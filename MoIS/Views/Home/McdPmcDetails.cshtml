@@ -1,0 +1,394 @@
+﻿@model MoIS.Models.DetailsViewModel
+
+<div class="container" style="width:100%;margin-top:2%">
+    <ul class="list-group">
+
+        @foreach (var item in Model.deceasedList)
+        {
+            string num = @item.NoIC;
+            string substr = num.Substring(num.Length - 1);
+            int x = Int32.Parse(substr);
+            int typeofcase = @item.TypeOfCase;
+            int deceasedid = item.DeceasedID;
+            var symbol = "@";
+            Session["id"] = deceasedid;
+            
+            <li style="color:transparent">
+                @if (typeofcase == 0)
+                {
+                <p>
+                    @Html.ActionLink("Convert View To PDF", "PrintViewToPdf/" + deceasedid + "/McdPmcDetails", "", htmlAttributes: new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-default" })
+                </p>
+                }
+            </li>
+            <li class="list-group-item active">BUTIRAN SIMATI</li>
+            <li class="list-group-item">
+                <div class='row'>
+                    <div class='col-md-6 col-xs-12'>
+                        (a) NAMA: <b>@item.DeceasedName</b>
+                    </div>
+                    <div class='col-md-6 col-xs-12'>
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item">
+                (b) ALAMAT: <b>@item.Address</b>
+            </li>
+            <li class="list-group-item">
+                <div class='row'>
+                    <div class='col-md-4 col-xs-12'>
+                        (c) POSKOD: <b>@item.Postcode</b>
+                    </div>
+                    <div class='col-md-4 col-xs-12'>
+                        (d) BANDAR: <b></b>
+                    </div>
+                    <div class='col-md-4 col-xs-12'>
+                        (e) NEGERI: <b></b>
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class='row'>
+                    <div class='col-md-6 col-xs-12'>
+                        (f) NO. KAD PENGENALAN: <b>@item.NoIC</b>
+                    </div>
+                    <div class='col-md-6 col-xs-12'>
+                        (g) UMUR: <b>@item.Age</b>
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class='row'>
+                    <div class='col-md-4 col-xs-12'>
+                        (h) JANTINA: <b>@item.Gender</b>
+                    </div>
+                    <div class='col-md-4 col-xs-12'>
+                        (i) BANGSA: <b>@item.Race</b>
+                    </div>
+                    <div class='col-md-4 col-xs-12'>
+                        (j) AGAMA: <b>@item.Religion</b>
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class='row'>
+                    <div class='col-md-6 col-xs-12'>
+                        (k) NO. PENDAFTARAN HOSPITAL: <b>@item.NoOfHospitalRegister</b>
+                    </div>
+                    <div class='col-md-6 col-xs-12'>
+                        TARIKH AND MASA PENDAFTARAN: <b>@String.Format("{0:yyyy-MM-dd}", @item.DateOfRegistration)</b>@symbol<b>@String.Format("{0:H:mm:ss}", @item.DateOfRegistration)</b>
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item">
+                (l) TARIKH AND MASA WAD: <b>@String.Format("{0:yyyy-MM-dd}", @item.DateOfWad)</b>@symbol<b>@String.Format("{0:H:mm:ss}", @item.DateOfWad)</b>
+            </li>
+            <li class="list-group-item">
+                (m) TARIKH AND MASA KEMATIAN: <b>@String.Format("{0:yyyy-MM-dd}", @item.DateOfDeath)</b>@symbol<b>@String.Format("{0:H:mm:ss}", @item.DateOfDeath)</b>
+            </li>
+
+
+            if (typeofcase == 1)
+            {
+                <li class="list-group-item">KES : <b>KES BIASA</b></li>
+            }
+            else
+            {
+                <li class="list-group-item">KES: <b>KES POLIS</b></li>
+            }
+        }
+    </ul>
+    <ul class="list-group">
+        @foreach (var item in Model.medicalassistantPenerimaList)
+        {
+            <li class="list-group-item active">BUTIRAN PENERIMA JASAD SIMATI</li>
+            <li class="list-group-item">
+                @foreach (var item2 in Model.deceasedList)
+                {
+                    <div class='row'>
+                        <div class='col-md-4 col-xs-12'>
+                            (a) TARIKH: <b>@String.Format("{0:yyyy-MM-dd}", @item2.DateOfWad)</b>
+                        </div>
+                        <div class='col-md-4 col-xs-12'>
+                            (b) MASA: <b>@String.Format("{0:H:mm:ss}", @item2.DateOfWad)</b>
+                        </div>
+
+                        <div class='col-md-4 col-xs-12'>
+                            (c) WAD/UNIT: <b>@item2.WadUnit</b>
+                        </div>
+                    </div>
+                }
+            </li>
+            <li class="list-group-item">
+                (d) NAME PEGAWAI YANG MENERIMA: <b>@item.MaName</b>
+            </li>
+            <li class="list-group-item">
+                <div class='row'>
+                    <div class='col-md-6 col-xs-12'>
+                        (e) JAWATAN: <b>@item.Role</b>
+                    </div>
+                    <div class='col-md-6 col-xs-12'>
+                        (f) NO. KAD PENGENALAN: <b>@item.MaIcNo</b>
+                    </div>
+                </div>
+            </li>
+           @* <li class="list-group-item">
+                <div class='row'>
+                    <div class='col-md-6 col-xs-12'>
+                    </div>
+                    <div class='col-md-6 col-xs-12'>
+                        <hr style="color: black; border: 1px black solid; margin-top: 25px;" />
+                        <p>TANDATANGAN PEGAWAI</p> <b></b>
+                    </div>
+            </li>*@
+        }
+    </ul>
+
+    <ul class="list-group">
+        @foreach (var item in Model.butiranmcdpmcList)
+        {
+            <li class="list-group-item active">BUTIRAN MCD/PMC</li>
+            <li class="list-group-item">
+                <div class='row'>
+                    <div class='col-md-6 col-xs-12'>
+                        (a) NO. <i>MCD</i>: <b>@item.NoMCD</b>
+                    </div>
+                    <div class='col-md-6 col-xs-12'>
+                        NO. <i>PMC</i>: <b>@item.NoPMC</b>
+                    </div>
+                </div>
+            </li>
+            foreach (var item2 in Model.medicalassistantPegawaiperubatanList)
+            {
+                <li class="list-group-item">
+                    <div class='row'>
+                        <div class='col-md-6 col-xs-12'>
+                            (b) NAMA PEG. PERUBATAN YANG SAHKAN SEBAB KEMATIAN: <b>@item2.MaName</b>
+                        </div>
+                        <div class='col-md-6 col-xs-12'>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    (c) NO. KAD PENGENALAN PEG. PERUBATAN: <b>@item2.MaIcNo</b>
+                </li>
+            }
+            <li class="list-group-item">
+                <div class='row'>
+                    <div class='col-md-6 col-xs-12'>
+                        (d) SEBAB KEMATIAN: <b>@item.SebabKematian</b>
+                    </div>
+                    <div class='col-md-6 col-xs-12'>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+
+    @if (Model.butiranbedahsiasatList != null)
+    {
+        <ul class="list-group">
+            @foreach (var item in Model.butiranbedahsiasatList)
+            {
+                <li class="list-group-item active">BUTIRAN BEDAH SIASAT (JIKA DIJANLANKAN)</li>
+                <li class="list-group-item">
+                    <div class='row'>
+                        <div class='col-md-6 col-xs-12'>
+                            (a) NO. BEDAH SIASAT: <b>@item.NoBedahSiasat</b>
+                        </div>
+                        <div class='col-md-6 col-xs-12'>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class='row'>
+                        <div class='col-md-6 col-xs-12'>
+                            (b) TARIKH: <b>@item.NoBedahSiasat</b>
+                        </div>
+                        <div class='col-md-6 col-xs-12'>
+                            (c) MASA: <b>@item.DateTimeBS</b>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class='row'>
+                        <div class='col-md-6 col-xs-12'>
+                            (d) NO. LAPORAN POLIS: <b>@item.NoLaporanPolis</b>
+                        </div>
+                        <div class='col-md-6 col-xs-12'>
+                            (e) TARIKH DAN MASA POL. 61 DITERIMA: <b>@item.DateTimePOL</b>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+    }
+
+    <ul class="list-group">
+        @foreach (var item in Model.butiranwariList)
+        {
+            <li class="list-group-item active">BUTIRAN WARIS YANG TERIMA DAN AKUAN TERIMA JASAD SIMATI</li>
+            <li class="list-group-item">
+                <div class='row'>
+                    <div class='col-md-6 col-xs-12'>
+                        SAYA <b>@item.WarisName</b>
+                    </div>
+                    <div class='col-md-6 col-xs-12'>
+                        NO. KAD PENGENALAN <b>@item.WarisNoIC</b>
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class='row'>
+                    <div class='col-md-6 col-xs-12'>
+                        BERALAMAT <b>@item.Alamat</b>
+                    </div>
+                    <div class='col-md-6 col-xs-12'>
+
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class='row'>
+                    <div class='col-md-6 col-xs-12'>
+                        DAN NO. TELEFON <b>@item.PhoneNo</b>
+                    </div>
+                    <div class='col-md-6 col-xs-12'>
+                        (PERHUBUNGAN SIMATI) <b>@item.Perhubungan</b>
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class='row'>
+                    <div class='col-md-6 col-xs-12'>
+                        DENGAN INI MEGAKU MENERIMA JASAD <b></b>
+                    </div>
+                    <div class='col-md-6 col-xs-12'>
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class='row'>
+                    <div class='col-md-4 col-xs-12'>
+                    </div>
+                    <div class='col-md-4 col-xs-12'>
+                        TARIKH <b></b>
+                    </div>
+                    <div class='col-md-4 col-xs-12'>
+                        MASA <b></b>
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class='row'>
+                    <div class='col-md-6 col-xs-12'>
+                        <table class="table">
+                            <thead><tr><th></th><th>TARIKH</th><th>MASA</th></tr></thead>
+                            <tbody>
+                                <tr><td>TUNTUTAN</td><td>@String.Format("{0:yyyy-MM-dd}", @item.DateTimeRequest)</td><td>@String.Format("{0:H:mm:ss}", @item.DateTimeRequest)</td></tr>
+                                <tr><td>SERAHAN</td><td>@String.Format("{0:yyyy-MM-dd}", @item.DateTimeReturn)</td><td>@String.Format("{0:H:mm:ss}", @item.DateTimeReturn)</td></tr>
+                            <tbody>
+                        </table>
+                    </div>
+                    @*<div class='col-md-6 col-xs-12'>
+            <hr style="color: black; border: 1px black solid; margin-top: 75px;" />
+            <p>TANDATANGAN WARIS</p> <b></b>
+        </div>*@
+                </div>
+            </li>
+        }
+    </ul>
+
+    <ul class="list-group">
+        @foreach (var item in Model.medicalassistantPegawaimenyerahkanList)
+        {
+            <li class="list-group-item active">BUTIRAN PEGAWAI YANG MENYERAHKAN JASAD SIMATI</li>
+            <li class="list-group-item">
+                <div class='row'>
+                    <div class='col-md-6 col-xs-12'>
+                        (a) NAMA: <b>@item.MaName</b>
+                    </div>
+                    <div class='col-md-6 col-xs-12'>
+                        (b) JAWATAN: <b>@item.Role</b>
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class='row'>
+                    <div class='col-md-6 col-xs-12'>
+                        (c) NO. KAD PENGENALAN: <b>@item.MaIcNo</b>
+                    </div>
+                    <div class='col-md-6 col-xs-12'>
+                    </div>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <div class='row'>
+                    @foreach (var item2 in Model.butiranwariList)
+                    {
+                        <div class='col-md-6 col-xs-12'>
+                            (d) TARIKH DAN MASA JASAD SIMATI DISERAHKAN: <b>@item2.DateTimeReturn</b>
+                        </div>
+                    }
+                    <div class='col-md-6 col-xs-12'>
+                    </div>
+            </li>
+            @* <li class="list-group-item">
+                <div class='row'>
+                    <div class='col-md-6 col-xs-12'>
+
+                    </div>
+                    <div class='col-md-6 col-xs-12'>
+                        <hr style="color: black; border: 1px black solid; margin-top: 25px;" />
+                        <p>TANDATANGAN PEGAWAI</p> <b></b>
+                    </div>
+            </li>*@
+        }
+    </ul>
+
+    <ul class="list-group">
+        @foreach (var item in Model.butiranpengurusmayatList)
+    {
+        <li class="list-group-item active">BUTIRAN PENGURUS MAYAT</li>
+        <li class="list-group-item">
+            <div class='row'>
+                <div class='col-md-6 col-xs-12'>
+                    (a) NAMA SYARIKAT/INDIVIDU: <b>@item.Syarikat_Individu</b>
+                </div>
+                <div class='col-md-6 col-xs-12'>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class='row'>
+                <div class='col-md-6 col-xs-12'>
+                    (b) NAMA PEMANDU: <b>@item.Pemandu</b>
+                </div>
+                <div class='col-md-6 col-xs-12'>
+                    (c) NO. TELEFON: <b>@item.PhoneNO</b>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item">
+            <div class='row'>
+                <div class='col-md-6 col-xs-12'>
+                    (d) NO. PENGENALAN: <b>@item.NoIC</b>
+                </div>
+                <div class='col-md-6 col-xs-12'>
+                </div>
+        </li>
+        @*<li class="list-group-item">
+                <div class='row'>
+                <div class='col-md-6 col-xs-12'>
+                    (e) TARIKH DAN MASA: <b>@item.DateTime</b>
+                </div>
+                <div class='col-md-6 col-xs-12'>
+                    <hr style="color: black; border: 1px black solid; margin-top: 25px;" />
+                    <p>TANDATANGAN PEMANDU</p> <b></b>
+                </div>
+        </li>*@
+}
+    </ul>
+    
+</div>

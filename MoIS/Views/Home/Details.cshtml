@@ -1,0 +1,67 @@
+﻿@model MoIS.Models.deceased
+
+@{
+
+    if (Session["maID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>deceased</h4>
+    <hr />
+    <div class="container" style="width:60%;margin-top:2%">
+
+        @if (Model != null)
+        {
+            if (Model.TypeOfCase == 0)
+            {
+                <p>
+                    @Html.ActionLink("Print A", "PrintA", new { id = Model.DeceasedID })
+                </p>
+            }
+            string num = @Model.NoIC;
+            string substr = num.Substring(num.Length - 1);
+            int x = Int32.Parse(substr);
+
+
+            <ul class="list-group">
+                <li class="list-group-item active">Deceased Information</li>
+                <li class="list-group-item">Deceased Name : <b>@Model.DeceasedName</b></li>
+                <li class="list-group-item">IC NO : <b>@Model.NoIC</b></li>
+
+
+                @if (x % 2 == 0)
+                {
+                    <li class="list-group-item">Gender : <b>female</b></li>
+                }
+
+                else
+                {
+                    <li class="list-group-item">Gender : <b>male</b></li>
+                }
+
+                <li class="list-group-item">Address : <b>@Model.Address</b></li>
+                <li class="list-group-item">Postcode : <b>@Model.Postcode</b></li>
+                @*<li class="list-group-item">City : <b>@Model.CityName</b></li>
+                    <li class="list-group-item">State : <b>@Model.StateName</b></li>*@
+                <li class="list-group-item">Date Of Registration : <b>@Model.DateOfRegistration</b></li>
+                <li class="list-group-item">Date Of Death : <b>@Model.DateOfDeath</b></li>
+                <li class="list-group-item">Date Of Wad : <b>@Model.DateOfWad</b></li>
+
+            </ul>
+        }
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.DeceasedID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

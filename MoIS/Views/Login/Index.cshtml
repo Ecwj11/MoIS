@@ -1,0 +1,121 @@
+﻿@model MoIS.Models.medicalassistant
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+<link rel="stylesheet" href="@Url.Content("~/Content/ladda-themeless.min.css")" type="text/css" />
+@{
+
+    ViewBag.Title = "Login";
+
+}
+
+<style>
+    body {
+        /*background-image: url('http://localhost:65100/img/login_bg.jpg') !important;
+        background-size: cover !important;
+        background-repeat: no-repeat !important;*/
+        /*height: 100vh;
+        background-color: #fff !important;
+        color: white;*/
+        overflow: hidden;
+    }
+
+    #login-panel {
+        width: 100%;
+        /* background: #fff; */
+        margin: auto;
+        padding: 10px;
+        /*margin-top: 100px;*/
+    }
+
+    footer {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 100px;
+        width: 100%;
+        overflow: hidden;
+        text-align: center;
+    }
+
+    input {
+        max-width: 100% !important;
+        background-color: transparent !important;
+    }
+
+    /*.form-control {
+        color: white !important;
+    }
+   ::placeholder {
+        color: white;
+        opacity: 1;
+    }*/
+    .input-icon-wrap {
+        border: 1px solid #ddd;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .input-icon {
+        background: #ddd;
+        position: absolute;
+        height: 34px;
+        padding: 0 10px;
+        display: flex;
+        align-items: center;
+        background: transparent;
+        border-right: 0.5px solid #bdbdbd;
+        width: 37px;
+        justify-content: center;
+    }
+
+    .input-with-icon {
+        flex: 1;
+        padding-left: 45px !important;
+    }
+
+    .input-icon, .input-with-icon {
+        padding: 10px;
+    }
+</style>
+<div class="container">
+    <div id="login-panel">
+        <div class="row">
+            <div class="col-sm-4 col-sm-offset-4">
+                <br /><br /><br /><br />
+                <h3><b>Mortuary Information System</b></h3><br />
+                <h4 class="card-title mb-4 mt-1" style="text-align: center;">Account Sign in</h4>
+                <br />
+                @using (Html.BeginForm("Autherize", "Login", FormMethod.Post))
+                {
+                    <div class="form-group input-with-wrap">
+
+                        <span class="input-icon"><span class="fa fa-user"></span></span>@Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control input-with-icon", required = "required", autofocus = "autofocus", autocomplete = "off", placeholder = "Username" } })
+
+                        @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group input-with-wrap">
+
+                        <span class="input-icon"><span class="fa fa-lock"></span></span> @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control input-with-icon", required = "required", autocomplete = "off", placeholder = "Password" } })
+
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+                    <label style="color: red;" class="field-validation-error">@Html.DisplayFor(model => model.LoginErrorMessage)</label>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary ladda-button" data-style="zoom-in" id="btnLogin" style="width: 100%;">Login</button>
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/ladda.js"></script>
+<script>
+   
+</script>

@@ -1,0 +1,195 @@
+﻿@model MoIS.Models.WarisanPengecamanViewModel
+
+<link href="@Url.Content("~/Content/jquery.datetimepicker.css")" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "NextProcess";
+}
+
+<h2>NextProcess</h2>
+
+
+@using (Html.BeginForm("NextProcess", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Butiran Warisan</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.WarisName, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.butiranwari.WarisName, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.butiranwari.WarisName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.WarisNoIC, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.butiranwari.WarisNoIC, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.butiranwari.WarisNoIC, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Alamat, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.butiranwari.Alamat, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.butiranwari.Alamat, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PhoneNo, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.butiranwari.PhoneNo, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.butiranwari.PhoneNo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Perhubungan, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        <select name="Perhubungan" class="form-control" required>
+                            <option value="">-------Select List------</option>
+                            @foreach (var value in ViewBag.perhubunganSelect)
+                            {
+                                if (@Model.butiranwari.Perhubungan == @value)
+                                {
+                                    <option value="@value" selected>@value</option>
+                                }
+                                else
+                                {
+                                    <option value="@value">@value</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DateTimeRequest, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.butiranwari.DateTimeRequest, new { htmlAttributes = new { @class = "form-control datetimepicker", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.butiranwari.DateTimeRequest, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DateTimeReturn, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.butiranwari.DateTimeReturn, new { htmlAttributes = new { @class = "form-control datetimepicker", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.butiranwari.DateTimeReturn, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                @* <div class="clearfix"></div>
+            <div class="clearfix"></div>
+            <h4>Pengecaman Semula</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                    @Html.LabelFor(model => model.LabelMayat, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.pengecamansemula.LabelMayat, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.pengecamansemula.LabelMayat, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PengecamanMukaSimati, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.pengecamansemula.PengecamanMukaSimati, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.pengecamansemula.PengecamanMukaSimati, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Pakaian, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.pengecamansemula.Pakaian, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.pengecamansemula.Pakaian, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Lain_lainCara, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.pengecamansemula.Lain_lainCara, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.pengecamansemula.Lain_lainCara, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+            </div>
+            <div class="col-md-6">
+                <h4>Pengecaman Semula</h4>
+                <hr />
+                <h5><u>Pengecaman Berdasarkan Kepada:</u></h5>
+                <div class="form-group">
+                    <label class="control-label col-md-4">Label Mayat</label>
+                    <div class="col-md-8">
+                        <input type="checkbox" name="labelMayat" value="1" @if (@Model.pengecamansemula.LabelMayat == "1") { @ViewData["checked"] } />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-4">Pengecaman Muka Simati</label>
+                    <div class="col-md-8">
+                        <input type="checkbox" name="pengecamanMukaSimati" value="1" @if (@Model.pengecamansemula.PengecamanMukaSimati == "1") { @ViewData["checked"] } />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-4">Pakaian / Barang Kemas/ Lain-lain Artifak</label>
+                    <div class="col-md-8">
+                        <input type="checkbox" name="pakaian" value="1" @if (@Model.pengecamansemula.Pakaian == "1") { @ViewData["checked"] } />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-4">Lain-lain Cara:</label>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-8">
+                        <input type="checkbox" name="tandaFizikal" value="Tanda-tanda Fizikal" @if (@ViewData["tandaFizikal"] == "1") { @ViewData["checked"] } /> Tanda-tanda Fizikal
+                        <br />
+                        <input type="checkbox" name="tandaTatoo" value="Tanda Tatoo" @if (@ViewData["tandaTatoo"] == "1") { @ViewData["checked"] } />Tanda Tatoo
+                        <br />
+                        <input type="checkbox" name="capJari" value="Cap Jari" @if (@ViewData["capJari"] == "1") { @ViewData["checked"] } />Cap Jari
+                        <br />
+                        <input type="checkbox" name="odontologi" value="Odontologi" @if (@ViewData["odontologi"] == "1") { @ViewData["checked"] } />Odontologi
+                        <br />
+                        <input type="checkbox" name="dna" value="DNA" @if (@ViewData["dna"] == "1") { @ViewData["checked"] } />DNA
+                        <br />
+                        <input type="checkbox" name="" value="" @if (@ViewData["lain_lain"] != "") { @ViewData["checked"] } />Lain-Lain
+                        <br />
+                        <textarea placeholder="Lain-lain" name="lain-lain">@ViewData["lain_lain_string"]</textarea>
+                    </div>
+                    </div>
+
+                </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-4 col-md-12">
+                <input type="submit" value="Save" class="btn btn-success" />
+                @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-default" })
+            </div>
+        </div>
+    </div>
+}
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="@Url.Content("~/Scripts/jquery.datetimepicker.full.min.js")"></script>
+<script>
+    $('.datetimepicker').datetimepicker({
+        showSecond: true,
+        format: 'm/d/Y H:i:s'
+    });
+        //$('.datepicker').datepicker();
+</script>

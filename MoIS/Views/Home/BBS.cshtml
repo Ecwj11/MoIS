@@ -1,0 +1,72 @@
+﻿@model MoIS.Models.butiranbedahsiasat
+
+<link href="@Url.Content("~/Content/jquery.datetimepicker.css")" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Butrian Pengurus Mayat";
+}
+
+<h2>Butrian Bedah Siasat</h2>
+
+
+@using (Html.BeginForm("BBS", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Butrian Bedah Siasat</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NoBedahSiasat, htmlAttributes: new { @class = "control-label col-md-4" })
+        <div class="col-md-8">
+            @Html.EditorFor(model => model.NoBedahSiasat, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+            @Html.ValidationMessageFor(model => model.NoBedahSiasat, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DateTimeBS, htmlAttributes: new { @class = "control-label col-md-4" })
+        <div class="col-md-8">
+            @Html.EditorFor(model => model.DateTimeBS, new { htmlAttributes = new { @class = "form-control datetimepicker", required = "required" } })
+            @Html.ValidationMessageFor(model => model.DateTimeBS, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NoLaporanPolis, htmlAttributes: new { @class = "control-label col-md-4" })
+        <div class="col-md-8">
+            @Html.EditorFor(model => model.NoLaporanPolis, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+            @Html.ValidationMessageFor(model => model.NoLaporanPolis, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DateTimePOL, htmlAttributes: new { @class = "control-label col-md-4" })
+        <div class="col-md-8">
+            @Html.EditorFor(model => model.DateTimePOL, new { htmlAttributes = new { @class = "form-control datetimepicker", required = "required" } })
+            @Html.ValidationMessageFor(model => model.DateTimePOL, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-4 col-md-10">
+            <input type="submit" value="Save" class="btn btn-success" />
+            @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-default" })
+        </div>
+    </div>
+</div>
+}
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="@Url.Content("~/Scripts/jquery.datetimepicker.full.min.js")"></script>
+<script>
+    $('.datetimepicker').datetimepicker({
+        showSecond: true,
+        format: 'm/d/Y H:i:s'
+    });
+    //$('.datepicker').datepicker();
+</script>

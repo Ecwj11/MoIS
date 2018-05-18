@@ -1,0 +1,217 @@
+﻿@model MoIS.Models.DetailsViewModel
+
+@{
+
+    if (Session["maID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+<style>
+    table td {
+        padding-left: 10px;
+    }
+
+    table th {
+        padding-left: 10px;
+    }
+
+    .tableNoneBorder table tbody tr td {
+        border: none !important;
+    }
+</style>
+<h2 class="align_center">AUTOPSY PROTOCOL</h2>
+
+<div>
+    <hr />
+    <div class="container" style="width:60%;margin-top:2%">
+        <p>
+            @Html.ActionLink("Convert View To PDF", "AutopsyProtocol/" + 0 + "/AutopsyProtocol", "", htmlAttributes: new { @class = "btn btn-primary" })
+            @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-default" })
+        </p>
+        <div class="row">
+            <div class="col-md-6">
+                <pre style="list-style: none;">AUTOPSY PROTOCOL
+DEPARTMENT OF FORENSIC MEDICINA,
+SARAWAK GENERAL HOSPITAL
+KUCHING, SARAWAK</pre>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="col-md-7">POLICE STATION </label>:________________
+                </div>
+                <div class="form-group">
+                    <label class="col-md-7">POLICE REPORT NO </label>:________________
+                </div>
+                <div class="form-group">
+                    <label class="col-md-7">AUTOPSY NO </label>:________________
+                </div>
+            </div>
+        </div>
+
+        <table style="width: 100%;">
+            @foreach (var item in Model.deceasedList)
+            {
+                <tbody>
+                    <tr><td style="width:40%;">Name of Deceased : @item.DeceasedName</td><td style="width:30%;">Age : @item.Age</td><td style="width:30%;">Gender : @item.Gender</td></tr>
+                    <tr><td style="width:40%;">IC No / Passport No : </td><td style="width:30%;">Nationality : </td><td style="width:30%;">Race : </td></tr>
+                    <tr><td style="width:40%;">BID / DIC / Hospitalised </td><td style="width:30%;">Hospital Reg. No : </td><td style="width:30%;">Ward : </td></tr>
+                    <tr><td style="width:100%;" colspan="3">Date / Time of Admission to Hospital : </td></tr>
+                    <tr><td style="width:100%;" colspan="3">Date / Time Arrived at forensic Unit : </td></tr>
+                    <tr><td style="width:100%;" colspan="3">Date / Time of Post Mortem : </td></tr>
+                    <tr><td style="width:100%;" colspan="3">Autopsy Performed By : </td></tr>
+                </tbody>
+            }
+        </table>
+        <table style="width: 100%;">
+            <tbody>
+                <tr><td style="width:20%;" class="align_center" rowspan="9">Assisted By</td><td style="width:30%;" rowspan="3">Assitant Medical Officer (PPP) </td><td style="width:40%;">1.</td></tr>
+                <tr><td style="width:40%;">2.</td></tr>
+                <tr><td style="width:40%;">3.</td></tr>
+                <tr><td style="width:20%;" rowspan="3">Pembantu Perawatan Kesihatan </td><td style="width:40%;">1.</td></tr>
+                <tr><td style="width:40%;">2.</td></tr>
+                <tr><td style="width:40%;">3.</td></tr>
+                <tr><td style="width:20%;" rowspan="3">Other officer (Mo / Ho) </td><td style="width:40%;">1.</td></tr>
+                <tr><td style="width:40%;">2.</td></tr>
+                <tr><td style="width:40%;">3.</td></tr>
+            </tbody>
+        </table>
+        <br />
+        <b>Body Identified By :</b>
+        <div class="tableNoneBorder">
+            <table style="width: 100%;">
+                <tbody>
+                    <tr><td colspan="2"><b>1 Name of Next of Kin : ______________________________________________</b></td></tr>
+                    <tr><td>MyKad / Passport No : </td><td>Relationship : </td></tr>
+                    <tr><td colspan="2">Address :</td></tr>
+                    <tr><td>Tel. No : </td><td><p>___________</p><small>(Signature / Thunm print)</small></td></tr>
+                </tbody>
+                <tbody>
+                    <tr><td colspan="2"><b>2 Name of Police Officer : _____________________________________________</b></td></tr>
+                    <tr><td colspan="2">Rank :</td></tr>
+                    <tr><td>No : </td><td><p>___________</p><small>(Signature)</small></td></tr>
+                </tbody>
+                <tbody>
+                    <tr><td colspan="2"><b> Photographer : </b></td></tr>
+                    <tr><td colspan="2">Name :</td></tr>
+                    <tr><td colspan="2">Rank / No : </td></tr>
+                </tbody>
+            </table>
+        </div>
+        <br />
+        <h4>CLOTHING:</h4>
+        <table style="width: 100%;"><tbody><tr><td style="height: 300px;"></td></tr></tbody></table>
+        <br />
+        <h4><b><u>EXTERNAL EXAMINATION</u></b></h4>
+        <div class="row">
+            <div class="col-md-6">
+                <label class="control-label col-md-6">General Features</label>
+            </div>
+            <div class="col-md-6">
+                <table style="width:100%;">
+                    <tbody>
+                        <tr><td>Height : </td><td>Weight : </td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <p>Post Mortem Changes : Rigor Mortis</p>
+            </div>
+            <div class="col-md-6">
+                <p>Hypotasis : </p>
+            </div>
+        </div>
+
+        <br />
+        <br />
+        <h4>Mark of Injuries:</h4>
+        <table style="width: 100%;"><tbody><tr><td style="height: 300px;"></td></tr></tbody></table>
+        <br />
+        <h4><b><u>INTERNAL EXAMINATION</u></b></h4>
+        <table style="width:100%;">
+            <thead><tr><th colspan="2">Head & Neck</th><th colspan="2">WEIGHT OF ORGAN</th></tr></thead>
+            <tbody>
+                @{
+                    int countHN = ViewBag.headNeck.Length;
+                    int countWOO = ViewBag.weightOfOrgan.Length;
+                    int countST = ViewBag.specimensTaken.Length;
+                    int rowspanST = countST + 1;
+                    int countArray = 0;
+
+                    if (@countHN >= @countWOO)
+                    {
+                        countArray = @countHN;
+                    }
+                    else
+                    {
+                        countArray = @countWOO;
+                    }
+                }
+                @for (int i = 0; i < countArray; i++)
+                {
+                    <tr>
+                        <td width="25%">@ViewBag.headNeck[i]</td>
+                        <td></td>
+                        <td width="25%">@ViewBag.weightOfOrgan[i]</td>
+                        <td></td>
+                    </tr>
+                }
+                <tr><th colspan="4">Chest</th></tr>
+                @foreach (var itemChest in ViewBag.chest)
+                {
+                    <tr>
+                        <td width="25%">@itemChest</td>
+                        <td colspan="3"></td>
+                    </tr>
+                }
+                <tr><th colspan="4">Abdomen</th></tr>
+                @foreach (var itemAbdomen in ViewBag.abdomen)
+                {
+                    <tr>
+                        <td width="25%">@itemAbdomen</td>
+                        <td colspan="3"></td>
+                    </tr>
+                }
+                <tr><td width="25%" rowspan="@rowspanST">Specimens Taken</td></tr>
+                @foreach (var itemST in ViewBag.specimensTaken)
+                {
+                    <tr>
+                        <td width="25%">@itemST</td>
+                        <td colspan="2"></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <br />
+        <div class="row">
+            <div class="col-md-4">
+                <h4><b>CAUSE OF DEATH</b></h4>
+            </div>
+            <div class="col-md-8">
+                <p>That the immediate case of death was ......................................... </p><p>due to (or in consequence of) .........................................</p><p>due to (or in consequence of) .........................................</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Place</label> <div class="col-md-10">
+                <p> : ............................................................</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Date</label> <div class="col-md-10">
+                <p>  : ............................................................</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Signature</label> <div class="col-md-10">
+                <p> : ............................................................</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Name</label> <div class="col-md-10">
+                <p>  : ............................................................</p>
+            </div>
+        </div>
+    </div>
+</div>

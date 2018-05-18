@@ -1,0 +1,1227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="moisModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.5" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="butiranbedahsiasat">
+          <Key>
+            <PropertyRef Name="BsID" />
+          </Key>
+          <Property Name="BsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NoBedahSiasat" Type="varchar" MaxLength="45" />
+          <Property Name="DateTimeBS" Type="datetime" Precision="0" />
+          <Property Name="NoLaporanPolis" Type="varchar" MaxLength="45" />
+          <Property Name="DateTimePOL" Type="datetime" Precision="0" />
+          <Property Name="DeceasedID" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" Precision="0" />
+          <Property Name="EditedBy" Type="int" />
+          <Property Name="EditedDate" Type="datetime" Precision="0" />
+          <Property Name="Status" Type="smallint" />
+        </EntityType>
+        <EntityType Name="butiranmcdpmc">
+          <Key>
+            <PropertyRef Name="ButiranID" />
+          </Key>
+          <Property Name="ButiranID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NoMCD" Type="varchar" MaxLength="45" />
+          <Property Name="NoPMC" Type="varchar" MaxLength="45" />
+          <Property Name="SebabKematian" Type="varchar" MaxLength="45" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" Precision="0" />
+          <Property Name="DeceasedID" Type="int" />
+          <Property Name="EditedBy" Type="int" />
+          <Property Name="EditedDate" Type="datetime" Precision="0" />
+          <Property Name="Status" Type="smallint" />
+        </EntityType>
+        <EntityType Name="butiranpengurusmayat">
+          <Key>
+            <PropertyRef Name="PM_ID" />
+          </Key>
+          <Property Name="PM_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Syarikat/Individu" Type="varchar" MaxLength="45" />
+          <Property Name="Pemandu" Type="varchar" MaxLength="45" />
+          <Property Name="PhoneNO" Type="varchar" MaxLength="45" />
+          <Property Name="NoIC" Type="varchar" MaxLength="45" />
+          <Property Name="DateTime" Type="varchar" MaxLength="45" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="DeceasedID" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" Precision="0" />
+          <Property Name="EditedBy" Type="int" />
+          <Property Name="EditedDate" Type="datetime" Precision="0" />
+          <Property Name="Status" Type="smallint" />
+        </EntityType>
+        <EntityType Name="butiranwaris">
+          <Key>
+            <PropertyRef Name="WarisID" />
+          </Key>
+          <Property Name="WarisID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WarisName" Type="varchar" MaxLength="45" />
+          <Property Name="WarisNoIC" Type="varchar" MaxLength="45" />
+          <Property Name="Alamat" Type="varchar" MaxLength="45" />
+          <Property Name="PhoneNo" Type="varchar" MaxLength="45" />
+          <Property Name="Perhubungan" Type="varchar" MaxLength="45" />
+          <Property Name="DateTimeRequest" Type="datetime" Precision="0" />
+          <Property Name="DateTimeReturn" Type="datetime" Precision="0" />
+          <Property Name="ReturnedBy" Type="int" />
+          <Property Name="DeceasedID" Type="int" />
+          <Property Name="Signature" Type="mediumblob" />
+          <Property Name="Editedby" Type="int" />
+          <Property Name="EditedDate" Type="datetime" Precision="0" />
+          <Property Name="Status" Type="smallint" />
+        </EntityType>
+        <EntityType Name="city">
+          <Key>
+            <PropertyRef Name="CityID" />
+          </Key>
+          <Property Name="CityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CityName" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="StateID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="deceased">
+          <Key>
+            <PropertyRef Name="DeceasedID" />
+          </Key>
+          <Property Name="DeceasedID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DeceasedName" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="45" />
+          <Property Name="Postcode" Type="int" />
+          <Property Name="NoIC" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Gender" Type="varchar" MaxLength="10" />
+          <Property Name="Age" Type="int" />
+          <Property Name="Race" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Religion" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="DateOfWad" Type="datetime" Precision="0" />
+          <Property Name="DateOfDeath" Type="datetime" Precision="0" />
+          <Property Name="DateOfRegistration" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="DateOfLastModified" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="ModifiedBy" Type="int" Nullable="false" />
+          <Property Name="TypeOfCase" Type="int" Nullable="false" />
+          <Property Name="DateOfReceived" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="WadUnit" Type="varchar" MaxLength="45" />
+          <Property Name="NoOfHospitalRegister" Type="varchar" MaxLength="45" />
+          <Property Name="qrcode" Type="mediumblob" />
+          <Property Name="Status" Type="smallint" />
+          <Property Name="Nationality" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="medicalassistant">
+          <Key>
+            <PropertyRef Name="MaID" />
+          </Key>
+          <Property Name="MaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MaName" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="MaIcNo" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Role" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="RegisteredDate" Type="datetime" Precision="0" />
+          <Property Name="Status" Type="smallint" />
+        </EntityType>
+        <EntityType Name="pengecamansemula">
+          <Key>
+            <PropertyRef Name="CaseID" />
+          </Key>
+          <Property Name="CaseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LabelMayat" Type="varchar" MaxLength="45" />
+          <Property Name="PengecamanMukaSimati" Type="varchar" MaxLength="45" />
+          <Property Name="Pakaian" Type="varchar" MaxLength="45" />
+          <Property Name="Lain-lainCara" Type="varchar" MaxLength="45" />
+          <Property Name="DeceasedID" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" Precision="0" />
+          <Property Name="Status" Type="smallint" />
+          <Property Name="EditedBy" Type="int" />
+          <Property Name="EditedDate" Type="datetime" Precision="0" />
+        </EntityType>
+        <EntityType Name="postcode">
+          <Key>
+            <PropertyRef Name="Postcode" />
+          </Key>
+          <Property Name="Postcode" Type="int" Nullable="false" />
+          <Property Name="CityID" Type="int" Nullable="false" />
+          <Property Name="StateID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="state">
+          <Key>
+            <PropertyRef Name="StateID" />
+          </Key>
+          <Property Name="StateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StateName" Type="varchar" MaxLength="45" Nullable="false" />
+        </EntityType>
+        <Association Name="CityID">
+          <End Role="city" Type="Self.city" Multiplicity="1" />
+          <End Role="postcode" Type="Self.postcode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="city">
+              <PropertyRef Name="CityID" />
+            </Principal>
+            <Dependent Role="postcode">
+              <PropertyRef Name="CityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Created_By">
+          <End Role="medicalassistant" Type="Self.medicalassistant" Multiplicity="0..1" />
+          <End Role="butiranmcdpmc" Type="Self.butiranmcdpmc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medicalassistant">
+              <PropertyRef Name="MaID" />
+            </Principal>
+            <Dependent Role="butiranmcdpmc">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CreatedBy">
+          <End Role="medicalassistant" Type="Self.medicalassistant" Multiplicity="0..1" />
+          <End Role="deceased" Type="Self.deceased" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medicalassistant">
+              <PropertyRef Name="MaID" />
+            </Principal>
+            <Dependent Role="deceased">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CreatedMA">
+          <End Role="medicalassistant" Type="Self.medicalassistant" Multiplicity="0..1" />
+          <End Role="butiranpengurusmayat" Type="Self.butiranpengurusmayat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medicalassistant">
+              <PropertyRef Name="MaID" />
+            </Principal>
+            <Dependent Role="butiranpengurusmayat">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Deceased1">
+          <End Role="deceased" Type="Self.deceased" Multiplicity="0..1" />
+          <End Role="butiranmcdpmc" Type="Self.butiranmcdpmc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="deceased">
+              <PropertyRef Name="DeceasedID" />
+            </Principal>
+            <Dependent Role="butiranmcdpmc">
+              <PropertyRef Name="DeceasedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Deceased2">
+          <End Role="deceased" Type="Self.deceased" Multiplicity="0..1" />
+          <End Role="pengecamansemula" Type="Self.pengecamansemula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="deceased">
+              <PropertyRef Name="DeceasedID" />
+            </Principal>
+            <Dependent Role="pengecamansemula">
+              <PropertyRef Name="DeceasedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DeceasedID">
+          <End Role="deceased" Type="Self.deceased" Multiplicity="0..1" />
+          <End Role="butiranbedahsiasat" Type="Self.butiranbedahsiasat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="deceased">
+              <PropertyRef Name="DeceasedID" />
+            </Principal>
+            <Dependent Role="butiranbedahsiasat">
+              <PropertyRef Name="DeceasedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DeceasedName">
+          <End Role="deceased" Type="Self.deceased" Multiplicity="0..1" />
+          <End Role="butiranwaris" Type="Self.butiranwaris" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="deceased">
+              <PropertyRef Name="DeceasedID" />
+            </Principal>
+            <Dependent Role="butiranwaris">
+              <PropertyRef Name="DeceasedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DeceasedPM">
+          <End Role="deceased" Type="Self.deceased" Multiplicity="0..1" />
+          <End Role="butiranpengurusmayat" Type="Self.butiranpengurusmayat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="deceased">
+              <PropertyRef Name="DeceasedID" />
+            </Principal>
+            <Dependent Role="butiranpengurusmayat">
+              <PropertyRef Name="DeceasedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Edited_By">
+          <End Role="medicalassistant" Type="Self.medicalassistant" Multiplicity="0..1" />
+          <End Role="butiranmcdpmc" Type="Self.butiranmcdpmc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medicalassistant">
+              <PropertyRef Name="MaID" />
+            </Principal>
+            <Dependent Role="butiranmcdpmc">
+              <PropertyRef Name="EditedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EditedBW">
+          <End Role="medicalassistant" Type="Self.medicalassistant" Multiplicity="0..1" />
+          <End Role="butiranwaris" Type="Self.butiranwaris" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medicalassistant">
+              <PropertyRef Name="MaID" />
+            </Principal>
+            <Dependent Role="butiranwaris">
+              <PropertyRef Name="Editedby" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EditedPM">
+          <End Role="medicalassistant" Type="Self.medicalassistant" Multiplicity="0..1" />
+          <End Role="butiranpengurusmayat" Type="Self.butiranpengurusmayat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medicalassistant">
+              <PropertyRef Name="MaID" />
+            </Principal>
+            <Dependent Role="butiranpengurusmayat">
+              <PropertyRef Name="EditedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Ma">
+          <End Role="medicalassistant" Type="Self.medicalassistant" Multiplicity="0..1" />
+          <End Role="butiranbedahsiasat" Type="Self.butiranbedahsiasat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medicalassistant">
+              <PropertyRef Name="MaID" />
+            </Principal>
+            <Dependent Role="butiranbedahsiasat">
+              <PropertyRef Name="EditedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MA2">
+          <End Role="medicalassistant" Type="Self.medicalassistant" Multiplicity="0..1" />
+          <End Role="pengecamansemula" Type="Self.pengecamansemula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medicalassistant">
+              <PropertyRef Name="MaID" />
+            </Principal>
+            <Dependent Role="pengecamansemula">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MA3">
+          <End Role="medicalassistant" Type="Self.medicalassistant" Multiplicity="0..1" />
+          <End Role="pengecamansemula" Type="Self.pengecamansemula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medicalassistant">
+              <PropertyRef Name="MaID" />
+            </Principal>
+            <Dependent Role="pengecamansemula">
+              <PropertyRef Name="EditedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MedicalAssistant1">
+          <End Role="medicalassistant" Type="Self.medicalassistant" Multiplicity="0..1" />
+          <End Role="butiranbedahsiasat" Type="Self.butiranbedahsiasat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medicalassistant">
+              <PropertyRef Name="MaID" />
+            </Principal>
+            <Dependent Role="butiranbedahsiasat">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ModifiedBy">
+          <End Role="medicalassistant" Type="Self.medicalassistant" Multiplicity="1" />
+          <End Role="deceased" Type="Self.deceased" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medicalassistant">
+              <PropertyRef Name="MaID" />
+            </Principal>
+            <Dependent Role="deceased">
+              <PropertyRef Name="ModifiedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Postcode1">
+          <End Role="postcode" Type="Self.postcode" Multiplicity="0..1" />
+          <End Role="deceased" Type="Self.deceased" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="postcode">
+              <PropertyRef Name="Postcode" />
+            </Principal>
+            <Dependent Role="deceased">
+              <PropertyRef Name="Postcode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ReturnedBy">
+          <End Role="medicalassistant" Type="Self.medicalassistant" Multiplicity="0..1" />
+          <End Role="butiranwaris" Type="Self.butiranwaris" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medicalassistant">
+              <PropertyRef Name="MaID" />
+            </Principal>
+            <Dependent Role="butiranwaris">
+              <PropertyRef Name="ReturnedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="State1">
+          <End Role="state" Type="Self.state" Multiplicity="1" />
+          <End Role="postcode" Type="Self.postcode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="state">
+              <PropertyRef Name="StateID" />
+            </Principal>
+            <Dependent Role="postcode">
+              <PropertyRef Name="StateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StateID">
+          <End Role="state" Type="Self.state" Multiplicity="1" />
+          <End Role="city" Type="Self.city" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="state">
+              <PropertyRef Name="StateID" />
+            </Principal>
+            <Dependent Role="city">
+              <PropertyRef Name="StateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="moisModelStoreContainer">
+          <EntitySet Name="butiranbedahsiasat" EntityType="Self.butiranbedahsiasat" Schema="mois" store:Type="Tables" />
+          <EntitySet Name="butiranmcdpmc" EntityType="Self.butiranmcdpmc" Schema="mois" store:Type="Tables" />
+          <EntitySet Name="butiranpengurusmayat" EntityType="Self.butiranpengurusmayat" Schema="mois" store:Type="Tables" />
+          <EntitySet Name="butiranwaris" EntityType="Self.butiranwaris" Schema="mois" store:Type="Tables" />
+          <EntitySet Name="city" EntityType="Self.city" Schema="mois" store:Type="Tables" />
+          <EntitySet Name="deceased" EntityType="Self.deceased" Schema="mois" store:Type="Tables" />
+          <EntitySet Name="medicalassistant" EntityType="Self.medicalassistant" Schema="mois" store:Type="Tables" />
+          <EntitySet Name="pengecamansemula" EntityType="Self.pengecamansemula" Schema="mois" store:Type="Tables" />
+          <EntitySet Name="postcode" EntityType="Self.postcode" Schema="mois" store:Type="Tables" />
+          <EntitySet Name="state" EntityType="Self.state" Schema="mois" store:Type="Tables" />
+          <AssociationSet Name="CityID" Association="Self.CityID">
+            <End Role="city" EntitySet="city" />
+            <End Role="postcode" EntitySet="postcode" />
+          </AssociationSet>
+          <AssociationSet Name="Created_By" Association="Self.Created_By">
+            <End Role="medicalassistant" EntitySet="medicalassistant" />
+            <End Role="butiranmcdpmc" EntitySet="butiranmcdpmc" />
+          </AssociationSet>
+          <AssociationSet Name="CreatedBy" Association="Self.CreatedBy">
+            <End Role="medicalassistant" EntitySet="medicalassistant" />
+            <End Role="deceased" EntitySet="deceased" />
+          </AssociationSet>
+          <AssociationSet Name="CreatedMA" Association="Self.CreatedMA">
+            <End Role="medicalassistant" EntitySet="medicalassistant" />
+            <End Role="butiranpengurusmayat" EntitySet="butiranpengurusmayat" />
+          </AssociationSet>
+          <AssociationSet Name="Deceased1" Association="Self.Deceased1">
+            <End Role="deceased" EntitySet="deceased" />
+            <End Role="butiranmcdpmc" EntitySet="butiranmcdpmc" />
+          </AssociationSet>
+          <AssociationSet Name="Deceased2" Association="Self.Deceased2">
+            <End Role="deceased" EntitySet="deceased" />
+            <End Role="pengecamansemula" EntitySet="pengecamansemula" />
+          </AssociationSet>
+          <AssociationSet Name="DeceasedID" Association="Self.DeceasedID">
+            <End Role="deceased" EntitySet="deceased" />
+            <End Role="butiranbedahsiasat" EntitySet="butiranbedahsiasat" />
+          </AssociationSet>
+          <AssociationSet Name="DeceasedName" Association="Self.DeceasedName">
+            <End Role="deceased" EntitySet="deceased" />
+            <End Role="butiranwaris" EntitySet="butiranwaris" />
+          </AssociationSet>
+          <AssociationSet Name="DeceasedPM" Association="Self.DeceasedPM">
+            <End Role="deceased" EntitySet="deceased" />
+            <End Role="butiranpengurusmayat" EntitySet="butiranpengurusmayat" />
+          </AssociationSet>
+          <AssociationSet Name="Edited_By" Association="Self.Edited_By">
+            <End Role="medicalassistant" EntitySet="medicalassistant" />
+            <End Role="butiranmcdpmc" EntitySet="butiranmcdpmc" />
+          </AssociationSet>
+          <AssociationSet Name="EditedBW" Association="Self.EditedBW">
+            <End Role="medicalassistant" EntitySet="medicalassistant" />
+            <End Role="butiranwaris" EntitySet="butiranwaris" />
+          </AssociationSet>
+          <AssociationSet Name="EditedPM" Association="Self.EditedPM">
+            <End Role="medicalassistant" EntitySet="medicalassistant" />
+            <End Role="butiranpengurusmayat" EntitySet="butiranpengurusmayat" />
+          </AssociationSet>
+          <AssociationSet Name="Ma" Association="Self.Ma">
+            <End Role="medicalassistant" EntitySet="medicalassistant" />
+            <End Role="butiranbedahsiasat" EntitySet="butiranbedahsiasat" />
+          </AssociationSet>
+          <AssociationSet Name="MA2" Association="Self.MA2">
+            <End Role="medicalassistant" EntitySet="medicalassistant" />
+            <End Role="pengecamansemula" EntitySet="pengecamansemula" />
+          </AssociationSet>
+          <AssociationSet Name="MA3" Association="Self.MA3">
+            <End Role="medicalassistant" EntitySet="medicalassistant" />
+            <End Role="pengecamansemula" EntitySet="pengecamansemula" />
+          </AssociationSet>
+          <AssociationSet Name="MedicalAssistant1" Association="Self.MedicalAssistant1">
+            <End Role="medicalassistant" EntitySet="medicalassistant" />
+            <End Role="butiranbedahsiasat" EntitySet="butiranbedahsiasat" />
+          </AssociationSet>
+          <AssociationSet Name="ModifiedBy" Association="Self.ModifiedBy">
+            <End Role="medicalassistant" EntitySet="medicalassistant" />
+            <End Role="deceased" EntitySet="deceased" />
+          </AssociationSet>
+          <AssociationSet Name="Postcode1" Association="Self.Postcode1">
+            <End Role="postcode" EntitySet="postcode" />
+            <End Role="deceased" EntitySet="deceased" />
+          </AssociationSet>
+          <AssociationSet Name="ReturnedBy" Association="Self.ReturnedBy">
+            <End Role="medicalassistant" EntitySet="medicalassistant" />
+            <End Role="butiranwaris" EntitySet="butiranwaris" />
+          </AssociationSet>
+          <AssociationSet Name="State1" Association="Self.State1">
+            <End Role="state" EntitySet="state" />
+            <End Role="postcode" EntitySet="postcode" />
+          </AssociationSet>
+          <AssociationSet Name="StateID" Association="Self.StateID">
+            <End Role="state" EntitySet="state" />
+            <End Role="city" EntitySet="city" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="moisModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="butiranbedahsiasat">
+          <Key>
+            <PropertyRef Name="BsID" />
+          </Key>
+          <Property Name="BsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NoBedahSiasat" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="DateTimeBS" Type="DateTime" />
+          <Property Name="NoLaporanPolis" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="DateTimePOL" Type="DateTime" />
+          <Property Name="DeceasedID" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="EditedBy" Type="Int32" />
+          <Property Name="EditedDate" Type="DateTime" />
+          <Property Name="Status" Type="Int16" />
+          <NavigationProperty Name="deceased" Relationship="Self.DeceasedID" FromRole="butiranbedahsiasat" ToRole="deceased" />
+          <NavigationProperty Name="medicalassistant" Relationship="Self.Ma" FromRole="butiranbedahsiasat" ToRole="medicalassistant" />
+          <NavigationProperty Name="medicalassistant1" Relationship="Self.MedicalAssistant1" FromRole="butiranbedahsiasat" ToRole="medicalassistant" />
+        </EntityType>
+        <EntityType Name="butiranmcdpmc">
+          <Key>
+            <PropertyRef Name="ButiranID" />
+          </Key>
+          <Property Name="ButiranID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NoMCD" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="NoPMC" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="SebabKematian" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="DeceasedID" Type="Int32" />
+          <Property Name="EditedBy" Type="Int32" />
+          <Property Name="EditedDate" Type="DateTime" />
+          <Property Name="Status" Type="Int16" />
+          <NavigationProperty Name="medicalassistant" Relationship="Self.Created_By" FromRole="butiranmcdpmc" ToRole="medicalassistant" />
+          <NavigationProperty Name="deceased" Relationship="Self.Deceased1" FromRole="butiranmcdpmc" ToRole="deceased" />
+          <NavigationProperty Name="medicalassistant1" Relationship="Self.Edited_By" FromRole="butiranmcdpmc" ToRole="medicalassistant" />
+        </EntityType>
+        <EntityType Name="butiranpengurusmayat">
+          <Key>
+            <PropertyRef Name="PM_ID" />
+          </Key>
+          <Property Name="PM_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Syarikat_Individu" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Pemandu" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNO" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="NoIC" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="DateTime" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="DeceasedID" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="EditedBy" Type="Int32" />
+          <Property Name="EditedDate" Type="DateTime" />
+          <Property Name="Status" Type="Int16" />
+          <NavigationProperty Name="medicalassistant" Relationship="Self.CreatedMA" FromRole="butiranpengurusmayat" ToRole="medicalassistant" />
+          <NavigationProperty Name="deceased" Relationship="Self.DeceasedPM" FromRole="butiranpengurusmayat" ToRole="deceased" />
+          <NavigationProperty Name="medicalassistant1" Relationship="Self.EditedPM" FromRole="butiranpengurusmayat" ToRole="medicalassistant" />
+        </EntityType>
+        <EntityType Name="butiranwari">
+          <Key>
+            <PropertyRef Name="WarisID" />
+          </Key>
+          <Property Name="WarisID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WarisName" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="WarisNoIC" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Alamat" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNo" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Perhubungan" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="DateTimeRequest" Type="DateTime" />
+          <Property Name="DateTimeReturn" Type="DateTime" />
+          <Property Name="ReturnedBy" Type="Int32" />
+          <Property Name="DeceasedID" Type="Int32" />
+          <Property Name="Signature" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Editedby" Type="Int32" />
+          <Property Name="EditedDate" Type="DateTime" />
+          <Property Name="Status" Type="Int16" />
+          <NavigationProperty Name="deceased" Relationship="Self.DeceasedName" FromRole="butiranwaris" ToRole="deceased" />
+          <NavigationProperty Name="medicalassistant" Relationship="Self.EditedBW" FromRole="butiranwaris" ToRole="medicalassistant" />
+          <NavigationProperty Name="medicalassistant1" Relationship="Self.ReturnedBy" FromRole="butiranwaris" ToRole="medicalassistant" />
+        </EntityType>
+        <EntityType Name="city">
+          <Key>
+            <PropertyRef Name="CityID" />
+          </Key>
+          <Property Name="CityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CityName" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StateID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="postcodes" Relationship="Self.CityID" FromRole="city" ToRole="postcode" />
+          <NavigationProperty Name="state" Relationship="Self.StateID" FromRole="city" ToRole="state" />
+        </EntityType>
+        <EntityType Name="deceased">
+          <Key>
+            <PropertyRef Name="DeceasedID" />
+          </Key>
+          <Property Name="DeceasedID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeceasedName" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Postcode" Type="Int32" />
+          <Property Name="NoIC" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Age" Type="Int32" />
+          <Property Name="Race" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Religion" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DateOfWad" Type="DateTime" />
+          <Property Name="DateOfDeath" Type="DateTime" />
+          <Property Name="DateOfRegistration" Type="DateTime" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="DateOfLastModified" Type="DateTime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
+          <Property Name="TypeOfCase" Type="Int32" Nullable="false" />
+          <Property Name="DateOfReceived" Type="DateTime" Nullable="false" />
+          <Property Name="WadUnit" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="NoOfHospitalRegister" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="qrcode" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Status" Type="Int16" />
+          <NavigationProperty Name="butiranbedahsiasats" Relationship="Self.DeceasedID" FromRole="deceased" ToRole="butiranbedahsiasat" />
+          <NavigationProperty Name="butiranmcdpmcs" Relationship="Self.Deceased1" FromRole="deceased" ToRole="butiranmcdpmc" />
+          <NavigationProperty Name="butiranpengurusmayats" Relationship="Self.DeceasedPM" FromRole="deceased" ToRole="butiranpengurusmayat" />
+          <NavigationProperty Name="butiranwaris" Relationship="Self.DeceasedName" FromRole="deceased" ToRole="butiranwaris" />
+          <NavigationProperty Name="medicalassistant" Relationship="Self.CreatedBy" FromRole="deceased" ToRole="medicalassistant" />
+          <NavigationProperty Name="pengecamansemulas" Relationship="Self.Deceased2" FromRole="deceased" ToRole="pengecamansemula" />
+          <NavigationProperty Name="medicalassistant1" Relationship="Self.ModifiedBy" FromRole="deceased" ToRole="medicalassistant" />
+          <NavigationProperty Name="postcode1" Relationship="Self.Postcode1" FromRole="deceased" ToRole="postcode" />
+          <Property Name="Nationality" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="medicalassistant">
+          <Key>
+            <PropertyRef Name="MaID" />
+          </Key>
+          <Property Name="MaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MaName" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MaIcNo" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Role" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RegisteredDate" Type="DateTime" />
+          <Property Name="Status" Type="Int16" />
+          <NavigationProperty Name="butiranbedahsiasats" Relationship="Self.Ma" FromRole="medicalassistant" ToRole="butiranbedahsiasat" />
+          <NavigationProperty Name="butiranbedahsiasats1" Relationship="Self.MedicalAssistant1" FromRole="medicalassistant" ToRole="butiranbedahsiasat" />
+          <NavigationProperty Name="butiranmcdpmcs" Relationship="Self.Created_By" FromRole="medicalassistant" ToRole="butiranmcdpmc" />
+          <NavigationProperty Name="butiranmcdpmcs1" Relationship="Self.Edited_By" FromRole="medicalassistant" ToRole="butiranmcdpmc" />
+          <NavigationProperty Name="butiranpengurusmayats" Relationship="Self.CreatedMA" FromRole="medicalassistant" ToRole="butiranpengurusmayat" />
+          <NavigationProperty Name="butiranpengurusmayats1" Relationship="Self.EditedPM" FromRole="medicalassistant" ToRole="butiranpengurusmayat" />
+          <NavigationProperty Name="butiranwaris" Relationship="Self.EditedBW" FromRole="medicalassistant" ToRole="butiranwaris" />
+          <NavigationProperty Name="butiranwaris1" Relationship="Self.ReturnedBy" FromRole="medicalassistant" ToRole="butiranwaris" />
+          <NavigationProperty Name="deceaseds" Relationship="Self.CreatedBy" FromRole="medicalassistant" ToRole="deceased" />
+          <NavigationProperty Name="deceaseds1" Relationship="Self.ModifiedBy" FromRole="medicalassistant" ToRole="deceased" />
+          <NavigationProperty Name="pengecamansemulas" Relationship="Self.MA2" FromRole="medicalassistant" ToRole="pengecamansemula" />
+          <NavigationProperty Name="pengecamansemulas1" Relationship="Self.MA3" FromRole="medicalassistant" ToRole="pengecamansemula" />
+        </EntityType>
+        <EntityType Name="pengecamansemula">
+          <Key>
+            <PropertyRef Name="CaseID" />
+          </Key>
+          <Property Name="CaseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LabelMayat" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="PengecamanMukaSimati" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Pakaian" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Lain_lainCara" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="DeceasedID" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" />
+          <Property Name="Status" Type="Int16" />
+          <Property Name="EditedBy" Type="Int32" />
+          <Property Name="EditedDate" Type="DateTime" />
+          <NavigationProperty Name="deceased" Relationship="Self.Deceased2" FromRole="pengecamansemula" ToRole="deceased" />
+          <NavigationProperty Name="medicalassistant" Relationship="Self.MA2" FromRole="pengecamansemula" ToRole="medicalassistant" />
+          <NavigationProperty Name="medicalassistant1" Relationship="Self.MA3" FromRole="pengecamansemula" ToRole="medicalassistant" />
+        </EntityType>
+        <EntityType Name="postcode">
+          <Key>
+            <PropertyRef Name="Postcode1" />
+          </Key>
+          <Property Name="Postcode1" Type="Int32" Nullable="false" />
+          <Property Name="CityID" Type="Int32" Nullable="false" />
+          <Property Name="StateID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="city" Relationship="Self.CityID" FromRole="postcode" ToRole="city" />
+          <NavigationProperty Name="deceaseds" Relationship="Self.Postcode1" FromRole="postcode" ToRole="deceased" />
+          <NavigationProperty Name="state" Relationship="Self.State1" FromRole="postcode" ToRole="state" />
+        </EntityType>
+        <EntityType Name="state">
+          <Key>
+            <PropertyRef Name="StateID" />
+          </Key>
+          <Property Name="StateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StateName" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="cities" Relationship="Self.StateID" FromRole="state" ToRole="city" />
+          <NavigationProperty Name="postcodes" Relationship="Self.State1" FromRole="state" ToRole="postcode" />
+        </EntityType>
+        <Association Name="DeceasedID">
+          <End Role="deceased" Type="Self.deceased" Multiplicity="0..1" />
+          <End Role="butiranbedahsiasat" Type="Self.butiranbedahsiasat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="deceased">
+              <PropertyRef Name="DeceasedID" />
+            </Principal>
+            <Dependent Role="butiranbedahsiasat">
+              <PropertyRef Name="DeceasedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Ma">
+          <End Role="medicalassistant" Type="Self.medicalassistant" Multiplicity="0..1" />
+          <End Role="butiranbedahsiasat" Type="Self.butiranbedahsiasat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medicalassistant">
+              <PropertyRef Name="MaID" />
+            </Principal>
+            <Dependent Role="butiranbedahsiasat">
+              <PropertyRef Name="EditedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MedicalAssistant1">
+          <End Role="medicalassistant" Type="Self.medicalassistant" Multiplicity="0..1" />
+          <End Role="butiranbedahsiasat" Type="Self.butiranbedahsiasat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medicalassistant">
+              <PropertyRef Name="MaID" />
+            </Principal>
+            <Dependent Role="butiranbedahsiasat">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Created_By">
+          <End Role="medicalassistant" Type="Self.medicalassistant" Multiplicity="0..1" />
+          <End Role="butiranmcdpmc" Type="Self.butiranmcdpmc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medicalassistant">
+              <PropertyRef Name="MaID" />
+            </Principal>
+            <Dependent Role="butiranmcdpmc">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Deceased1">
+          <End Role="deceased" Type="Self.deceased" Multiplicity="0..1" />
+          <End Role="butiranmcdpmc" Type="Self.butiranmcdpmc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="deceased">
+              <PropertyRef Name="DeceasedID" />
+            </Principal>
+            <Dependent Role="butiranmcdpmc">
+              <PropertyRef Name="DeceasedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Edited_By">
+          <End Role="medicalassistant" Type="Self.medicalassistant" Multiplicity="0..1" />
+          <End Role="butiranmcdpmc" Type="Self.butiranmcdpmc" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medicalassistant">
+              <PropertyRef Name="MaID" />
+            </Principal>
+            <Dependent Role="butiranmcdpmc">
+              <PropertyRef Name="EditedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CreatedMA">
+          <End Role="medicalassistant" Type="Self.medicalassistant" Multiplicity="0..1" />
+          <End Role="butiranpengurusmayat" Type="Self.butiranpengurusmayat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medicalassistant">
+              <PropertyRef Name="MaID" />
+            </Principal>
+            <Dependent Role="butiranpengurusmayat">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DeceasedPM">
+          <End Role="deceased" Type="Self.deceased" Multiplicity="0..1" />
+          <End Role="butiranpengurusmayat" Type="Self.butiranpengurusmayat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="deceased">
+              <PropertyRef Name="DeceasedID" />
+            </Principal>
+            <Dependent Role="butiranpengurusmayat">
+              <PropertyRef Name="DeceasedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EditedPM">
+          <End Role="medicalassistant" Type="Self.medicalassistant" Multiplicity="0..1" />
+          <End Role="butiranpengurusmayat" Type="Self.butiranpengurusmayat" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medicalassistant">
+              <PropertyRef Name="MaID" />
+            </Principal>
+            <Dependent Role="butiranpengurusmayat">
+              <PropertyRef Name="EditedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DeceasedName">
+          <End Role="deceased" Type="Self.deceased" Multiplicity="0..1" />
+          <End Role="butiranwaris" Type="Self.butiranwari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="deceased">
+              <PropertyRef Name="DeceasedID" />
+            </Principal>
+            <Dependent Role="butiranwaris">
+              <PropertyRef Name="DeceasedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EditedBW">
+          <End Role="medicalassistant" Type="Self.medicalassistant" Multiplicity="0..1" />
+          <End Role="butiranwaris" Type="Self.butiranwari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medicalassistant">
+              <PropertyRef Name="MaID" />
+            </Principal>
+            <Dependent Role="butiranwaris">
+              <PropertyRef Name="Editedby" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ReturnedBy">
+          <End Role="medicalassistant" Type="Self.medicalassistant" Multiplicity="0..1" />
+          <End Role="butiranwaris" Type="Self.butiranwari" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medicalassistant">
+              <PropertyRef Name="MaID" />
+            </Principal>
+            <Dependent Role="butiranwaris">
+              <PropertyRef Name="ReturnedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CityID">
+          <End Role="city" Type="Self.city" Multiplicity="1" />
+          <End Role="postcode" Type="Self.postcode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="city">
+              <PropertyRef Name="CityID" />
+            </Principal>
+            <Dependent Role="postcode">
+              <PropertyRef Name="CityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StateID">
+          <End Role="state" Type="Self.state" Multiplicity="1" />
+          <End Role="city" Type="Self.city" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="state">
+              <PropertyRef Name="StateID" />
+            </Principal>
+            <Dependent Role="city">
+              <PropertyRef Name="StateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CreatedBy">
+          <End Role="medicalassistant" Type="Self.medicalassistant" Multiplicity="0..1" />
+          <End Role="deceased" Type="Self.deceased" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medicalassistant">
+              <PropertyRef Name="MaID" />
+            </Principal>
+            <Dependent Role="deceased">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Deceased2">
+          <End Role="deceased" Type="Self.deceased" Multiplicity="0..1" />
+          <End Role="pengecamansemula" Type="Self.pengecamansemula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="deceased">
+              <PropertyRef Name="DeceasedID" />
+            </Principal>
+            <Dependent Role="pengecamansemula">
+              <PropertyRef Name="DeceasedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ModifiedBy">
+          <End Role="medicalassistant" Type="Self.medicalassistant" Multiplicity="1" />
+          <End Role="deceased" Type="Self.deceased" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medicalassistant">
+              <PropertyRef Name="MaID" />
+            </Principal>
+            <Dependent Role="deceased">
+              <PropertyRef Name="ModifiedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Postcode1">
+          <End Role="postcode" Type="Self.postcode" Multiplicity="0..1" />
+          <End Role="deceased" Type="Self.deceased" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="postcode">
+              <PropertyRef Name="Postcode1" />
+            </Principal>
+            <Dependent Role="deceased">
+              <PropertyRef Name="Postcode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MA2">
+          <End Role="medicalassistant" Type="Self.medicalassistant" Multiplicity="0..1" />
+          <End Role="pengecamansemula" Type="Self.pengecamansemula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medicalassistant">
+              <PropertyRef Name="MaID" />
+            </Principal>
+            <Dependent Role="pengecamansemula">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MA3">
+          <End Role="medicalassistant" Type="Self.medicalassistant" Multiplicity="0..1" />
+          <End Role="pengecamansemula" Type="Self.pengecamansemula" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="medicalassistant">
+              <PropertyRef Name="MaID" />
+            </Principal>
+            <Dependent Role="pengecamansemula">
+              <PropertyRef Name="EditedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="State1">
+          <End Role="state" Type="Self.state" Multiplicity="1" />
+          <End Role="postcode" Type="Self.postcode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="state">
+              <PropertyRef Name="StateID" />
+            </Principal>
+            <Dependent Role="postcode">
+              <PropertyRef Name="StateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DBModels" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="butiranbedahsiasats" EntityType="Self.butiranbedahsiasat" />
+          <EntitySet Name="butiranmcdpmcs" EntityType="Self.butiranmcdpmc" />
+          <EntitySet Name="butiranpengurusmayats" EntityType="Self.butiranpengurusmayat" />
+          <EntitySet Name="butiranwaris" EntityType="Self.butiranwari" />
+          <EntitySet Name="cities" EntityType="Self.city" />
+          <EntitySet Name="deceaseds" EntityType="Self.deceased" />
+          <EntitySet Name="medicalassistants" EntityType="Self.medicalassistant" />
+          <EntitySet Name="pengecamansemulas" EntityType="Self.pengecamansemula" />
+          <EntitySet Name="postcodes" EntityType="Self.postcode" />
+          <EntitySet Name="states" EntityType="Self.state" />
+          <AssociationSet Name="DeceasedID" Association="Self.DeceasedID">
+            <End Role="deceased" EntitySet="deceaseds" />
+            <End Role="butiranbedahsiasat" EntitySet="butiranbedahsiasats" />
+          </AssociationSet>
+          <AssociationSet Name="Ma" Association="Self.Ma">
+            <End Role="medicalassistant" EntitySet="medicalassistants" />
+            <End Role="butiranbedahsiasat" EntitySet="butiranbedahsiasats" />
+          </AssociationSet>
+          <AssociationSet Name="MedicalAssistant1" Association="Self.MedicalAssistant1">
+            <End Role="medicalassistant" EntitySet="medicalassistants" />
+            <End Role="butiranbedahsiasat" EntitySet="butiranbedahsiasats" />
+          </AssociationSet>
+          <AssociationSet Name="Created_By" Association="Self.Created_By">
+            <End Role="medicalassistant" EntitySet="medicalassistants" />
+            <End Role="butiranmcdpmc" EntitySet="butiranmcdpmcs" />
+          </AssociationSet>
+          <AssociationSet Name="Deceased1" Association="Self.Deceased1">
+            <End Role="deceased" EntitySet="deceaseds" />
+            <End Role="butiranmcdpmc" EntitySet="butiranmcdpmcs" />
+          </AssociationSet>
+          <AssociationSet Name="Edited_By" Association="Self.Edited_By">
+            <End Role="medicalassistant" EntitySet="medicalassistants" />
+            <End Role="butiranmcdpmc" EntitySet="butiranmcdpmcs" />
+          </AssociationSet>
+          <AssociationSet Name="CreatedMA" Association="Self.CreatedMA">
+            <End Role="medicalassistant" EntitySet="medicalassistants" />
+            <End Role="butiranpengurusmayat" EntitySet="butiranpengurusmayats" />
+          </AssociationSet>
+          <AssociationSet Name="DeceasedPM" Association="Self.DeceasedPM">
+            <End Role="deceased" EntitySet="deceaseds" />
+            <End Role="butiranpengurusmayat" EntitySet="butiranpengurusmayats" />
+          </AssociationSet>
+          <AssociationSet Name="EditedPM" Association="Self.EditedPM">
+            <End Role="medicalassistant" EntitySet="medicalassistants" />
+            <End Role="butiranpengurusmayat" EntitySet="butiranpengurusmayats" />
+          </AssociationSet>
+          <AssociationSet Name="DeceasedName" Association="Self.DeceasedName">
+            <End Role="deceased" EntitySet="deceaseds" />
+            <End Role="butiranwaris" EntitySet="butiranwaris" />
+          </AssociationSet>
+          <AssociationSet Name="EditedBW" Association="Self.EditedBW">
+            <End Role="medicalassistant" EntitySet="medicalassistants" />
+            <End Role="butiranwaris" EntitySet="butiranwaris" />
+          </AssociationSet>
+          <AssociationSet Name="ReturnedBy" Association="Self.ReturnedBy">
+            <End Role="medicalassistant" EntitySet="medicalassistants" />
+            <End Role="butiranwaris" EntitySet="butiranwaris" />
+          </AssociationSet>
+          <AssociationSet Name="CityID" Association="Self.CityID">
+            <End Role="city" EntitySet="cities" />
+            <End Role="postcode" EntitySet="postcodes" />
+          </AssociationSet>
+          <AssociationSet Name="StateID" Association="Self.StateID">
+            <End Role="state" EntitySet="states" />
+            <End Role="city" EntitySet="cities" />
+          </AssociationSet>
+          <AssociationSet Name="CreatedBy" Association="Self.CreatedBy">
+            <End Role="medicalassistant" EntitySet="medicalassistants" />
+            <End Role="deceased" EntitySet="deceaseds" />
+          </AssociationSet>
+          <AssociationSet Name="Deceased2" Association="Self.Deceased2">
+            <End Role="deceased" EntitySet="deceaseds" />
+            <End Role="pengecamansemula" EntitySet="pengecamansemulas" />
+          </AssociationSet>
+          <AssociationSet Name="ModifiedBy" Association="Self.ModifiedBy">
+            <End Role="medicalassistant" EntitySet="medicalassistants" />
+            <End Role="deceased" EntitySet="deceaseds" />
+          </AssociationSet>
+          <AssociationSet Name="Postcode1" Association="Self.Postcode1">
+            <End Role="postcode" EntitySet="postcodes" />
+            <End Role="deceased" EntitySet="deceaseds" />
+          </AssociationSet>
+          <AssociationSet Name="MA2" Association="Self.MA2">
+            <End Role="medicalassistant" EntitySet="medicalassistants" />
+            <End Role="pengecamansemula" EntitySet="pengecamansemulas" />
+          </AssociationSet>
+          <AssociationSet Name="MA3" Association="Self.MA3">
+            <End Role="medicalassistant" EntitySet="medicalassistants" />
+            <End Role="pengecamansemula" EntitySet="pengecamansemulas" />
+          </AssociationSet>
+          <AssociationSet Name="State1" Association="Self.State1">
+            <End Role="state" EntitySet="states" />
+            <End Role="postcode" EntitySet="postcodes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="moisModelStoreContainer" CdmEntityContainer="DBModels">
+          <EntitySetMapping Name="butiranbedahsiasats">
+            <EntityTypeMapping TypeName="moisModel.butiranbedahsiasat">
+              <MappingFragment StoreEntitySet="butiranbedahsiasat">
+                <ScalarProperty Name="BsID" ColumnName="BsID" />
+                <ScalarProperty Name="NoBedahSiasat" ColumnName="NoBedahSiasat" />
+                <ScalarProperty Name="DateTimeBS" ColumnName="DateTimeBS" />
+                <ScalarProperty Name="NoLaporanPolis" ColumnName="NoLaporanPolis" />
+                <ScalarProperty Name="DateTimePOL" ColumnName="DateTimePOL" />
+                <ScalarProperty Name="DeceasedID" ColumnName="DeceasedID" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="EditedBy" ColumnName="EditedBy" />
+                <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="butiranmcdpmcs">
+            <EntityTypeMapping TypeName="moisModel.butiranmcdpmc">
+              <MappingFragment StoreEntitySet="butiranmcdpmc">
+                <ScalarProperty Name="ButiranID" ColumnName="ButiranID" />
+                <ScalarProperty Name="NoMCD" ColumnName="NoMCD" />
+                <ScalarProperty Name="NoPMC" ColumnName="NoPMC" />
+                <ScalarProperty Name="SebabKematian" ColumnName="SebabKematian" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="DeceasedID" ColumnName="DeceasedID" />
+                <ScalarProperty Name="EditedBy" ColumnName="EditedBy" />
+                <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="butiranpengurusmayats">
+            <EntityTypeMapping TypeName="moisModel.butiranpengurusmayat">
+              <MappingFragment StoreEntitySet="butiranpengurusmayat">
+                <ScalarProperty Name="PM_ID" ColumnName="PM_ID" />
+                <ScalarProperty Name="Syarikat_Individu" ColumnName="Syarikat/Individu" />
+                <ScalarProperty Name="Pemandu" ColumnName="Pemandu" />
+                <ScalarProperty Name="PhoneNO" ColumnName="PhoneNO" />
+                <ScalarProperty Name="NoIC" ColumnName="NoIC" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DeceasedID" ColumnName="DeceasedID" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="EditedBy" ColumnName="EditedBy" />
+                <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="butiranwaris">
+            <EntityTypeMapping TypeName="moisModel.butiranwari">
+              <MappingFragment StoreEntitySet="butiranwaris">
+                <ScalarProperty Name="WarisID" ColumnName="WarisID" />
+                <ScalarProperty Name="WarisName" ColumnName="WarisName" />
+                <ScalarProperty Name="WarisNoIC" ColumnName="WarisNoIC" />
+                <ScalarProperty Name="Alamat" ColumnName="Alamat" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="Perhubungan" ColumnName="Perhubungan" />
+                <ScalarProperty Name="DateTimeRequest" ColumnName="DateTimeRequest" />
+                <ScalarProperty Name="DateTimeReturn" ColumnName="DateTimeReturn" />
+                <ScalarProperty Name="ReturnedBy" ColumnName="ReturnedBy" />
+                <ScalarProperty Name="DeceasedID" ColumnName="DeceasedID" />
+                <ScalarProperty Name="Signature" ColumnName="Signature" />
+                <ScalarProperty Name="Editedby" ColumnName="Editedby" />
+                <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cities">
+            <EntityTypeMapping TypeName="moisModel.city">
+              <MappingFragment StoreEntitySet="city">
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="StateID" ColumnName="StateID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="deceaseds">
+            <EntityTypeMapping TypeName="moisModel.deceased">
+              <MappingFragment StoreEntitySet="deceased">
+                <ScalarProperty Name="Nationality" ColumnName="Nationality" />
+                <ScalarProperty Name="DeceasedID" ColumnName="DeceasedID" />
+                <ScalarProperty Name="DeceasedName" ColumnName="DeceasedName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Postcode" ColumnName="Postcode" />
+                <ScalarProperty Name="NoIC" ColumnName="NoIC" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+                <ScalarProperty Name="Race" ColumnName="Race" />
+                <ScalarProperty Name="Religion" ColumnName="Religion" />
+                <ScalarProperty Name="DateOfWad" ColumnName="DateOfWad" />
+                <ScalarProperty Name="DateOfDeath" ColumnName="DateOfDeath" />
+                <ScalarProperty Name="DateOfRegistration" ColumnName="DateOfRegistration" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DateOfLastModified" ColumnName="DateOfLastModified" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="TypeOfCase" ColumnName="TypeOfCase" />
+                <ScalarProperty Name="DateOfReceived" ColumnName="DateOfReceived" />
+                <ScalarProperty Name="WadUnit" ColumnName="WadUnit" />
+                <ScalarProperty Name="NoOfHospitalRegister" ColumnName="NoOfHospitalRegister" />
+                <ScalarProperty Name="qrcode" ColumnName="qrcode" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="medicalassistants">
+            <EntityTypeMapping TypeName="moisModel.medicalassistant">
+              <MappingFragment StoreEntitySet="medicalassistant">
+                <ScalarProperty Name="MaID" ColumnName="MaID" />
+                <ScalarProperty Name="MaName" ColumnName="MaName" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="MaIcNo" ColumnName="MaIcNo" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="RegisteredDate" ColumnName="RegisteredDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pengecamansemulas">
+            <EntityTypeMapping TypeName="moisModel.pengecamansemula">
+              <MappingFragment StoreEntitySet="pengecamansemula">
+                <ScalarProperty Name="CaseID" ColumnName="CaseID" />
+                <ScalarProperty Name="LabelMayat" ColumnName="LabelMayat" />
+                <ScalarProperty Name="PengecamanMukaSimati" ColumnName="PengecamanMukaSimati" />
+                <ScalarProperty Name="Pakaian" ColumnName="Pakaian" />
+                <ScalarProperty Name="Lain_lainCara" ColumnName="Lain-lainCara" />
+                <ScalarProperty Name="DeceasedID" ColumnName="DeceasedID" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="EditedBy" ColumnName="EditedBy" />
+                <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="postcodes">
+            <EntityTypeMapping TypeName="moisModel.postcode">
+              <MappingFragment StoreEntitySet="postcode">
+                <ScalarProperty Name="Postcode1" ColumnName="Postcode" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="StateID" ColumnName="StateID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="states">
+            <EntityTypeMapping TypeName="moisModel.state">
+              <MappingFragment StoreEntitySet="state">
+                <ScalarProperty Name="StateID" ColumnName="StateID" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

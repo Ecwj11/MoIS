@@ -1,0 +1,215 @@
+﻿@model MoIS.Models.DetailsViewModel
+
+@{
+
+    if (Session["maID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+
+<h2>BORANG KES DIBAWA MATI</h2>
+
+<div>
+    <h4>Bagi kes-kes kematian yang dibawa ters oleh polis ke Jabatan Forensik bersama-same dengan borang POL61</h4>
+    <hr />
+    <div class="container" style="width:100%;margin-top:2%">
+        <ul class="list-group">
+
+            @foreach (var item in Model.deceasedList)
+            {
+                <li style="color:transparent">
+                    <p>
+                        @Html.ActionLink("Convert View To PDF", "PrintViewToPdf/" + item.DeceasedID + "/BringToDeathReport", "", htmlAttributes: new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-default" })
+                    </p>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class='col-md-6 col-xs-12'>
+                            <b>1. Butir-butir simati: </b>@item.DeceasedName
+                            <br />
+                            <i>Nama simati: <i />
+                        </div>
+                        <div class='col-md-6 col-xs-12'>
+                            <i>No. Kad Pengenalan/Passport: </i>@item.NoIC
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class='col-md-6 col-xs-12'>
+                            <i>Bangsa: </i>@item.Race
+                        </div>
+                        <div class='col-md-6 col-xs-12'>
+                            <i>Agama: </i>@item.Religion
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class='col-md-6 col-xs-12'>
+                            <i>Umur: </i> @item.Age
+                            <br />
+                            <i>Jantina: </i>@item.Gender
+                        </div>
+                        <div class='col-md-6 col-xs-12'>
+                            <i>Warganegara: </i>
+                            @if (@item.Nationality == "Malaysian")
+                            {
+                                <input value="@ViewData["tick"]" style="width:5%;" /><label>Ya</label>
+                            }
+                            else
+                            {
+                                <input style="width:5%;" /><label>Ya</label>
+                            }
+                            @if (@item.Nationality != "Malaysian")
+                            {
+                                <input style="width:5%;" value="@ViewData["tick"]" /><label>Tidak....................(Nyatakan)</label>
+                            } else
+                            {
+                                <input style="width:5%;" /><label>Tidak....................(Nyatakan)</label>
+                            }
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <i>Alamat terakhir simati:</i> @item.Address
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class='col-md-6 col-xs-12'>
+                            <b>2. Butir-butir pembawa simati:</b>
+                            <br />
+                            <i>Nama:</i>
+                            <br />
+                            <i>Jawatan:</i>
+                            <br />
+                            <i>No & Pangkat:</i>
+                            <br />
+                            <i>No. Tel:</i>
+                        </div>
+                        <div class='col-md-6 col-xs-12'>
+                            <b>3. Butir-butir Pegawai Penyiasat kes:</b>
+                            <br />
+                            <i>Nama:</i>
+                            <br />
+                            <i>Jawatan:</i>
+                            <br />
+                            <i>No & Pangkat:</i>
+                            <br />
+                            <i>No. Tel:</i>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class='col-md-6 col-xs-12'>
+                            <b>Balai Polis:</b>
+                        </div>
+                        <div class='col-md-6 col-xs-12'>
+                            <b>No. Rpt. Polis:</b>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class='col-md-6 col-xs-12'>
+                            <i>Tarikh dan masa tiba di Jabatan Forensik: </i>@item.DateOfRegistration
+                        </div>
+                        <div class='col-md-6 col-xs-12'>
+                            <i>Tarikh dan Masa dilapurkan mati: </i>@item.DateOfDeath
+                        </div>
+                    </div>
+                </li>
+
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class='col-md-8 col-xs-12'>
+                            @foreach (var item3 in Model.medicalassistantPenerimaList)
+                            {
+                                <b>4. Butir-butir Penolong Pegawai Perubatan Kaunter yang menerima kes:</b>
+                                <br />
+                                <i>Nama: </i>@item3.MaName
+                                <br />
+                                <i>Tarikh & Mmasa: </i>@item.DateOfRegistration
+                                <br />
+                                <i>Tandatangan: </i>
+                            }
+                        </div>
+                        <div class='col-md-6 col-xs-12'>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class='col-md-8 col-xs-12'>
+                            <table class="table">
+                                <thead><tr><th><b><i>Bil</i></b></th><th><b>Tanda-tanda kematian adalah berdasarkan:</b></th><th><b>Pegawai Polis</b></th><th><b>Peg. Perubatan/Pen. Peg. Perubatan</b></th></tr></thead>
+                                <tbody>
+                                    @{
+                                        int i = 1;
+                                    }
+                                    @foreach (var item2 in ViewBag.tableTanda)
+                                    {
+                                        <tr><td><i>@i</i></td><td><i>@item2</i></td><td></td><td></td></tr>
+                                        i++;
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class='col-md-4 col-xs-12'>
+                            <div style="border: 1px solid black; padding: 10px;">
+                                <u><b>Pemeriksaan Vital</b></u>
+                                <br />
+                                <div class="row">
+                                    <div class='col-md-6 col-xs-12'>
+                                        <p>Tekanan Darah</p>
+                                        <p>Kadar Nadi</p>
+                                        <p>Kadar Pernafasan</p>
+                                        <p>Suhu</p>
+                                    </div>
+                                    <div class='col-md-6 col-xs-12'>
+                                        <input type="text" style="margin-left: 10px; width: 30%;" /><br />
+                                        <input type="text" style="margin-left: 10px; width: 30%;" /><br />
+                                        <input type="text" style="margin-left: 10px; width: 30%;" /><br />
+                                        <input type="text" style="margin-left: 10px; width: 30%;" /><br />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class='col-md-6 col-xs-12'>
+                            <div style="text-align: center;">
+                                <p>Tandatangan Pegawai Penyiasat:</p>
+                                <br />
+                                <p>..............................................................</p>
+                                <p>Tarikh & Masa : ..............................................</p>
+                            </div>
+                        </div>
+                        <div class='col-md-6 col-xs-12'>
+                            <p>Disokong Oleh:</p>
+                            <br />
+                            <p>..............................................................</p>
+                            <p>Pegawai Perubatan/ Pen. Peg. Perubatan Jabatan Perubatan Forensik Sarawak.</p>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+        
+    </div>
+</div>

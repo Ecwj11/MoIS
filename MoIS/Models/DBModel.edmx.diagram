@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7b553767a570405e871cb21b0c219e82" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="moisModel.butiranbedahsiasat" Width="1.5" PointX="3" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="moisModel.butiranmcdpmc" Width="1.5" PointX="6" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="moisModel.butiranpengurusmayat" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="moisModel.butiranwari" Width="1.5" PointX="3" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="moisModel.city" Width="1.5" PointX="4.5" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="moisModel.deceased" Width="1.5" PointX="9" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="moisModel.medicalassistant" Width="1.5" PointX="0.75" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="moisModel.pengecamansemula" Width="1.5" PointX="11.25" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="moisModel.postcode" Width="1.5" PointX="6.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="moisModel.state" Width="1.5" PointX="2.25" PointY="4.75" IsExpanded="true" />
+        <AssociationConnector Association="moisModel.DeceasedID" ManuallyRouted="false" />
+        <AssociationConnector Association="moisModel.Ma" ManuallyRouted="false" />
+        <AssociationConnector Association="moisModel.MedicalAssistant1" ManuallyRouted="false" />
+        <AssociationConnector Association="moisModel.Created_By" ManuallyRouted="false" />
+        <AssociationConnector Association="moisModel.Deceased1" ManuallyRouted="false" />
+        <AssociationConnector Association="moisModel.Edited_By" ManuallyRouted="false" />
+        <AssociationConnector Association="moisModel.CreatedMA" ManuallyRouted="false" />
+        <AssociationConnector Association="moisModel.DeceasedPM" ManuallyRouted="false" />
+        <AssociationConnector Association="moisModel.EditedPM" ManuallyRouted="false" />
+        <AssociationConnector Association="moisModel.DeceasedName" ManuallyRouted="false" />
+        <AssociationConnector Association="moisModel.EditedBW" ManuallyRouted="false" />
+        <AssociationConnector Association="moisModel.ReturnedBy" ManuallyRouted="false" />
+        <AssociationConnector Association="moisModel.CityID" ManuallyRouted="false" />
+        <AssociationConnector Association="moisModel.StateID" ManuallyRouted="false" />
+        <AssociationConnector Association="moisModel.CreatedBy" ManuallyRouted="false" />
+        <AssociationConnector Association="moisModel.Deceased2" ManuallyRouted="false" />
+        <AssociationConnector Association="moisModel.ModifiedBy" ManuallyRouted="false" />
+        <AssociationConnector Association="moisModel.Postcode1" ManuallyRouted="false" />
+        <AssociationConnector Association="moisModel.MA2" ManuallyRouted="false" />
+        <AssociationConnector Association="moisModel.MA3" ManuallyRouted="false" />
+        <AssociationConnector Association="moisModel.State1" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

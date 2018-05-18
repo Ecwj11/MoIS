@@ -1,0 +1,191 @@
+﻿@model MoIS.Models.DeceasedButiranViewModel
+<link href="@Url.Content("~/Content/jquery.datetimepicker.css")" rel="stylesheet" type="text/css" />
+@{
+    ViewBag.Title = "Deceased Registration";
+    if (Session["maID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+
+    }
+}
+
+<h2>Deceased Registration</h2>
+
+@using (Html.BeginForm("Create", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="container" style="width:60%;margin-top:2%">
+        <div class="form-horizontal">
+            <hr />
+            <div class="form-group">
+                @Html.LabelFor(model => model.TypeOfCase, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    <div class="row" style="margin-left: 0px;">
+                        <label>
+                            @Html.RadioButton("TypeOfCase", "1", htmlAttributes: new { required = "required" })
+                            Biasa
+                        </label>
+                        <label>
+                            @Html.RadioButton("TypeOfCase", "2", htmlAttributes: new { required = "required" })
+                            Polis
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DateOfReceived, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.DateOfReceived, new { htmlAttributes = new { @class = "form-control datetimepicker", required = "required" } })
+                    @Html.ValidationMessageFor(model => model.DateOfReceived, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.WadUnit, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.WadUnit, new { @class = "form-control", required = "required" })
+                    @Html.ValidationMessageFor(model => model.WadUnit, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DeceasedName, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.DeceasedName, new { @class = "form-control", required = "required" })
+                    @Html.ValidationMessageFor(model => model.DeceasedName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.NoIC, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.NoIC, new { @class = "form-control", required = "required" })
+                    @Html.ValidationMessageFor(model => model.NoIC, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    <div class="row" style="margin-left: 0px;">
+                        <label>
+                            @Html.RadioButton("Gender", "Male", htmlAttributes: new { required = "required" })
+                            Lelaki
+                        </label>
+                        <label>
+                            @Html.RadioButton("Gender", "Female", htmlAttributes: new { required = "required" })
+                            Perempuan
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.Age, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.Age, new { @class = "form-control", required = "required" })
+                    @Html.ValidationMessageFor(model => model.Age, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Postcode, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.TextBoxFor(model => model.Postcode, new { @class = "form-control", required = "required" })
+                    @Html.ValidationMessageFor(model => model.Postcode, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Race, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.DropDownListFor(model => model.Race, ViewBag.Race as List<SelectListItem>, "  -------Select List------", new { @class = "form-control", required = "required" })
+                    @Html.ValidationMessageFor(model => model.Race, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Religion, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.DropDownListFor(model => model.Religion, ViewBag.Religion as List<SelectListItem>, "  -------Select List------", new { @class = "form-control", required = "required" })
+                    @Html.ValidationMessageFor(model => model.Religion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.DateOfWad, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.DateOfWad, new { htmlAttributes = new { @class = "form-control datetimepicker", required = "required" } })
+                    @Html.ValidationMessageFor(model => model.DateOfWad, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.DateOfDeath, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.DateOfDeath, new { htmlAttributes = new { @class = "form-control datetimepicker", required = "required" } })
+                    @Html.ValidationMessageFor(model => model.DateOfDeath, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.NoOfHospitalRegister, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.NoOfHospitalRegister, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                    @Html.ValidationMessageFor(model => model.NoOfHospitalRegister, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.NoMCD, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.NoMCD, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DateOfDeath, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.NoPMC, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.NoPMC, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.NoPMC, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SebabKematian, htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.SebabKematian, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                    @Html.ValidationMessageFor(model => model.SebabKematian, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-8">
+                    <input type="submit" value="Save" class="btn btn-success" />
+                    @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-default" })
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<!--<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>-->
+<script src="@Url.Content("~/Scripts/jquery-1.10.2.min.js")"></script>
+<script src="@Url.Content("~/Scripts/jquery.datetimepicker.full.min.js")"></script>
+<script>
+    $('.datetimepicker').datetimepicker({
+        showSecond: true,
+        format: 'm/d/Y H:i:s'
+    });
+    $('.datetimepicker').click(function () {
+        console.log($(this).attr('type'));
+        $(this).prop('type', 'text');
+        console.log($(this).attr('type'));
+    });
+    $('.datetimpicker').prop('type', 'text');
+    //$('.datepicker').datepicker();
+</script>

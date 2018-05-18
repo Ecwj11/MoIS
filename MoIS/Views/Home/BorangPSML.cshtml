@@ -1,0 +1,122 @@
+﻿@model MoIS.Models.DetailsViewModel
+
+@{
+
+    if (Session["maID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+<style>
+    table td {
+        padding-left: 10px;
+    }
+</style>
+<h2 class="align_center">BORANG PENGENDALIAN SPESIMEN MEDIKO-LEGAL</h2>
+
+<div>
+    <hr />
+    <div class="container" style="width:60%;margin-top:2%">
+        <p>
+            @Html.ActionLink("Convert View To PDF", "PrintViewToPdf/" + 0 + "/BorangPSML", "", htmlAttributes: new { @class = "btn btn-primary" })
+            @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-default" })
+        </p>
+        @foreach (var item in Model.deceasedList)
+        {
+            foreach (var item2 in Model.butiranbedahsiasatList)
+            { 
+                <table width="100%">
+                    <tbody>
+                        <tr><td width="50%">NO. DAFTAR KLINIK FORENSIK</td><td width="50%">@item.NoOfHospitalRegister</td></tr>
+                        <tr><td width="50%">NO. REPORT POLIS</td><td width="50%">@item2.NoLaporanPolis</td></tr>
+                        <tr><td width="50%">NAMA</td><td width="50%">@item.DeceasedName</td></tr>
+                        <tr><td width="50%">NO. KAD PENGENALAN</td><td width="50%">@item.NoIC</td></tr>
+                    </tbody>
+                </table>
+            }
+        }
+        <br />
+        <p>Saya ______________________________________No. Anggota : _____________________________</p>
+        <small>(Nama Pegawai Yang Menerima Spesimen)</small>
+        <p>Pangkat________________________________Balai Polis: __________________________________</p>
+        <p>mengaku menerima spesimen yang disenaraikan di bawah ini bagi kes yang tersebut di atas pada :</p>
+        <p>_________________________________</p>
+        <small>(Tarikh & Masa)</small>
+        <br />
+        <b>(A). SENARAI SPESIMEN YANG DI AMBIL - Sila tandakan (@ViewData["tick"])</b>
+        <div class="row">
+            <div class="col-md-6">
+                <table width="100%">
+                    <tbody>
+                        @for (var i = 1; i < 9; i++)
+                        {
+                            <tr><td style="width:20%;" class="align_center">@i</td><td width="60%"></td><td width="20%"></td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <table width="100%">
+                    <thead><tr><th colspan="3" class="align_center"><b>LAIN-LAIN (NYATAKAN)</b></th></tr></thead>
+                    <tbody>
+                        @for (var i = 8; i < 15; i++)
+                        {
+                            <tr><td style="width:20%;" class="align_center">@i</td><td width="60%"></td><td width="20%"></td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br />
+        <b>(B). PEGAWAI YANG MENGENDALI SPESIMEN - Sila tandakan (@ViewData["tick"])</b>
+        <table width="100%">
+            <tbody>
+                <tr><td width="20%" class="align_center">1</td><td width="60%">Spesimen diambil oleh</td><td width="20%"></td></tr>
+                <tr><td width="20%" class="align_center">2</td><td width="60%">Bekas Spesimen dilabel oleh</td><td width="20%"></td></tr>
+                <tr><td width="20%" class="align_center">3</td><td width="60%">Spesimen dimenteral oleh</td><td width="20%"></td></tr>
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="col-md-7">
+                <h5>Pegawai Penyiast PDRM Yang menerima Spesimen</h5>
+                <br />
+                <p class="align_center" ">_____________________</p>
+                <p style="font-size:85%;" class="align_center">(Tandatangan)</p>
+                <label class="control-label col-md-5">Nama</label>
+                <div class="col-md-7">
+                    <p>:____________________</p>
+                </div>
+                <label class="control-label col-md-5">Pangkat</label>
+                <div class="col-md-7">
+                    <p>:____________________</p>
+                </div>
+                <label class="control-label col-md-5">No. HP/Telefon</label>
+                <div class="col-md-7">
+                    <p>:____________________</p>
+                </div>
+                <label class="control-label col-md-5">Tarikh & Masa</label>
+                <div class="col-md-7">
+                    <p>:____________________</p>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <h5>Pegawai Yang Menyerah Spesimen</h5>
+                <p class="align_center" ">_____________________</p>
+                <p style="font-size:85%; class=" align_center"">(Tandatangan)</p>
+                <label class="control-label col-md-5">Nama</label>
+                <div class="col-md-7">
+                    <p>:____________________</p>
+                </div>
+                <label class="control-label col-md-5">Jawatan</label>
+                <div class="col-md-7">
+                    <p>:____________________</p>
+                </div>
+                <label class="control-label col-md-5">Tarikh & Masa</label>
+                <div class="col-md-7">
+                    <p>:____________________</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

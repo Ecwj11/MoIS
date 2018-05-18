@@ -1,0 +1,119 @@
+﻿@model IEnumerable<MoIS.Models.deceased>
+<link href="@Url.Content("~/Content/jquery.datatables.css")" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+@{
+
+    if (Session["maID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+
+<div>
+
+
+    <div class="page-header">
+        <h1>Dashboard</h1>
+        <div>Today is : @DateTime.Now.DayOfWeek</div>
+        <div class="pull-left">
+            <h2> Hello, @Session["username"]</h2>
+        </div>
+        <div class="pull-right">
+            <h3 class="text-right"> <a href="@Url.Action("LogOut","Login")"><i class="fas fa-sign-out-alt"></i>Logout</a></h3>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+
+</div>
+<div class="form-group">
+    @Html.ActionLink("Create", "Create", "Home", new { @class = "btn btn-primary" })
+</div>
+<div class="container" style="width:100%;margin-top:2%">
+
+    <!--<b>Search By : </b>
+     <select id="SearchBy">
+         <option value="DeceasedName">Name</option>
+         <option value="NoIC">Ic No</option>
+     </select><br /><br />
+     @Html.TextBox("Search")<input type="submit" id="SearchBtn" value="Search" /><br /><br />-->
+    
+    @if (Model != null)
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Ic No
+                    </th>
+                    <th>
+                        Type Of Case
+                    </th>
+                    <th>
+                        Date of Registration
+                    </th>
+                    <th>Action</th>
+                    <th>Report</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionLink(item.DeceasedName, "McdPmcDetails", new { id = item.DeceasedID })
+                        </td>
+                        <td>
+                            @item.NoIC
+                        </td>
+
+                        @if (item.TypeOfCase == 0)
+                        {
+                            <td>
+                                Police Case
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                Normal Case
+                            </td>
+                        }
+                        <td>
+                            @item.DateOfRegistration
+                        </td>
+                        <td>
+                            @Html.ActionLink("NextProcess", "NextProcess", new { id = item.DeceasedID }) |
+                            @Html.ActionLink("Butiran Pengurus Mayat", "BPM", new { id = item.DeceasedID }) |
+                            @Html.ActionLink("Butiran Bedah Siasat", "BBS", new { id = item.DeceasedID }) |
+                            @Html.ActionLink("Edit", "Edit", new { id = item.DeceasedID })
+                        </td>
+                        <td>
+                            @Html.ActionLink("BringToDeathReport", "BringToDeathReport", new { id = item.DeceasedID }) |
+                            @Html.ActionLink("BorangPSML", "BorangPSML", new { id = item.DeceasedID })
+                            @Html.ActionLink("AutopsyProtocol", "AutopsyProtocol", new { id = item.DeceasedID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/jquery.dataTables.js"></script>
+<script src="~/Scripts/jQuery.flashMessage.js"></script>
+<script src="~/Scripts/jquery.cookie.js"></script>
+
+<script>
+    $('.table').dataTable({
+        stateSave: true
+    });
+</script>
