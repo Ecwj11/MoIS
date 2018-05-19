@@ -31,8 +31,11 @@ namespace MoIS.Models
         public DbSet<butiranwari> butiranwaris { get; set; }
         public DbSet<city> cities { get; set; }
         public DbSet<deceased> deceaseds { get; set; }
+        public DbSet<log> logs { get; set; }
         public DbSet<medicalassistant> medicalassistants { get; set; }
         public DbSet<pengecamansemula> pengecamansemulas { get; set; }
+        public DbSet<permohonanbillik> permohonanbilliks { get; set; }
+        public DbSet<permohonansimpanmayat> permohonansimpanmayats { get; set; }
         public DbSet<postcode> postcodes { get; set; }
         public DbSet<state> states { get; set; }
     }

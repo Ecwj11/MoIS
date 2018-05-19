@@ -14,6 +14,12 @@ namespace MoIS.Models
     
     public partial class butiranwari
     {
+        public butiranwari()
+        {
+            this.permohonansimpanmayats = new HashSet<permohonansimpanmayat>();
+            this.permohonanbilliks = new HashSet<permohonanbillik>();
+        }
+    
         public int WarisID { get; set; }
         public string WarisName { get; set; }
         public string WarisNoIC { get; set; }
@@ -32,5 +38,7 @@ namespace MoIS.Models
         public virtual deceased deceased { get; set; }
         public virtual medicalassistant medicalassistant { get; set; }
         public virtual medicalassistant medicalassistant1 { get; set; }
+        public virtual ICollection<permohonansimpanmayat> permohonansimpanmayats { get; set; }
+        public virtual ICollection<permohonanbillik> permohonanbilliks { get; set; }
     }
 }

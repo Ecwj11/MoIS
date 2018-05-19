@@ -287,10 +287,19 @@
     </Compile>
     <Compile Include="Models\DeceasedButiranViewModel.cs" />
     <Compile Include="Models\Details.cs" />
+    <Compile Include="Models\log.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\medicalassistant.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\pengecamansemula.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\permohonanbillik.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\permohonansimpanmayat.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\postcode.cs">
@@ -317,6 +326,7 @@
     <Content Include="Views\Home\BorangPSML.cshtml" />
     <Content Include="Views\Home\AutopsyProtocol.cshtml" />
     <Content Include="Views\Home\BorangPBPFT.cshtml" />
+    <Content Include="Views\MedicalAssistant\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

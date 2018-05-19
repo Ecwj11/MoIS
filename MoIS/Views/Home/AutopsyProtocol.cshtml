@@ -26,7 +26,7 @@
     <hr />
     <div class="container" style="width:60%;margin-top:2%">
         <p>
-            @Html.ActionLink("Convert View To PDF", "AutopsyProtocol/" + 0 + "/AutopsyProtocol", "", htmlAttributes: new { @class = "btn btn-primary" })
+            @Html.ActionLink("Convert View To PDF", "PrintViewToPdf/" + @ViewData["deceasedId"] + "/AutopsyProtocol", "", htmlAttributes: new { @class = "btn btn-primary" })
             @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-default" })
         </p>
         <div class="row">
@@ -52,15 +52,15 @@ KUCHING, SARAWAK</pre>
         <table style="width: 100%;">
             @foreach (var item in Model.deceasedList)
             {
-                <tbody>
-                    <tr><td style="width:40%;">Name of Deceased : @item.DeceasedName</td><td style="width:30%;">Age : @item.Age</td><td style="width:30%;">Gender : @item.Gender</td></tr>
-                    <tr><td style="width:40%;">IC No / Passport No : </td><td style="width:30%;">Nationality : </td><td style="width:30%;">Race : </td></tr>
-                    <tr><td style="width:40%;">BID / DIC / Hospitalised </td><td style="width:30%;">Hospital Reg. No : </td><td style="width:30%;">Ward : </td></tr>
-                    <tr><td style="width:100%;" colspan="3">Date / Time of Admission to Hospital : </td></tr>
-                    <tr><td style="width:100%;" colspan="3">Date / Time Arrived at forensic Unit : </td></tr>
-                    <tr><td style="width:100%;" colspan="3">Date / Time of Post Mortem : </td></tr>
-                    <tr><td style="width:100%;" colspan="3">Autopsy Performed By : </td></tr>
-                </tbody>
+            <tbody>
+                <tr><td style="width:40%;">Name of Deceased : @item.DeceasedName</td><td style="width:30%;">Age : @item.Age</td><td style="width:30%;">Gender : @item.Gender</td></tr>
+                <tr><td style="width:40%;">IC No / Passport No : @item.NoIC</td><td style="width:30%;">Nationality : @item.Nationality</td><td style="width:30%;">Race : @item.Race</td></tr>
+                <tr><td style="width:40%;">BID / DIC / Hospitalised </td><td style="width:30%;">Hospital Reg. No : @item.NoOfHospitalRegister</td><td style="width:30%;">Ward : @item.WadUnit</td></tr>
+                <tr><td style="width:100%;" colspan="3">Date / Time of Admission to Hospital : @item.DateOfRegistration</td></tr>
+                <tr><td style="width:100%;" colspan="3">Date / Time Arrived at forensic Unit : @item.DateOfReceived</td></tr>
+                <tr><td style="width:100%;" colspan="3">Date / Time of Post Mortem : @ViewData["dateBs"]</td></tr>
+                <tr><td style="width:100%;" colspan="3">Autopsy Performed By : @ViewData["medicalassistantBS"]</td></tr>
+            </tbody>
             }
         </table>
         <table style="width: 100%;">
@@ -80,22 +80,25 @@ KUCHING, SARAWAK</pre>
         <b>Body Identified By :</b>
         <div class="tableNoneBorder">
             <table style="width: 100%;">
-                <tbody>
-                    <tr><td colspan="2"><b>1 Name of Next of Kin : ______________________________________________</b></td></tr>
-                    <tr><td>MyKad / Passport No : </td><td>Relationship : </td></tr>
-                    <tr><td colspan="2">Address :</td></tr>
-                    <tr><td>Tel. No : </td><td><p>___________</p><small>(Signature / Thunm print)</small></td></tr>
-                </tbody>
-                <tbody>
-                    <tr><td colspan="2"><b>2 Name of Police Officer : _____________________________________________</b></td></tr>
-                    <tr><td colspan="2">Rank :</td></tr>
-                    <tr><td>No : </td><td><p>___________</p><small>(Signature)</small></td></tr>
-                </tbody>
-                <tbody>
-                    <tr><td colspan="2"><b> Photographer : </b></td></tr>
-                    <tr><td colspan="2">Name :</td></tr>
-                    <tr><td colspan="2">Rank / No : </td></tr>
-                </tbody>
+                @foreach (var item3 in Model.butiranwariList)
+                {
+                    <tbody>
+                        <tr><td colspan="2"><b>1 Name of Next of Kin : @item3.WarisName</b></td></tr>
+                        <tr><td>MyKad / Passport No : @item3.WarisNoIC</td><td>Relationship : @item3.Perhubungan</td></tr>
+                        <tr><td colspan="2">Address : @item3.Alamat</td></tr>
+                        <tr><td>Tel. No : @item3.PhoneNo</td><td><p>___________</p><small>(Signature / Thumb print)</small></td></tr>
+                    </tbody>
+                    <tbody>
+                        <tr><td colspan="2"><b>2 Name of Police Officer : _____________________________________________</b></td></tr>
+                        <tr><td colspan="2">Rank :</td></tr>
+                        <tr><td>No : </td><td><p>___________</p><small>(Signature)</small></td></tr>
+                    </tbody>
+                    <tbody>
+                        <tr><td colspan="2"><b> Photographer : </b></td></tr>
+                        <tr><td colspan="2">Name :</td></tr>
+                        <tr><td colspan="2">Rank / No : </td></tr>
+                    </tbody>
+                }
             </table>
         </div>
         <br />

@@ -14,13 +14,10 @@
             Session["id"] = deceasedid;
             
             <li style="color:transparent">
-                @if (typeofcase == 0)
-                {
                 <p>
                     @Html.ActionLink("Convert View To PDF", "PrintViewToPdf/" + deceasedid + "/McdPmcDetails", "", htmlAttributes: new { @class = "btn btn-primary" })
                     @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-default" })
                 </p>
-                }
             </li>
             <li class="list-group-item active">BUTIRAN SIMATI</li>
             <li class="list-group-item">

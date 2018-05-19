@@ -12,21 +12,21 @@ namespace MoIS.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class pengecamansemula
+    public partial class permohonansimpanmayat
     {
-        public int CaseID { get; set; }
-        public Nullable<short> LabelMayat { get; set; }
-        public Nullable<short> PengecamanMukaSimati { get; set; }
-        public Nullable<short> Pakaian { get; set; }
-        public string Lain_lainCara { get; set; }
+        public int PSMID { get; set; }
+        public Nullable<int> WarisID { get; set; }
         public Nullable<int> DeceasedID { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<short> Status { get; set; }
         public Nullable<int> EditedBy { get; set; }
         public Nullable<System.DateTime> EditedDate { get; set; }
-        public string HartaBenda { get; set; }
+        public Nullable<short> Status { get; set; }
+        public string Duration { get; set; }
+        public string Catatan { get; set; }
+        public Nullable<System.DateTime> PSMRequestDate { get; set; }
     
+        public virtual butiranwari butiranwari { get; set; }
         public virtual deceased deceased { get; set; }
         public virtual medicalassistant medicalassistant { get; set; }
         public virtual medicalassistant medicalassistant1 { get; set; }

@@ -12,6 +12,14 @@ namespace MoIS.Controllers
 {
     public class HomeController : Controller
     {
+        private object SessionMaID()
+        {
+            if(Session["maID"] == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            return Session["maID"];
+        }
         // GET: Home
         public ActionResult Index()
         {
@@ -79,7 +87,7 @@ namespace MoIS.Controllers
             butiranpengurusmayat newpengurusmayat = new butiranpengurusmayat();
             pengecamansemula newpengecamansemula = new pengecamansemula();
 
-            int maId = (int)System.Web.HttpContext.Current.Session["maID"];
+            int maId = (int)SessionMaID();
 
             newdeceased.DeceasedName = deceasedModel.DeceasedName;
             newdeceased.NoIC = deceasedModel.NoIC;
@@ -100,8 +108,9 @@ namespace MoIS.Controllers
             newdeceased.DateOfReceived = deceasedModel.DateOfReceived;
             newdeceased.NoOfHospitalRegister = deceasedModel.NoOfHospitalRegister;
             newdeceased.Status = 1;
-            deceased deceasedData = dBModel.deceaseds.SingleOrDefault(x => x.Postcode == deceasedModel.Postcode);
-            if(deceasedData != null)
+            postcode postcodeData = dBModel.postcodes.Where(x => x.Postcode1 == deceasedModel.Postcode).FirstOrDefault();
+            
+            if(postcodeData != null)
             {
                 newdeceased.Nationality = "Malaysian";
             } else
@@ -206,80 +215,109 @@ namespace MoIS.Controllers
         // GET: Deceased/NextProcess/1
         public ActionResult NextProcess(int id)
         {
-             DBModels dBModel = new DBModels();
-             butiranwari waris = dBModel.butiranwaris.Where(x => x.DeceasedID == id).FirstOrDefault();
-            /*butiranwari warisVM = new butiranwari();
-
-            warisVM.WarisName = waris.WarisName;
-            warisVM.WarisNoIC = waris.WarisNoIC;
-            warisVM.Alamat = waris.Alamat;
-            warisVM.PhoneNo = waris.PhoneNo;
-            warisVM.Perhubungan = waris.Perhubungan;
-            warisVM.DateTimeRequest = waris.DateTimeRequest;
-            warisVM.DateTimeReturn = waris.DateTimeReturn;
-            warisVM.ReturnedBy = waris.ReturnedBy;*/
-
+            DBModels dBModel = new DBModels();
+            butiranwari waris = dBModel.butiranwaris.Where(x => x.DeceasedID == id).FirstOrDefault();
+            if(SessionMaID() == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            int maID = (int)SessionMaID();
+            
             Session["Perhubungan"] = waris.Perhubungan;
             string[] perhubunganSelect = { "Son", "Daughter", "Father", "Mother", "Brother", "Sister", "Cousin", "GrandSon", "GrandDaughter", "Uncle", "Aunt" };
             ViewData["perhubunganSelect"] = perhubunganSelect;
             ViewData["Perhubungan"] = waris.Perhubungan;
-            /* ViewBag.Perhubungan = new List<SelectListItem>()
-             {
-                 new SelectListItem(){ Value="Son", Text = "Son", Selected = true},
-                 new SelectListItem(){ Value="Daughter", Text = "Daughter"},
-                 new SelectListItem(){ Value="Father", Text = "Father"},
-                 new SelectListItem(){ Value="Mother", Text = "Mother"},
-                 new SelectListItem(){ Value="Bother", Text = "Bother"},
-                 new SelectListItem(){ Value="Sister", Text = "Sister"},
-                 new SelectListItem(){ Value="Cousin", Text = "Cousin"},
-                 new SelectListItem(){ Value="GrandSon", Text = "GrandSon"},
-                 new SelectListItem(){ Value="GrandDaughter", Text = "GrandDaughter"},
-                 new SelectListItem(){ Value="Uncle", Text = "Uncle"},
-                 new SelectListItem(){ Value="Aunt", Text = "Aunt"}
-        };*/
-            //return View(waris);
 
             Session["error"] = null;
             butiranwari butiranwariModel = new butiranwari();
             pengecamansemula newrecord = new pengecamansemula();
+            medicalassistant medicalassistantModel = new medicalassistant();
+            permohonansimpanmayat permohonansimpanmayatModel = new permohonansimpanmayat();
+            deceased deceasedModel = new deceased();
+
             using (DBModels dBModel2 = new DBModels())
             {
                 butiranwariModel = dBModel2.butiranwaris.Where(x => x.DeceasedID == id).FirstOrDefault();
                 newrecord = dBModel2.pengecamansemulas.Where(x => x.DeceasedID == id).FirstOrDefault();
+                medicalassistantModel = dBModel2.medicalassistants.Where(x => x.MaID == maID).FirstOrDefault();
+                permohonansimpanmayatModel = dBModel2.permohonansimpanmayats.Where(x => x.DeceasedID == id).FirstOrDefault();
+                deceasedModel = dBModel2.deceaseds.Where(x => x.DeceasedID == id).FirstOrDefault();
+            }
+            if(butiranwariModel.WarisName == null)
+            {
+                ViewData["fieldsetDisabled"] = "";
+            } else
+            {
+                ViewData["fieldsetDisabled"] = "disabled";
             }
             ViewData["checked"] = "checked";
-            if(newrecord.Lain_lainCara.IndexOf("Fizikal") != -1)
-            {
-                ViewData["tandaFizikal"] = "1";
+            if (newrecord.Lain_lainCara != null) { 
+                if (newrecord.Lain_lainCara.IndexOf("Fizikal") != -1)
+                {
+                    ViewData["tandaFizikal"] = "1";
+                }
+                if (newrecord.Lain_lainCara.IndexOf("Tatoo") != -1)
+                {
+                    ViewData["tandaTatoo"] = "1";
+                }
+                if (newrecord.Lain_lainCara.IndexOf("Jari") != -1)
+                {
+                    ViewData["capJari"] = "1";
+                }
+                if (newrecord.Lain_lainCara.IndexOf("Odontologi") != -1)
+                {
+                    ViewData["odontologi"] = "1";
+                }
+                if (newrecord.Lain_lainCara.IndexOf("DNA") != -1)
+                {
+                    ViewData["dna"] = "1";
+                }
+                string lain_lain_string = newrecord.Lain_lainCara.Replace("Tanda-tanda Fizikal", "");
+                lain_lain_string = lain_lain_string.Replace("Tanda Tatoo", "");
+                lain_lain_string = lain_lain_string.Replace("Cap Jari", "");
+                lain_lain_string = lain_lain_string.Replace("Odontologi", "");
+                lain_lain_string = lain_lain_string.Replace("DNA", "");
+                lain_lain_string = lain_lain_string.Replace(",", "");
+                if (lain_lain_string != "")
+                {
+                    ViewData["lain_lain"] = "1";
+                    ViewData["lain_lain_string"] = lain_lain_string;
+                }
             }
-            if (newrecord.Lain_lainCara.IndexOf("Tatoo") != -1)
+            
+            if(newrecord.HartaBenda != null && newrecord.HartaBenda != "")
             {
-                ViewData["tandaTatoo"] = "1";
-            }
-            if (newrecord.Lain_lainCara.IndexOf("Jari") != -1)
+                ViewData["hartaBendaYes"] = "checked";
+                ViewData["hartaBendaNo"] = "";
+                string[] hartaBenda = newrecord.HartaBenda.Split(',');
+                ViewData["hartaBenda"] = hartaBenda;
+            } else
             {
-                ViewData["capJari"] = "1";
+                ViewData["hartaBendaYes"] = "";
+                ViewData["hartaBendaNo"] = "checked";
             }
-            if (newrecord.Lain_lainCara.IndexOf("Odontologi") != -1)
+
+            if(permohonansimpanmayatModel.Duration != null && permohonansimpanmayatModel.Duration != "")
             {
-                ViewData["odontologi"] = "1";
+                ViewData["pMYes"] = "checked";
+                ViewData["pMNo"] = "";
             }
-            if (newrecord.Lain_lainCara.IndexOf("DNA") != -1)
+            else
             {
-                ViewData["dna"] = "1";
+                ViewData["pMYes"] = "";
+                ViewData["pMNo"] = "checked";
             }
-            string lain_lain_string = newrecord.Lain_lainCara.Replace("Tanda-tanda Fizikal", "");
-            lain_lain_string = lain_lain_string.Replace("Tanda Tatoo", "");
-            lain_lain_string = lain_lain_string.Replace("Cap Jari", "");
-            lain_lain_string = lain_lain_string.Replace("Odontologi", "");
-            lain_lain_string = lain_lain_string.Replace("DNA", "");
-            lain_lain_string = lain_lain_string.Replace(",", "");
-            if (lain_lain_string != "")
+
+            if(deceasedModel.Religion == "Islam")
             {
-                ViewData["lain_lain"] = "1";
-                ViewData["lain_lain_string"] = lain_lain_string;
+                ViewData["isIslam"] = "checked";
+                ViewData["notIslam"] = "";
+            } else
+            {
+                ViewData["isIslam"] = "";
+                ViewData["notIslam"] = "checked";
             }
-            var dbv = new WarisanPengecamanViewModel { butiranwari = butiranwariModel, pengecamansemula = newrecord };
+            var dbv = new WarisanPengecamanViewModel { butiranwari = butiranwariModel, pengecamansemula = newrecord, medicalassistant = medicalassistantModel, permohonansimpanmayat = permohonansimpanmayatModel };
             return View(dbv);
         }
 
@@ -327,9 +365,17 @@ namespace MoIS.Controllers
         [HttpPost]
         public ActionResult NextProcess(int id, butiranwari butiranwariModel)
         {
+            int maID = (int)SessionMaID();
             DBModels dBModel = new DBModels();
             butiranwariModel = dBModel.butiranwaris.Where(x => x.DeceasedID == id).FirstOrDefault();
+            permohonansimpanmayat permohonansimpanmayatModel = dBModel.permohonansimpanmayats.Where(x => x.DeceasedID == id).FirstOrDefault();
 
+            var editData = Request.Form["editData"];
+            if(editData == null)
+            {
+                Session["warning"] = "No changes.";
+                return RedirectToAction("NextProcess", "Home", new { id = id });
+            }
             butiranwariModel.WarisName = Request.Form["butiranwari.WarisName"];
             butiranwariModel.WarisNoIC = Request.Form["butiranwari.WarisNoIC"];
             butiranwariModel.Alamat = Request.Form["butiranwari.Alamat"];
@@ -337,12 +383,21 @@ namespace MoIS.Controllers
             butiranwariModel.Perhubungan = Request.Form["Perhubungan"];
             butiranwariModel.DateTimeRequest = DateTime.Parse(Request.Form["butiranwari.DateTimeRequest"]);
             butiranwariModel.DateTimeReturn = DateTime.Parse(Request.Form["butiranwari.DateTimeReturn"]);
-            butiranwariModel.ReturnedBy = 1;
-            butiranwariModel.Editedby = 1;
+            butiranwariModel.ReturnedBy = maID;
+            butiranwariModel.Editedby = maID;
             butiranwariModel.EditedDate = @DateTime.Now;
             dBModel.Entry(butiranwariModel).State = EntityState.Modified;
             dBModel.SaveChanges();
 
+            string hartaBenda = "";
+            for (int i = 1; i<=12; i++)
+            {
+                if(Request.Form["hartaBenda_" + i] != null && Request.Form["hartaBenda_" + i] != "")
+                {
+                    hartaBenda += Request.Form["hartaBenda_" + i] + ",";
+                }
+            }
+            hartaBenda = hartaBenda.TrimEnd(',');
             string Labelmayat = Request.Form["labelMayat"];
             string PengecamanMukaSimati = Request.Form["pengecamanMukaSimati"];
             string Pakaian = Request.Form["pakaian"];
@@ -380,9 +435,37 @@ namespace MoIS.Controllers
             lain_lain = lain_lain.TrimStart(',');
             // Update command
             int noOfRowUpdated = dBModel.Database.ExecuteSqlCommand(
-                "Update pengecamansemula set LabelMayat = {0}, PengecamanMukaSimati = {1}, Pakaian = {2}, `Lain-lainCara` = {3} where DeceasedID = {4}",
-                Labelmayat, PengecamanMukaSimati, Pakaian, lain_lain, id);
+                "Update pengecamansemula set LabelMayat = {0}, PengecamanMukaSimati = {1}, Pakaian = {2}, `Lain-lainCara` = {3}, HartaBenda = {4} where DeceasedID = {5}",
+                Labelmayat, PengecamanMukaSimati, Pakaian, lain_lain, hartaBenda, id);
 
+            if(Request.Form["simpanMayatTick"] == "1")
+            {
+                if (permohonansimpanmayatModel == null)
+                {
+                    permohonansimpanmayat newpsm = new permohonansimpanmayat();
+
+                    newpsm.DeceasedID = id;
+                    newpsm.WarisID = butiranwariModel.WarisID;
+                    newpsm.CreatedBy = maID;
+                    newpsm.CreatedDate = @DateTime.Now;
+                    newpsm.EditedBy = maID;
+                    newpsm.EditedDate = @DateTime.Now;
+                    newpsm.Duration = Request.Form["duration"];
+                    newpsm.Catatan = Request.Form["catatan"];
+                    newpsm.PSMRequestDate = @DateTime.Parse(Request.Form["toDate"]);
+                    newpsm.Status = 1;
+                    dBModel.permohonansimpanmayats.Add(newpsm);
+
+                    dBModel.SaveChanges();
+                } else
+                {
+                    // Update command
+                    dBModel.Database.ExecuteSqlCommand(
+                        "Update permohonansimpanmayat set Duration = {0}, Catatan = {1}, PSMRequestDate = {2}, `Status` = {3}, EditedBy = {4}, EditedDate = {5} where DeceasedID = {6}",
+                        Request.Form["duration"], Request.Form["catatan"], @DateTime.Parse(Request.Form["toDate"]), 1, maID, @DateTime.Now, id);
+                }
+            }
+            
             Session["success"] = "Update Success.";
             return RedirectToAction("NextProcess", "Home", new { id = id });
         }
@@ -469,7 +552,8 @@ namespace MoIS.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Edit(int id, deceased deceasedModel)
         {
-            int maId = (int)System.Web.HttpContext.Current.Session["maID"];
+            int maId = (int)SessionMaID();
+           
             using (DBModels dBModel = new DBModels())
             {
                 if (Request.Form["deceased.DateOfDeath"] == null || Request.Form["deceased.DateOfDeath"] == "")
@@ -544,34 +628,15 @@ namespace MoIS.Controllers
 
             DBModels dBModel = new DBModels();
             deceased deceasedData = dBModel.deceaseds.SingleOrDefault(x => x.DeceasedID == id);
-            butiranmcdpmc butiranmcdpmcData = dBModel.butiranmcdpmcs.SingleOrDefault(x => x.DeceasedID == id);
-            butiranwari butiranwariData = dBModel.butiranwaris.SingleOrDefault(x => x.DeceasedID == id);
-
-            var medicalassistantPenerima = dBModel.medicalassistants.Where(x => x.MaID == deceasedData.CreatedBy).ToList();
-            var medicalassistantPegawaiperubatan = dBModel.medicalassistants.Where(x => x.MaID == butiranmcdpmcData.CreatedBy).ToList();
-            var medicalassistantPegawaimenyerahkan = dBModel.medicalassistants.Where(x => x.MaID == butiranwariData.ReturnedBy).ToList();
-
             var deceased = dBModel.deceaseds.Where(x => x.DeceasedID == id).ToList();
-            var butiranmcdpmc = dBModel.butiranmcdpmcs.Where(x => x.DeceasedID == id).ToList();
             var butiranbedahsiasat = dBModel.butiranbedahsiasats.Where(x => x.DeceasedID == id).ToList();
-            var butiranwari = dBModel.butiranwaris.Where(x => x.DeceasedID == id).ToList();
-            var butiranpengurusmayat = dBModel.butiranpengurusmayats.Where(x => x.DeceasedID == id).ToList();
 
-            if (butiranbedahsiasat == null)
-            {
-                butiranbedahsiasat = null;
-            }
             var model = new DetailsViewModel()
             {
-                medicalassistantPenerimaList = medicalassistantPenerima,
-                medicalassistantPegawaiperubatanList = medicalassistantPegawaiperubatan,
-                medicalassistantPegawaimenyerahkanList = medicalassistantPegawaimenyerahkan,
                 deceasedList = deceased,
-                butiranmcdpmcList = butiranmcdpmc,
                 butiranbedahsiasatList = butiranbedahsiasat,
-                butiranwariList = butiranwari,
-                butiranpengurusmayatList = butiranpengurusmayat
             };
+            ViewData["deceasedId"] = deceasedData.DeceasedID;
             return View(model);
         }
 
@@ -582,33 +647,26 @@ namespace MoIS.Controllers
            
             DBModels dBModel = new DBModels();
             deceased deceasedData = dBModel.deceaseds.SingleOrDefault(x => x.DeceasedID == id);
-            butiranmcdpmc butiranmcdpmcData = dBModel.butiranmcdpmcs.SingleOrDefault(x => x.DeceasedID == id);
             butiranwari butiranwariData = dBModel.butiranwaris.SingleOrDefault(x => x.DeceasedID == id);
-
-            var medicalassistantPenerima = dBModel.medicalassistants.Where(x => x.MaID == deceasedData.CreatedBy).ToList();
-            var medicalassistantPegawaiperubatan = dBModel.medicalassistants.Where(x => x.MaID == butiranmcdpmcData.CreatedBy).ToList();
-            var medicalassistantPegawaimenyerahkan = dBModel.medicalassistants.Where(x => x.MaID == butiranwariData.ReturnedBy).ToList();
+            butiranbedahsiasat butiranbedahsiasatData = dBModel.butiranbedahsiasats.SingleOrDefault(x => x.DeceasedID == id);
+            if (butiranbedahsiasatData != null)
+            {
+                medicalassistant medicalassistantBS = dBModel.medicalassistants.SingleOrDefault(x => x.MaID == butiranbedahsiasatData.CreatedBy);
+                ViewData["dateBS"] = butiranbedahsiasatData.DateTimeBS;
+                ViewData["medicalassistantBS"] = medicalassistantBS.MaName;
+            } else
+            {
+                ViewData["dateBS"] = null;
+                ViewData["medicalassistantBS"] = null;
+            }
 
             var deceased = dBModel.deceaseds.Where(x => x.DeceasedID == id).ToList();
-            var butiranmcdpmc = dBModel.butiranmcdpmcs.Where(x => x.DeceasedID == id).ToList();
-            var butiranbedahsiasat = dBModel.butiranbedahsiasats.Where(x => x.DeceasedID == id).ToList();
             var butiranwari = dBModel.butiranwaris.Where(x => x.DeceasedID == id).ToList();
-            var butiranpengurusmayat = dBModel.butiranpengurusmayats.Where(x => x.DeceasedID == id).ToList();
 
-            if (butiranbedahsiasat == null)
-            {
-                butiranbedahsiasat = null;
-            }
             var model = new DetailsViewModel()
             {
-                medicalassistantPenerimaList = medicalassistantPenerima,
-                medicalassistantPegawaiperubatanList = medicalassistantPegawaiperubatan,
-                medicalassistantPegawaimenyerahkanList = medicalassistantPegawaimenyerahkan,
                 deceasedList = deceased,
-                butiranmcdpmcList = butiranmcdpmc,
-                butiranbedahsiasatList = butiranbedahsiasat,
                 butiranwariList = butiranwari,
-                butiranpengurusmayatList = butiranpengurusmayat
             };
 
             string[] headNeck = {  "Scalp", "Skull", "Meninges", "Brain", "Cervical Spine", "Face", "Throat", "Thyroid gland" };
@@ -625,9 +683,45 @@ namespace MoIS.Controllers
 
             string[] weightOfOrgan = { "BRAIN", "HEART", "RIGHT LUNG", "LEFT LUNG", "LIVER", "SPLEEN", "RIGHT KIDNEY", "LEFT KIDNEY" };
             ViewData["weightOfOrgan"] = weightOfOrgan;
-
+            ViewData["deceasedId"] = deceasedData.DeceasedID;
             return View(model);
         }
+
+        // GET: Deceased/BorangPBPFT/5
+        public ActionResult BorangPBPFT(int id)
+        {
+            ViewData["tick"] = "\u221A";
+
+            DBModels dBModel = new DBModels();
+            deceased deceasedData = dBModel.deceaseds.SingleOrDefault(x => x.DeceasedID == id);
+            butiranwari butiranwariData = dBModel.butiranwaris.SingleOrDefault(x => x.DeceasedID == id);
+            butiranbedahsiasat butiranbedahsiasatData = dBModel.butiranbedahsiasats.SingleOrDefault(x => x.DeceasedID == id);
+            if (butiranbedahsiasatData != null)
+            {
+                medicalassistant medicalassistantBS = dBModel.medicalassistants.SingleOrDefault(x => x.MaID == butiranbedahsiasatData.CreatedBy);
+                ViewData["dateBS"] = butiranbedahsiasatData.DateTimeBS;
+                ViewData["medicalassistantBS"] = medicalassistantBS.MaName;
+                ViewData["noLaporanPolis"] = butiranbedahsiasatData.NoLaporanPolis;
+            }
+            else
+            {
+                ViewData["dateBS"] = null;
+                ViewData["medicalassistantBS"] = null;
+                ViewData["noLaporanPolis"] = null;
+            }
+
+            var deceased = dBModel.deceaseds.Where(x => x.DeceasedID == id).ToList();
+            var butiranwari = dBModel.butiranwaris.Where(x => x.DeceasedID == id).ToList();
+
+            var model = new DetailsViewModel()
+            {
+                deceasedList = deceased,
+                butiranwariList = butiranwari,
+            };
+            ViewData["deceasedId"] = deceasedData.DeceasedID;
+            return View(model);
+        }
+
         public ActionResult PrintViewToPdf(int id, string page)
         {
             var report = new ActionAsPdf(page, new { id = id });
@@ -636,7 +730,7 @@ namespace MoIS.Controllers
 
         public ActionResult PrintPartialViewToPdf(int id)
         {
-            int maId = (int)System.Web.HttpContext.Current.Session["maID"];
+            int maId = (int)SessionMaID();
 
             DBModels dBModel = new DBModels();
             deceased deceasedData = dBModel.deceaseds.SingleOrDefault(x => x.DeceasedID == id);

@@ -18,7 +18,7 @@
     <hr />
     <div class="container" style="width:60%;margin-top:2%">
         <p>
-            @Html.ActionLink("Convert View To PDF", "PrintViewToPdf/" + 0 + "/BorangPSML", "", htmlAttributes: new { @class = "btn btn-primary" })
+            @Html.ActionLink("Convert View To PDF", "PrintViewToPdf/" + @ViewData["deceasedId"] + "/BorangPSML", "", htmlAttributes: new { @class = "btn btn-primary" })
             @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-default" })
         </p>
         @foreach (var item in Model.deceasedList)
@@ -27,7 +27,7 @@
             { 
                 <table width="100%">
                     <tbody>
-                        <tr><td width="50%">NO. DAFTAR KLINIK FORENSIK</td><td width="50%">@item.NoOfHospitalRegister</td></tr>
+                        <tr><td width="50%">NO. DAFTAR KLINIK FORENSIK</td><td width="50%"></td></tr>
                         <tr><td width="50%">NO. REPORT POLIS</td><td width="50%">@item2.NoLaporanPolis</td></tr>
                         <tr><td width="50%">NAMA</td><td width="50%">@item.DeceasedName</td></tr>
                         <tr><td width="50%">NO. KAD PENGENALAN</td><td width="50%">@item.NoIC</td></tr>

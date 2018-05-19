@@ -27,6 +27,10 @@ namespace MoIS.Models
             this.butiranwaris1 = new HashSet<butiranwari>();
             this.deceaseds = new HashSet<deceased>();
             this.deceaseds1 = new HashSet<deceased>();
+            this.permohonansimpanmayats = new HashSet<permohonansimpanmayat>();
+            this.permohonanbilliks = new HashSet<permohonanbillik>();
+            this.permohonansimpanmayats1 = new HashSet<permohonansimpanmayat>();
+            this.permohonanbilliks1 = new HashSet<permohonanbillik>();
             this.pengecamansemulas = new HashSet<pengecamansemula>();
             this.pengecamansemulas1 = new HashSet<pengecamansemula>();
         }
@@ -66,6 +70,10 @@ namespace MoIS.Models
         public virtual ICollection<butiranwari> butiranwaris1 { get; set; }
         public virtual ICollection<deceased> deceaseds { get; set; }
         public virtual ICollection<deceased> deceaseds1 { get; set; }
+        public virtual ICollection<permohonansimpanmayat> permohonansimpanmayats { get; set; }
+        public virtual ICollection<permohonanbillik> permohonanbilliks { get; set; }
+        public virtual ICollection<permohonansimpanmayat> permohonansimpanmayats1 { get; set; }
+        public virtual ICollection<permohonanbillik> permohonanbilliks1 { get; set; }
         public virtual ICollection<pengecamansemula> pengecamansemulas { get; set; }
         public virtual ICollection<pengecamansemula> pengecamansemulas1 { get; set; }
     }

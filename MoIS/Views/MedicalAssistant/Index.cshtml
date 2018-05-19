@@ -1,7 +1,9 @@
 ﻿@model IEnumerable<MoIS.Models.medicalassistant>
+<link href="@Url.Content("~/Content/jquery.datatables.css")" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 
 @{
-    ViewBag.Title = "MAList";
+    ViewBag.Title = "Medical Stuff List";
     if (Session["maID"] == null)
     {
         Response.Redirect("~/Login/Index");
@@ -9,53 +11,73 @@
     }
 }
 
-<h2>Index</h2>
+<h2>Medical Stuff List</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "Create", "MedicalAssitant", new { @class = "btn btn-primary" })
 </p>
 <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.MaID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MaName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Username)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MaIcNo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Role)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.MaID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MaName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Username)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MaIcNo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Role)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.MaID }) |
-            @Html.ActionLink("Details", "Details", new { id = item.MaID })
-        </td>
-    </tr>
-}
-
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MaID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaIcNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Role)
+            </th>
+            <th>Reset Password</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaIcNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Role)
+                </td>
+                <td>
+                    @Html.ActionLink("Reset Password", "ResetPassword/" + item.MaID, "MedicalAssistant", new { @class = "btn btn-danger" })
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit/" + item.MaID, "MedicalAssistant", new { id = item.MaID }) |
+                    @Html.ActionLink("Details", "Details/" + item.MaID, "MedicalAssistant", new { id = item.MaID })
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/jquery.dataTables.js"></script>
+<script src="~/Scripts/jQuery.flashMessage.js"></script>
+<script src="~/Scripts/jquery.cookie.js"></script>
+
+<script>
+    $('.table').dataTable({
+        stateSave: true
+    });
+</script>

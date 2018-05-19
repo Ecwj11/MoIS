@@ -21,12 +21,15 @@ namespace MoIS.Models
             this.butiranpengurusmayats = new HashSet<butiranpengurusmayat>();
             this.butiranwaris = new HashSet<butiranwari>();
             this.pengecamansemulas = new HashSet<pengecamansemula>();
+            this.permohonansimpanmayats = new HashSet<permohonansimpanmayat>();
+            this.permohonanbilliks = new HashSet<permohonanbillik>();
         }
     
         public int DeceasedID { get; set; }
         public string DeceasedName { get; set; }
         public string Address { get; set; }
         public Nullable<int> Postcode { get; set; }
+        public string Nationality { get; set; }
         public string NoIC { get; set; }
         public string Gender { get; set; }
         public Nullable<int> Age { get; set; }
@@ -44,7 +47,6 @@ namespace MoIS.Models
         public string NoOfHospitalRegister { get; set; }
         public byte[] qrcode { get; set; }
         public Nullable<short> Status { get; set; }
-        public string Nationality { get; set; }
     
         public virtual ICollection<butiranbedahsiasat> butiranbedahsiasats { get; set; }
         public virtual ICollection<butiranmcdpmc> butiranmcdpmcs { get; set; }
@@ -52,6 +54,8 @@ namespace MoIS.Models
         public virtual ICollection<butiranwari> butiranwaris { get; set; }
         public virtual medicalassistant medicalassistant { get; set; }
         public virtual ICollection<pengecamansemula> pengecamansemulas { get; set; }
+        public virtual ICollection<permohonansimpanmayat> permohonansimpanmayats { get; set; }
+        public virtual ICollection<permohonanbillik> permohonanbilliks { get; set; }
         public virtual medicalassistant medicalassistant1 { get; set; }
         public virtual postcode postcode1 { get; set; }
     }

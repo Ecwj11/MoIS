@@ -12,7 +12,7 @@ namespace MoIS.Controllers
     {
         // GET: Login
         public ActionResult Index()
-        {
+        {            
             return View();
         }
 
@@ -36,7 +36,14 @@ namespace MoIS.Controllers
 
                     Session["maID"] = maDetails.MaID;
                     Session["username"] = maDetails.Username;
-                    return RedirectToAction("Index", "Home");
+                    Session["role"] = maDetails.Role;
+                    if(maDetails.Role == "MO")
+                    {
+                        return RedirectToAction("Index", "MedicalAssistant");
+                    } else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
 
 

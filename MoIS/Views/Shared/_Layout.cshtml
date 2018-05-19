@@ -64,6 +64,16 @@
             <div class="alert alert-success">@Session["success"]</div>
             Session["success"] = null;
         }
+        @if (Session["error"] != null)
+        {
+            <div class="alert alert-danger">@Session["error"]</div>
+            Session["error"] = null;
+        }
+        @if (Session["warning"] != null)
+        {
+            <div class="alert alert-warning">@Session["warning"]</div>
+            Session["warning"] = null;
+        }
         @RenderBody()
 
         <footer>

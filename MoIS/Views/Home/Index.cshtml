@@ -94,8 +94,9 @@
                         </td>
                         <td>
                             @Html.ActionLink("BringToDeathReport", "BringToDeathReport", new { id = item.DeceasedID }) |
-                            @Html.ActionLink("BorangPSML", "BorangPSML", new { id = item.DeceasedID })
-                            @Html.ActionLink("AutopsyProtocol", "AutopsyProtocol", new { id = item.DeceasedID })
+                            @Html.ActionLink("BorangPSML", "BorangPSML", new { id = item.DeceasedID }) |
+                            @Html.ActionLink("AutopsyProtocol", "AutopsyProtocol", new { id = item.DeceasedID }) |
+                            @Html.ActionLink("BorangPBPFT", "BorangPBPFT", new { id = item.DeceasedID })
                         </td>
                     </tr>
                 }
