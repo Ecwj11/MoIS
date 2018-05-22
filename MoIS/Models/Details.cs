@@ -11,6 +11,7 @@ namespace MoIS.Models
         public List<butiranbedahsiasat> butiranbedahsiasatList { get; set; }
         public List<butiranwari> butiranwariList { get; set; }
         public List<butiranpengurusmayat> butiranpengurusmayatList { get; set; }
-        //public List<butiranbedahsiasat> butiranbedahsiasatList { get; set; }
-    }
+        public string NoRegistration { get; set; }
+    //public List<butiranbedahsiasat> butiranbedahsiasatList { get; set; }
+}
 }

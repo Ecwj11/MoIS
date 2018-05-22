@@ -1,0 +1,117 @@
+﻿@model MoIS.Models.DetailsViewModel
+@using MoIS.Helper
+
+@{
+    if (Session["maID"] == null && @ViewData["print"] != "print")
+    {
+        Response.Redirect("~/Login/Index");
+    }
+    var symbol = "@";
+}
+@if (@ViewData["print"] == "print")
+{
+    <style>
+        #details, #buttons, .navbar-fixed-top {
+            display: none !important;
+        }
+        #printView {
+            text-align: center !important;
+        }
+    </style>
+}
+<div class="container" style="width:100%;margin-top:2%">
+    <ul class="list-group">
+        @foreach (var item in Model.deceasedList)
+        {
+            foreach (var item2 in Model.butiranwariList)
+            {
+                <pre style="text-align:center;">UNIT PERUBATAN FORENSIK SARAWAK
+KAD PENGENALAN MAYAT
+KES POLIS</pre>
+                <li class="list-group-item" id="details">
+                    <table width="100%" style="border:none;">
+                        <tbody>
+                            <tr>
+                                <td style="padding-left: 5px;" colspan="3">WAD: @item.WadUnit</td>
+                                <td style="padding-left: 5px;">TEL: </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 5px;">NAMA: @item.DeceasedName</td>
+                                <td style="padding-left: 5px;">K/P: @item.DeceasedID</td>
+                                <td style="padding-left: 5px;" colspan="2">R/N: </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 5px;">UMUR: @item.Age</td>
+                                <td style="padding-left: 5px;">JANTINA: @item.Gender</td>
+                                <td style="padding-left: 5px;">KETURUNAN: @item.Race</td>
+                                <td style="padding-left: 5px;">AGAMA: @item.Religion</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 5px;" colspan="3">TARIKH DAN WAKTU DIDAFTAR MASUK: @string.Format("{0:yyyy-mm-dd}", @item.DateOfRegistration) @symbol @string.Format("{0:H:mm:ss}", @item.DateOfRegistration)</td>
+                                <td style="padding-left: 5px;">DOKTOR: </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 5px;" colspan="4">TARIKH DAN WAKTU KEMATIAN: @string.Format("{0:yyyy-mm-dd}", @item.DateOfDeath) @symbol @string.Format("{0:H:mm:ss}", @item.DateOfDeath)</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 5px;" colspan="3">JENIS KES POLIS: </td>
+                                <td style="padding-left: 5px;">KES B.I.D: YA/TIDAK</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 5px;" colspan="2">NAMA WARIS: @item2.WarisName</td>
+                                <td style="padding-left: 5px;">ALAMAT: @item2.Alamat</td>
+                                <td style="padding-left: 5px;">NAMA WARIS: @item2.PhoneNo</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 5px;" colspan="2">POLIS YANG DIHUBUNGI: </td>
+                                <td style="padding-left: 5px;">NO: </td>
+                                <td style="padding-left: 5px;">BALAI: </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 5px;" colspan="2">DIHUBUNGI OLEH S/R, S/N, MA: </td>
+                                <td style="padding-left: 5px;" colspan="2">TARIKH: </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 5px;" colspan="2">WARISAN TELAH DIHUBUNGI: YA/TIDAK</td>
+                                <td style="padding-left: 5px;" colspan="2">
+                                    <label class="control-label col-md-4">BIOHAZARD</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" type="checkbox" />
+                                    </div>
+                                    <label class="control-label col-md-4">YA/TIDAK</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control" type="checkbox" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </li>
+                <div class="row" id="printView">
+                    <div class="" style="display:inline-block;" id="QRImg">@Html.GenerateQrCode(@ViewData["DomainUrl"] + "/Qr/QrDetails?eId=" + @ViewData["eId"])</div>
+                    <div class="" style="display:inline-block;">
+                        <p>Nama Simati: @item.DeceasedName</p>
+                        <p>No. Kad Pengenalan: @item.NoIC</p>
+                        <p>No. Pendaftaran: @Model.NoRegistration</p>
+                        <div id="buttons">
+                            <button id="closeBtn" class="btn btn-default">Close</button>
+                            @Html.ActionLink("Print Qr Code", "PrintViewToPdf", "Qr", new { eId = @ViewData["eId"], page = "QrDetails" }, htmlAttributes: new { @class = "btn btn-primary" })
+                        </div>
+                    </div>
+                </div>
+
+
+            }
+        }
+    </ul>
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    $('#closeBtn').click(function () {
+        window.top.close();
+    });
+    $('#printBtn').click(function () {
+        window.print();
+    });
+</script>

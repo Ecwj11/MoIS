@@ -12,7 +12,7 @@
 <h2>Edit Profile</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("EditPost", "MedicalAssistant"))
 {
     @Html.AntiForgeryToken()
 
@@ -54,7 +54,7 @@
             </select>
         </div>
     </div>
-
+    <input type="hidden" name="maID" value="@ViewData["maID"]" />
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Save" class="btn btn-success" />

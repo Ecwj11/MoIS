@@ -14,7 +14,8 @@
 <h2>Medical Stuff List</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create", "MedicalAssitant", new { @class = "btn btn-primary" })
+    @Html.ActionLink("Create New Stuff", "Create", "MedicalAssitant", new { @class = "btn btn-primary" })
+    @Html.ActionLink("Statistics", "Statistics", "MedicalAssitant", new { @class = "btn btn-danger" })
 </p>
 <table class="table">
     <thead>
@@ -58,7 +59,7 @@
                     @Html.DisplayFor(modelItem => item.Role)
                 </td>
                 <td>
-                    @Html.ActionLink("Reset Password", "ResetPassword/" + item.MaID, "MedicalAssistant", new { @class = "btn btn-danger" })
+                    @Html.ActionLink("Reset Password", "ResetPassword/" + item.MaID, "MedicalAssistant", new { @class = "btn btn-danger", onClick = "javascript:return confirm_submit();" })
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit/" + item.MaID, "MedicalAssistant", new { id = item.MaID }) |
@@ -68,7 +69,11 @@
         }
     </tbody>
 </table>
-
+<div class="panel-body">
+    <div>
+        <canvas id="chart_6" height="191"></canvas>
+    </div>
+</div>
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
@@ -80,4 +85,10 @@
     $('.table').dataTable({
         stateSave: true
     });
+    function confirm_submit() {
+        var confrm;
+        confrm = window.confirm("Confirm reset?");
+
+        return confrm;
+    }
 </script>

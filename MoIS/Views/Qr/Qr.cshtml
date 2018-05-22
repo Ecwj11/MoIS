@@ -1,0 +1,31 @@
+﻿@model MoIS.Models.QrModel
+@using MoIS.Helper
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        @Html.GenerateQrCode(@Model.Content)
+        <p>Nama Simati: @Model.DeceasedName</p>
+        <p>No. Kad Pengenalan: @Model.NoIC</p>
+        <p>No. Pendaftaran: @Model.NoRegistration</p>
+
+        <button id="closeBtn" class="btn btn-default">Close</button>
+        <button id="printBtn" class="btn btn-default">Print</button>
+    </div>
+</body>
+</html>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    $('#closeBtn').click(function () {
+        window.top.close();
+    });
+    $('#printBtn').click(function () {
+        window.print();
+    });
+</script>

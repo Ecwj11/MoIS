@@ -1,0 +1,294 @@
+@model MoIS.Models.DetailsViewModel
+
+@{
+
+    if (Session["maID"] == null && @ViewData["print"] != "print")
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+@if (@ViewData["print"] == "print")
+{
+    <style>
+        /* .form-control {
+            border: none !important;
+            box-shadow: inset 0 0px 0px rgba(0,0,0,0.075) !important;
+        }*/
+
+        .navbar-fixed-top {
+            display: none;
+        }
+
+        .container {
+            margin-top: 0px;
+        }
+    </style>
+}
+<style>
+    .container input {
+        display: none;
+    }
+
+    .container select {
+        display: none;
+    }
+
+    .container input[type=checkbox] {
+        display: inline;
+    }
+
+    .container input[type=radio] {
+        display: inline;
+    }
+</style>
+<h2>BORANG KES DIBAWA MATI</h2>
+
+<div>
+    <h4>Bagi kes-kes kematian yang dibawa ters oleh polis ke Jabatan Forensik bersama-same dengan borang POL61</h4>
+    <hr />
+    <div class="container" style="width:100%;margin-top:2%">
+        <ul class="list-group">
+
+            @foreach (var item in Model.deceasedList)
+            {
+                <li style="color:transparent">
+                    @if (@ViewData["print"] != "print")
+                    {
+                        <p>
+                            @Html.ActionLink("Convert View To PDF", "PrintViewToPdf/" + item.DeceasedID + "/BringToDeathReport", "", htmlAttributes: new { @class = "btn btn-primary" })
+                            @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-default" })
+                        </p>
+                    }
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class='col-md-6 col-xs-12'>
+                            <b>1. Butir-butir simati: </b>
+                            <br />
+                            <i>Nama simati: </i>@item.DeceasedName
+                        </div>
+                        <div class='col-md-6 col-xs-12'>
+                            <i>No. Kad Pengenalan/Passport: </i>@item.NoIC
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class='col-md-6 col-xs-12'>
+                            <i>Bangsa: </i>@item.Race
+                        </div>
+                        <div class='col-md-6 col-xs-12'>
+                            <i>Agama: </i>@item.Religion
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class='col-md-6 col-xs-12'>
+                            <i>Umur: </i> @item.Age
+                            <br />
+                            <i>Jantina: </i>@item.Gender
+                        </div>
+                        <div class='col-md-6 col-xs-12'>
+                            <i>Warganegara: </i>
+                            @if (@item.Nationality == "Malaysian")
+                            {
+                                <input value="@ViewData["tick"]" style="width:5%;" /><label>Ya</label>
+                            }
+                            else
+                            {
+                                <input style="width:5%;" /><label>Ya</label>
+                            }
+                            @if (@item.Nationality != "Malaysian")
+                            {
+                                <input style="width:5%;" value="@ViewData["tick"]" /><label>Tidak,</label><div class="col-md-8"><input class="form-control" placeholder="(Nyatakan)" /></div>
+                            }
+                            else
+                            {
+                                <input style="width:5%;" /><label>Tidak....................(Nyatakan)</label>
+                            }
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <i>Alamat terakhir simati:</i> @item.Address
+                </li>
+
+                @*<li class="list-group-item">
+                        <div class="row">
+                            <div class='col-md-6 col-xs-12'>
+                                <b>2. Butir-butir pembawa simati:</b>
+                                <br />
+                                <i class="col-md-4">Nama:</i><div class="col-md-8"><input class="form-control" /></div>
+                                <br />
+                                <i class="col-md-4">Jawatan:</i><div class="col-md-8"><input class="form-control" /></div>
+                                <br />
+                                <i class="col-md-4">No & Pangkat:</i><div class="col-md-8"><input class="form-control" /></div>
+                                <br />
+                                <i class="col-md-4">No. Tel:</i><div class="col-md-8"><input class="form-control" /></div>
+                            </div>
+                            <div class='col-md-6 col-xs-12'>
+                                <b>3. Butir-butir Pegawai Penyiasat kes:</b>
+                                <br />
+                                <i class="col-md-4">Nama:</i><div class="col-md-8"><input class="form-control" /></div>
+                                <br />
+                                <i class="col-md-4">Jawatan:</i><div class="col-md-8"><input class="form-control" /></div>
+                                <br />
+                                <i class="col-md-4">No & Pangkat:</i><div class="col-md-8"><input class="form-control" /></div>
+                                <br />
+                                <i class="col-md-4">No. Tel:</i><div class="col-md-8"><input class="form-control" /></div>
+                            </div>
+                        </div>
+                    </li>*@
+
+                <li class="list-group-item">
+                    <table width="100%" style="border:none;">
+                        <thead style="border:none;">
+                            <tr>
+                                <th style="border:none;" colspan="2">2. Butir-butir pembawa simati:</th>
+                                <th style="border:none;" colspan="2">3. Butir-butir Pegawai Penyiasat kes:</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="padding-left: 10px; width:25%; border:none;"><i>Nama:</i></td>
+                                <td style="padding-left: 10px; width:25%; border:none;"></td>
+                                <td style="padding-left: 10px; width:25%; border:none;"><i>Nama:</i></td>
+                                <td style="padding-left: 10px; width:25%; border:none;"></td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 10px; width:25%; border:none;"><i>Jawatan:</i></td>
+                                <td style="padding-left: 10px; width:25%; border:none;"></td>
+                                <td style="padding-left: 10px; width:25%; border:none;"><i>Jawatan:</i></td>
+                                <td style="padding-left: 10px; width:25%; border:none;"></td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 10px; width:25%; border:none;"><i>No & Pangkat:</i></td>
+                                <td style="padding-left: 10px; width:25%; border:none;"></td>
+                                <td style="padding-left: 10px; width:25%; border:none;"><i>No & Pangkat:</i></td>
+                                <td style="padding-left: 10px; width:25%; border:none;"></td>
+                            </tr>
+                            <tr>
+                                <td style="padding-left: 10px; width:25%; border:none;"><i>No. Tel:</i></td>
+                                <td style="padding-left: 10px; width:25%; border:none;"></td>
+                                <td style="padding-left: 10px; width:25%; border:none;"><i>No. Tel:</i></td>
+                                <td style="padding-left: 10px; width:25%; border:none;"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </li>
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class='col-md-6 col-xs-12'>
+                            <b class="col-md-4">Balai Polis:</b><div class="col-md-8"><input class="form-control" /></div>
+                        </div>
+                        <div class='col-md-6 col-xs-12'>
+                            @if (@ViewData["noRptPolis"] != null && @ViewData["noRptPolis"] != "")
+                            {
+                                <b class="col-md-4">No. Rpt. Polis:</b><div class="col-md-8">@ViewData["noRptPolis"]</div>
+                            }
+                            else
+                            {
+                                <b class="col-md-4">No. Rpt. Polis:</b><div class="col-md-8"><input class="form-control" /></div>
+                            }
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class='col-md-6 col-xs-12'>
+                            <i>Tarikh dan masa tiba di Jabatan Forensik: </i>@item.DateOfRegistration
+                        </div>
+                        <div class='col-md-6 col-xs-12'>
+                            <i>Tarikh dan Masa dilapurkan mati: </i>@item.DateOfDeath
+                        </div>
+                    </div>
+                </li>
+
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class='col-md-8 col-xs-12'>
+                            @foreach (var item3 in Model.medicalassistantPenerimaList)
+                            {
+                                <b>4. Butir-butir Penolong Pegawai Perubatan Kaunter yang menerima kes:</b>
+                                <br />
+                                <i>Nama: </i>@item3.MaName
+                                <br />
+                                <i>Tarikh & Mmasa: </i>@item.DateOfRegistration
+                                <br />
+                                <i>Tandatangan: </i>
+                            }
+                        </div>
+                        <div class='col-md-6 col-xs-12'>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class='col-md-8 col-xs-12'>
+                            <table class="table">
+                                <thead><tr><th><b><i>Bil</i></b></th><th><b>Tanda-tanda kematian adalah berdasarkan:</b></th><th><b>Pegawai Polis</b></th><th><b>Peg. Perubatan/Pen. Peg. Perubatan</b></th></tr></thead>
+                                <tbody>
+                                    @{
+                                        int i = 1;
+                                    }
+                                    @foreach (var item2 in ViewBag.tableTanda)
+                                    {
+                                        <tr><td><i>@i</i></td><td><i>@item2</i></td><td><input class="form-control" /></td><td><input class="form-control" /></td></tr>
+                                        i++;
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class='col-md-4 col-xs-12'>
+                            <div style="border: 1px solid black; padding: 10px;">
+                                <u><b>Pemeriksaan Vital</b></u>
+                                <br />
+                                <div class="row">
+                                    <div class='col-md-12 col-xs-12'>
+                                        <label class="control-label col-md-6">Tekanan Darah</label><div class="col-md-6"><input type="checkbox" class="form-control" /></div>
+                                        <label class="control-label col-md-6">Kadar Nadi</label><div class="col-md-6"><input type="checkbox" class="form-control" /></div>
+                                        <label class="control-label col-md-6">Kadar Pernafasan</label><div class="col-md-6"><input type="checkbox" class="form-control" /></div>
+                                        <label class="control-label col-md-6">Suhu</label><div class="col-md-6"><input type="checkbox" class="form-control" /></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class='col-md-6 col-xs-12'>
+                            <div>
+                                <p>Tandatangan Pegawai Penyiasat:</p>
+                                <br />
+                                <textarea class="form-control"></textarea>
+                                <p>Tarikh & Masa : @DateTime.Now.ToString("yyyy-m-d H:mm:ss")</p>
+                            </div>
+                        </div>
+                        <div class='col-md-6 col-xs-12'>
+                            <p>Disokong Oleh:</p>
+                            <br />
+                            <textarea class="form-control"></textarea>
+                            <p>Pegawai Perubatan/ Pen. Peg. Perubatan Jabatan Perubatan Forensik Sarawak.</p>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+
+    </div>
+</div>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    $('input[type="checkbox"]').attr("disabled", true);
+    $('input[type="radio"]').attr("disabled", true);
+</script>

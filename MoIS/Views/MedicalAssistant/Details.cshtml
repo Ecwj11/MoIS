@@ -1,0 +1,38 @@
+﻿@model MoIS.Models.medicalassistant
+
+@{
+
+    if (Session["maID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Medical Stuff</h4>
+    <h5>@Model.Username</h5>
+    <hr />
+    <div class="container" style="width:60%;margin-top:2%">
+
+        @if (Model != null)
+        {
+          
+        <ul class="list-group">
+            <li class="list-group-item active">Medical Stuff Information</li>
+            <li class="list-group-item">Medical Stuff Username : <b>@Model.Username</b></li>
+            <li class="list-group-item">Medical Stuff Name : <b>@Model.MaName</b></li>
+            <li class="list-group-item">IC NO : <b>@Model.MaID</b></li>
+        </ul>
+        }
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-default" })
+</p>
+
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

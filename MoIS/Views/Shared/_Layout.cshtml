@@ -5,59 +5,90 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
-    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Site.css?v=1.04" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <link href="~/Plugins/lightbox2/dist/css/lightbox.min.css" rel="stylesheet" type="text/css" />
+    <style>
+        html {
+            position: relative;
+            min-height: 100%;
+        }
+
+        body {
+            margin: 0 0 100px;
+            /* bottom = footer height */
+            padding: 25px;
+            overflow-x: hidden;
+        }
+
+        footer {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 100px;
+            width: 100%;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        .align_center {
+            text-align: center !important;
+        }
+
+        .pagebreak {
+            page-break-before: always;
+        }
+        .tableNoneBorder table tbody tr td {
+            border: none !important;
+        }
+
+    </style>
 </head>
-<style>
-    html {
-        position: relative;
-        min-height: 100%;
-    }
 
-    body {
-        margin: 0 0 100px;
-        /* bottom = footer height */
-        padding: 25px;
-        overflow-x: hidden;
-    }
-
-    footer {
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        height: 100px;
-        width: 100%;
-        overflow: hidden;
-        text-align: center;
-    }
-
-    table, th, td {
-        border: 1px solid black;
-    }
-
-    .align_center {
-        text-align: center !important;
-    }
-</style>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
-                </button>-->
-                @Html.ActionLink("MoIS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </button>
+                @*Html.ActionLink("MoIS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+                <p class="navbar-brand">MoIS</p>
+                @if (Session["maID"] != null)
+                {
+                    if (Session["role2"] != null)
+                    {
+                        @Html.ActionLink("Home", "Index", "MedicalAssistant", new { area = "" }, new { @class = "navbar-brand" })
+                        @Html.ActionLink("Deceased Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    }
+
+                    @Html.ActionLink("Password Management", "ChangePassword", "MedicalAssistant", new { area = "" }, new { @class = "navbar-brand" })
+
+                }
+            </div>
+            <div class="navbar-header pull-right">
+                @if (Session["maID"] != null)
+                {
+                    <a href="#" class="navbar-brand">Welcome, @Session["username"]</a>
+                    <a href="@Url.Action("LogOut","Login")" class="navbar-brand"><i class="fas fa-sign-out-alt"></i>Logout</a>
+                }
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav"></ul>
-
             </div>
         </div>
     </div>
-   
+
     <div class="container body-content" style="margin-top: 3em;">
         @if (Session["success"] != null)
         {
@@ -82,9 +113,12 @@
         </footer>
     </div>
 
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.js"
             integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
             crossorigin="anonymous"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Plugins/lightbox2/dist/js/lightbox-plus-jquery.min.js"></script>
+    
 </body>
 </html>

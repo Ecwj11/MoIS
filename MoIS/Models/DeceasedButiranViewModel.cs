@@ -15,7 +15,7 @@ using System.ComponentModel.DataAnnotations;
         public string DeceasedName { get; set; }
         public string Address { get; set; }
         public Nullable<int> Postcode { get; set; }
-        [DisplayName("No. Kan Pengenalan")]
+        [DisplayName("No. Kad Pengenalan / Pasport")]
         public string NoIC { get; set; }
         public string Race { get; set; }
         public string Religion { get; set; }

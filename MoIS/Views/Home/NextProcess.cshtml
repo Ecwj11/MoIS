@@ -10,236 +10,215 @@
     }
 </style>
 @{
-    ViewBag.Title = "NextProcess";
+    ViewBag.Title = "Release Body Process";
 }
 
-<h2>NextProcess</h2>
+<h2>Release Body Process</h2>
   
 
-    @using (Html.BeginForm("NextProcess", "Home", FormMethod.Post))
+    @using (Html.BeginForm("NextProcessPost", "Home", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <div class="form-group">
-            <label style="text-align:left; font-size:20px;" class="control-label col-md-2">Edit Data?</label>
-                <input style="text-align:left;" class="form-control" type="checkbox" id="editData" name="editData" />
-        </div>
-        <fieldset @ViewData["fieldsetDisabled"]>
-            <div class="row">
-                <div class="col-md-6">
-                    <h4>A) Butiran Warisan</h4>
+<div class="form-horizontal">
+    <input type="hidden" value="@ViewData["eId"]" name="eId" />
+    <div class="form-group">
+        <label style="text-align:left; font-size:20px;" class="control-label col-md-2">Edit Data?</label>
+        <input style="text-align:left;" class="form-control" type="checkbox" id="editData" name="editData" />
+    </div>
+    <fieldset @ViewData["fieldsetDisabled"]>
+        <div class="row">
+            <div class="col-md-6">
+                <h4>A) Butiran Warisan</h4>
 
-                    <hr />
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.WarisName, htmlAttributes: new { @class = "control-label col-md-4" })
-                        <div class="col-md-8">
-                            @Html.EditorFor(model => model.butiranwari.WarisName, new { htmlAttributes = new { @class = "form-control", required = "required" } })
-                            @Html.ValidationMessageFor(model => model.butiranwari.WarisName, "", new { @class = "text-danger" })
-                        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.WarisName, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.butiranwari.WarisName, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.butiranwari.WarisName, "", new { @class = "text-danger" })
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.WarisNoIC, htmlAttributes: new { @class = "control-label col-md-4" })
-                        <div class="col-md-8">
-                            @Html.EditorFor(model => model.butiranwari.WarisNoIC, new { htmlAttributes = new { @class = "form-control", required = "required" } })
-                            @Html.ValidationMessageFor(model => model.butiranwari.WarisNoIC, "", new { @class = "text-danger" })
-                        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.WarisNoIC, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.butiranwari.WarisNoIC, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.butiranwari.WarisNoIC, "", new { @class = "text-danger" })
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Alamat, htmlAttributes: new { @class = "control-label col-md-4" })
-                        <div class="col-md-8">
-                            @Html.EditorFor(model => model.butiranwari.Alamat, new { htmlAttributes = new { @class = "form-control", required = "required" } })
-                            @Html.ValidationMessageFor(model => model.butiranwari.Alamat, "", new { @class = "text-danger" })
-                        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Alamat, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.butiranwari.Alamat, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.butiranwari.Alamat, "", new { @class = "text-danger" })
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.PhoneNo, htmlAttributes: new { @class = "control-label col-md-4" })
-                        <div class="col-md-8">
-                            @Html.EditorFor(model => model.butiranwari.PhoneNo, new { htmlAttributes = new { @class = "form-control", required = "required" } })
-                            @Html.ValidationMessageFor(model => model.butiranwari.PhoneNo, "", new { @class = "text-danger" })
-                        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PhoneNo, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.butiranwari.PhoneNo, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.butiranwari.PhoneNo, "", new { @class = "text-danger" })
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Perhubungan, htmlAttributes: new { @class = "control-label col-md-4" })
-                        <div class="col-md-8">
-                            <select id="Perhubungan" name="Perhubungan" class="form-control" required>
-                                <option value="">-------Select List------</option>
-                                @foreach (var value in ViewBag.perhubunganSelect)
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Perhubungan, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        <select id="Perhubungan" name="Perhubungan" class="form-control" required>
+                            <option value="">-------Select List------</option>
+                            @foreach (var value in ViewBag.perhubunganSelect)
+                            {
+                                if (@Model.butiranwari.Perhubungan == @value)
                                 {
-                                    if (@Model.butiranwari.Perhubungan == @value)
-                                    {
-                                        <option value="@value" selected>@value</option>
-                                    }
-                                    else
-                                    {
-                                        <option value="@value">@value</option>
-                                    }
+                                    <option value="@value" selected>@value</option>
                                 }
-                            </select>
-                        </div>
+                                else
+                                {
+                                    <option value="@value">@value</option>
+                                }
+                            }
+                        </select>
                     </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.DateTimeRequest, htmlAttributes: new { @class = "control-label col-md-4" })
-                        <div class="col-md-8">
-                            @Html.EditorFor(model => model.butiranwari.DateTimeRequest, new { htmlAttributes = new { @class = "form-control datetimepicker", required = "required" } })
-                            @Html.ValidationMessageFor(model => model.butiranwari.DateTimeRequest, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.DateTimeReturn, htmlAttributes: new { @class = "control-label col-md-4" })
-                        <div class="col-md-8">
-                            @Html.EditorFor(model => model.butiranwari.DateTimeReturn, new { htmlAttributes = new { @class = "form-control datetimepicker", required = "required" } })
-                            @Html.ValidationMessageFor(model => model.butiranwari.DateTimeReturn, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
                 </div>
-                <div class="col-md-6">
-                    <h4>B) Pengecaman Semula</h4>
-                    <hr />
-                    <h5><u>Pengecaman Berdasarkan Kepada:</u></h5>
-                    <div class="form-group">
-                        <label class="control-label col-md-4">Label Mayat</label>
-                        <div class="col-md-8">
-                            <input type="checkbox" name="labelMayat" value="1" @if (@Model.pengecamansemula.LabelMayat == 1) { @ViewData["checked"] } />
-                        </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label class="control-label col-md-4">Pengecaman Muka Simati</label>
-                        <div class="col-md-8">
-                            <input type="checkbox" name="pengecamanMukaSimati" value="1" @if (@Model.pengecamansemula.PengecamanMukaSimati == 1) { @ViewData["checked"] } />
-                        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DateTimeRequest, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.butiranwari.DateTimeRequest, new { htmlAttributes = new { @class = "form-control datetimepicker", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.butiranwari.DateTimeRequest, "", new { @class = "text-danger" })
                     </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-md-4">Pakaian / Barang Kemas/ Lain-lain Artifak</label>
-                        <div class="col-md-8">
-                            <input type="checkbox" name="pakaian" value="1" @if (@Model.pengecamansemula.Pakaian == 1) { @ViewData["checked"] } />
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="control-label col-md-4">Lain-lain Cara:</label>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-8">
-                            <input type="checkbox" name="tandaFizikal" value="Tanda-tanda Fizikal" @if (@ViewData["tandaFizikal"] == "1") { @ViewData["checked"] } /> Tanda-tanda Fizikal
-                            <br />
-                            <input type="checkbox" name="tandaTatoo" value="Tanda Tatoo" @if (@ViewData["tandaTatoo"] == "1") { @ViewData["checked"] } />Tanda Tatoo
-                            <br />
-                            <input type="checkbox" name="capJari" value="Cap Jari" @if (@ViewData["capJari"] == "1") { @ViewData["checked"] } />Cap Jari
-                            <br />
-                            <input type="checkbox" name="odontologi" value="Odontologi" @if (@ViewData["odontologi"] == "1") { @ViewData["checked"] } />Odontologi
-                            <br />
-                            <input type="checkbox" name="dna" value="DNA" @if (@ViewData["dna"] == "1") { @ViewData["checked"] } />DNA
-                            <br />
-                            <input type="checkbox" name="" value="" @if (@ViewData["lain_lain"] != "") { @ViewData["checked"] } />Lain-Lain
-                            <br />
-                            <textarea class="form-control" placeholder="Lain-lain" name="lain-lain">@ViewData["lain_lain_string"]</textarea>
-                        </div>
-                    </div>
-
                 </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DateTimeReturn, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.butiranwari.DateTimeReturn, new { htmlAttributes = new { @class = "form-control datetimepicker", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.butiranwari.DateTimeReturn, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
             </div>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <h4>C) HARTA BENDA SIMATI (UNTUK KES BID SAHAJA)</h4>
-                    <div class="row">
-                        <label class="control-label col-md-4">
-                            ADA
-                            <input type="radio" id="hBYes" name="hartaBendaTick" @ViewData["hartaBendaYes"] value="1" />
-                        </label>
-                        <label class="control-label col-md-4">
-                            TIADA
-                            <input type="radio" id="hBNo" name="hartaBendaTick" @ViewData["hartaBendaNo"] value="0" />
-                        </label>
+            <div class="col-md-6">
+                <h4>B) Pengecaman Semula</h4>
+                <hr />
+                <h5><u>Pengecaman Berdasarkan Kepada:</u></h5>
+                <div class="form-group">
+                    <label class="control-label col-md-4">Label Mayat</label>
+                    <div class="col-md-8">
+                        <input type="checkbox" name="labelMayat" value="1" @if (@Model.pengecamansemula.LabelMayat == 1) { @ViewData["checked"] } />
                     </div>
-                    <br />
-                    <div class="row" id="hartaBendaInput">
-                        <p>JIKA ADA (NYATAKAN)</p>
-                        @{
-                            int j = 1;
-                            var countT1 = 6;
-                            var countT2 = 6;
-                            int countHB = ViewBag.hartaBenda.Length;
-                            if (countHB > 6)
-                            {
-                                countT2 = 1 + countHB;
-                            }
-                            else
-                            {
-                                countT1 = 6 - countHB;
-                            }
-                        }
-                        @if (@ViewData["hartaBenda"] != "" && @ViewData["hartaBenda"] != null)
-                        {
+                </div>
 
-                            if (countHB > 6)
-                            {
-                                <div class="col-md-6">
-                                    @foreach (var item in @ViewBag.hartaBenda)
-                                    {
-                                        <label class="control-label col-md-4">@j) </label>
-                                        <div class="col-md-8">
-                                            <input name="hartaBenda_@j" class="form-control" value="@item" />
-                                        </div>
-                                        j++;
-                                    }
-                                </div>
-                                <div class="col-md-6">
-                                    @for (int i = countT2; i <= 12; i++)
-                                    {
-                                        <label class="control-label col-md-4">@i) </label>
-                                        <div class="col-md-8">
-                                            <input name="hartaBenda_@i" class="form-control" />
-                                        </div>
-                                    }
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="col-md-6">
-                                    @foreach (var item in @ViewBag.hartaBenda)
-                                    {
-                                        <label class="control-label col-md-4">@j) </label>
-                                        <div class="col-md-8">
-                                            <input name="hartaBenda_@j" class="form-control" value="@item" />
-                                        </div>
-                                        j++;
-                                    }
-                                    @for (int i = (1 + countHB); i <= 6; i++)
-                                    {
-                                        <label class="control-label col-md-4">@i) </label>
-                                        <div class="col-md-8">
-                                            <input name="hartaBenda_@i" class="form-control" />
-                                        </div>
-                                    }
-                                </div>
-                                <div class="col-md-6">
-                                    @for (int i = 7; i <= 12; i++)
-                                    {
-                                        <label class="control-label col-md-4">@i) </label>
-                                        <div class="col-md-8">
-                                            <input name="hartaBenda_@i" class="form-control" />
-                                        </div>
-                                    }
-                                </div>
-                            }
+                <div class="form-group">
+                    <label class="control-label col-md-4">Pengecaman Muka Simati</label>
+                    <div class="col-md-8">
+                        <input type="checkbox" name="pengecamanMukaSimati" value="1" @if (@Model.pengecamansemula.PengecamanMukaSimati == 1) { @ViewData["checked"] } />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-4">Pakaian / Barang Kemas/ Lain-lain Artifak</label>
+                    <div class="col-md-8">
+                        <input type="checkbox" name="pakaian" value="1" @if (@Model.pengecamansemula.Pakaian == 1) { @ViewData["checked"] } />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-4">Lain-lain Cara:</label>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-8">
+                        <input type="checkbox" name="tandaFizikal" value="Tanda-tanda Fizikal" @if (@ViewData["tandaFizikal"] == "1") { @ViewData["checked"] } /> Tanda-tanda Fizikal
+                        <br />
+                        <input type="checkbox" name="tandaTatoo" value="Tanda Tatoo" @if (@ViewData["tandaTatoo"] == "1") { @ViewData["checked"] } />Tanda Tatoo
+                        <br />
+                        <input type="checkbox" name="capJari" value="Cap Jari" @if (@ViewData["capJari"] == "1") { @ViewData["checked"] } />Cap Jari
+                        <br />
+                        <input type="checkbox" name="odontologi" value="Odontologi" @if (@ViewData["odontologi"] == "1") { @ViewData["checked"] } />Odontologi
+                        <br />
+                        <input type="checkbox" name="dna" value="DNA" @if (@ViewData["dna"] == "1") { @ViewData["checked"] } />DNA
+                        <br />
+                        <input type="checkbox" name="" value="" @if (@ViewData["lain_lain"] != "") { @ViewData["checked"] } />Lain-Lain
+                        <br />
+                        <textarea class="form-control" placeholder="Lain-lain" name="lain-lain">@ViewData["lain_lain_string"]</textarea>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h4>C) HARTA BENDA SIMATI (UNTUK KES BID SAHAJA)</h4>
+                <div class="row">
+                    <label class="control-label col-md-4">
+                        ADA
+                        <input type="radio" id="hBYes" name="hartaBendaTick" @ViewData["hartaBendaYes"] value="1" />
+                    </label>
+                    <label class="control-label col-md-4">
+                        TIADA
+                        <input type="radio" id="hBNo" name="hartaBendaTick" @ViewData["hartaBendaNo"] value="0" />
+                    </label>
+                </div>
+                <br />
+                <div class="row" id="hartaBendaInput">
+                    <p>JIKA ADA (NYATAKAN)</p>
+                    @{
+                        int j = 1;
+                        var countT1 = 6;
+                        var countT2 = 6;
+                        int countHB = ViewBag.hartaBenda.Length;
+                        if (countHB > 6)
+                        {
+                            countT2 = 1 + countHB;
+                        }
+                        else
+                        {
+                            countT1 = 6 - countHB;
+                        }
+                    }
+                    @if (@ViewData["hartaBenda"] != "" && @ViewData["hartaBenda"] != null)
+                    {
+
+                        if (countHB > 6)
+                        {
+                            <div class="col-md-6">
+                                @foreach (var item in @ViewBag.hartaBenda)
+                                {
+                                    <label class="control-label col-md-4">@j) </label>
+                                    <div class="col-md-8">
+                                        <input name="hartaBenda_@j" class="form-control" value="@item" />
+                                    </div>
+                                    j++;
+                                }
+                            </div>
+                            <div class="col-md-6">
+                                @for (int i = countT2; i <= 12; i++)
+                                {
+                                    <label class="control-label col-md-4">@i) </label>
+                                    <div class="col-md-8">
+                                        <input name="hartaBenda_@i" class="form-control" />
+                                    </div>
+                                }
+                            </div>
                         }
                         else
                         {
                             <div class="col-md-6">
-                                @for (int i = 1; i <= 6; i++)
+                                @foreach (var item in @ViewBag.hartaBenda)
+                                {
+                                    <label class="control-label col-md-4">@j) </label>
+                                    <div class="col-md-8">
+                                        <input name="hartaBenda_@j" class="form-control" value="@item" />
+                                    </div>
+                                    j++;
+                                }
+                                @for (int i = (1 + countHB); i <= 6; i++)
                                 {
                                     <label class="control-label col-md-4">@i) </label>
                                     <div class="col-md-8">
@@ -257,75 +236,97 @@
                                 }
                             </div>
                         }
-                    </div>
-                    <hr />
+                    }
+                    else
+                    {
+                        <div class="col-md-6">
+                            @for (int i = 1; i <= 6; i++)
+                            {
+                                <label class="control-label col-md-4">@i) </label>
+                                <div class="col-md-8">
+                                    <input name="hartaBenda_@i" class="form-control" />
+                                </div>
+                            }
+                        </div>
+                        <div class="col-md-6">
+                            @for (int i = 7; i <= 12; i++)
+                            {
+                                <label class="control-label col-md-4">@i) </label>
+                                <div class="col-md-8">
+                                    <input name="hartaBenda_@i" class="form-control" />
+                                </div>
+                            }
+                        </div>
+                    }
                 </div>
-                <div class="col-md-6">
-                    <h4>D) PERMOHONAN PENYIMPANAN **MAYAT / ANGGOTA BADAN / JANIN</h4>
-                    <div class="row">
-                        <label class="control-label col-md-4">
-                            YA
-                            <input type="radio" id="pPMYes" name="simpanMayatTick" value="1" @ViewData["pMYes"] />
-                        </label>
-                        <label class="control-label col-md-4">
-                            TIDAK
-                            <input type="radio" id="pPMNo" name="simpanMayatTick" value="0" @ViewData["pMNo"] />
-                        </label>
+                <hr />
+            </div>
+            <div class="col-md-6">
+                <h4>D) PERMOHONAN PENYIMPANAN **MAYAT / ANGGOTA BADAN / JANIN</h4>
+                <div class="row">
+                    <label class="control-label col-md-4">
+                        YA
+                        <input type="radio" id="pPMYes" name="simpanMayatTick" value="1" @ViewData["pMYes"] />
+                    </label>
+                    <label class="control-label col-md-4">
+                        TIDAK
+                        <input type="radio" id="pPMNo" name="simpanMayatTick" value="0" @ViewData["pMNo"] />
+                    </label>
+                </div>
+                <div class="" id="simpanMayatField">
+                    <label class="control-label col-md-4">DARI TARIKH: </label>
+                    <div class="col-md-8">
+                        <input id="fromDate" name="fromDate" class="form-control datetimepicker" value="@Model.permohonansimpanmayat.CreatedDate" />
                     </div>
-                    <div class="" id="simpanMayatField">
-                        <label class="control-label col-md-4">DARI TARIKH: </label>
-                        <div class="col-md-8">
-                            <input id="fromDate" name="fromDate" class="form-control datetimepicker" value="@Model.permohonansimpanmayat.PSMRequestDate" />
-                        </div>
-                        <label class="control-label col-md-4">HINGGA TARIKH: </label>
-                        <div class="col-md-8">
-                            <input id="toDate" name="toDate" class="form-control datetimepicker" />
-                        </div>
-                        <label class="control-label col-md-4">TEMPOH MASA: </label>
-                        <div class="col-md-8">
-                            <input id="tempohMasa" name="duration" class="form-control" value="@Model.permohonansimpanmayat.Duration" />
-                        </div>
-                        <label class="control-label col-md-4">CATATAN: </label>
-                        <div class="col-md-8">
-                            <textarea id="" name="catatan" class="form-control">@Model.permohonansimpanmayat.Catatan</textarea>
-                        </div>
+                    <label class="control-label col-md-4">HINGGA TARIKH: </label>
+                    <div class="col-md-8">
+                        <input id="toDate" name="toDate" class="form-control datetimepicker" value="@Model.permohonansimpanmayat.PSMRequestDate" />
+                    </div>
+                    <label class="control-label col-md-4">TEMPOH MASA: </label>
+                    <div class="col-md-8">
+                        <input id="tempohMasa" name="duration" class="form-control" value="@Model.permohonansimpanmayat.Duration" />
+                    </div>
+                    <label class="control-label col-md-4">CATATAN: </label>
+                    <div class="col-md-8">
+                        <textarea id="" name="catatan" class="form-control">@Model.permohonansimpanmayat.Catatan</textarea>
                     </div>
                 </div>
+            </div>
 
-                <div class="col-md-6">
-                    <h4>E) PERMOHONAN MENGGUNAKAN KEMUDAHAN BILIK PENGURUSAN MAYAT</h4>
-                    <div class="row">
-                        <label class="control-label col-md-4">
-                            ADA
-                            <input type="radio" id="bMYes" name="bilikMayatTick" value="1" @ViewData["pMYes"] />
-                        </label>
-                        <label class="control-label col-md-4">
-                            TIADA
-                            <input type="radio" id="bMNo" name="bilikMayatTick" value="0" @ViewData["pMNo"] />
-                        </label>
+            <div class="col-md-6">
+                <h4>E) PERMOHONAN MENGGUNAKAN KEMUDAHAN BILIK PENGURUSAN MAYAT</h4>
+                <div class="row">
+                    <label class="control-label col-md-4">
+                        ADA
+                        <input type="radio" id="bMYes" name="bilikMayatTick" value="1" @ViewData["pMYes"] />
+                    </label>
+                    <label class="control-label col-md-4">
+                        TIADA
+                        <input type="radio" id="bMNo" name="bilikMayatTick" value="0" @ViewData["pMNo"] />
+                    </label>
+                </div>
+                <div class="" id="simpanMayatField">
+                    <label class="control-label col-md-10">BILIK PENGURUSAN MAYAT UNTUK ORANG ISLAM: </label>
+                    <div class="col-md-2">
+                        <input id="isIslam" type="radio" name="islam" @ViewData["isIslam"] />
                     </div>
-                    <div class="" id="simpanMayatField">
-                        <label class="control-label col-md-10">BILIK PENGURUSAN MAYAT UNTUK ORANG ISLAM: </label>
-                        <div class="col-md-2">
-                            <input id="isIslam" type="radio" name="islam" @ViewData["isIslam"] />
-                        </div>
-                        <label class="control-label col-md-10">BILIK PENGURUSAN MAYAT UNTUK ORANG BUKAN ISLAM: </label>
-                        <div class="col-md-2">
-                            <input id="notIslam" type="radio" name="islam" @ViewData["notIslam"] />
-                        </div>
+                    <label class="control-label col-md-10">BILIK PENGURUSAN MAYAT UNTUK ORANG BUKAN ISLAM: </label>
+                    <div class="col-md-2">
+                        <input id="notIslam" type="radio" name="islam" @ViewData["notIslam"] />
                     </div>
                 </div>
             </div>
-        </fieldset>
-            <input value="@DateTime.Today" id="curDateTime" type="hidden" />
-            <div class="form-group">
-                <div class="col-md-offset-4 col-md-12">
-                    <input type="submit" value="Save" id="btnSubmit" class="btn btn-success" @ViewData["fieldsetDisabled"]/>
-                    @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-default backBtn" })
-                </div>
-            </div>
-       
+        </div>
+    </fieldset>
+    <input value="@DateTime.Today" id="curDateTime" type="hidden" />
+    <div class="form-group">
+        <div class="col-md-offset-4 col-md-12">
+            <input type="submit" value="Save" id="btnSubmit" class="btn btn-success" @ViewData["fieldsetDisabled"] />
+            @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-default backBtn" })
+        </div>
     </div>
+
+</div>
     }
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
@@ -333,7 +334,6 @@
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 <script src="@Url.Content("~/Scripts/jquery.datetimepicker.full.min.js")"></script>
 <script>
-    
     $('#editData').click(function () {
         var isChecked = $('#editData:checked').length > 0;
         var isCheckedHartaBenda = $('#hBYes:checked').length > 0;
@@ -357,9 +357,6 @@
         }
         
     });
-    if (document.getElementById('editData').checked) {
-        console.log(123);
-    }
     $('.datetimepicker').datetimepicker({
         showSecond: true,
         format: 'm/d/Y H:i:s'

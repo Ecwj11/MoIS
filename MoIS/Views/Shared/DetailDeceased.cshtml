@@ -1,0 +1,52 @@
+﻿@model MoIS.Models.deceased
+
+@{
+    ViewBag.Title = "DetailDeceaesed";
+}
+
+<div>
+    <h4>Deceased</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DeceasedName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeceasedName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NoIC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NoIC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfWad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfWad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfDeath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfDeath)
+        </dd>
+
+    </dl>
+    <table style="border: 1px solid black;">
+        <thead style="border: 1px solid black;">
+            <tr style="border: 1px solid black;"><th style="border: 1px solid black;">A</th><th>B</th></tr>
+        </thead>
+        <tbody style="border: 1px solid black;">
+            <tr style="border: 1px solid black;"><td style="border: 1px solid black;">123</td><td>456</td></tr>
+        </tbody>
+    </table>
+</div>

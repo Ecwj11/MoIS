@@ -1,8 +1,8 @@
 ﻿@model MoIS.Models.DetailsViewModel
-
+<link href="@Url.Content("~/Content/jquery.datetimepicker.css")" rel="stylesheet" type="text/css" />
 @{
 
-    if (Session["maID"] == null)
+    if (Session["maID"] == null && @ViewData["print"] != "print")
     {
         Response.Redirect("~/Login/Index");
     }
@@ -16,19 +16,53 @@
         padding-left: 10px;
     }
 
-    .tableNoneBorder table tbody tr td {
-        border: none !important;
+    .container input {
+        display:none;
+    }
+    .container select {
+        display: none;
+    }
+    .container input[type=checkbox] {
+        display: inline;
+    }
+
+    .container input[type=radio] {
+        display: inline;
     }
 </style>
+@if (@ViewData["print"] == "print")
+{
+    <style>
+        .navbar-fixed-top {
+            display: none;
+        }
+        #internalExDiv input {
+            height: 25px;
+        }
+    </style>
+}
+else
+{
+    <style>
+        .container {
+            margin-top: 0px;
+            width: 60%;
+        }
+    </style>
+}
 <h2 class="align_center">AUTOPSY PROTOCOL</h2>
 
 <div>
     <hr />
-    <div class="container" style="width:60%;margin-top:2%">
-        <p>
-            @Html.ActionLink("Convert View To PDF", "PrintViewToPdf/" + @ViewData["deceasedId"] + "/AutopsyProtocol", "", htmlAttributes: new { @class = "btn btn-primary" })
-            @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-default" })
-        </p>
+    <div class="container" style="width:100%;margin-top:2%">
+        @if (@ViewData["print"] != "print")
+        {
+            <p>
+                @Html.ActionLink("Convert View To PDF", "PrintViewToPdf", "Home", new {eId = @ViewData["deceasedId"], page = "AutopsyProtocol" }, htmlAttributes: new { @class = "btn btn-primary" })
+                @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-default" })
+            </p>
+        }
+
         <div class="row">
             <div class="col-md-6">
                 <pre style="list-style: none;">AUTOPSY PROTOCOL
@@ -38,13 +72,22 @@ KUCHING, SARAWAK</pre>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label class="col-md-7">POLICE STATION </label>:________________
+                    <label class="col-md-7">POLICE STATION :</label>
+                    <div class="col-md-5">
+                        <input class="form-control" />
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-7">POLICE REPORT NO </label>:________________
+                    <label class="col-md-7">POLICE REPORT NO :</label>
+                    <div class="col-md-5">
+                        <input class="form-control" />
+                    </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-7">AUTOPSY NO </label>:________________
+                    <label class="col-md-7">AUTOPSY NO :</label>
+                    <div class="col-md-5">
+                        <input class="form-control" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -52,78 +95,100 @@ KUCHING, SARAWAK</pre>
         <table style="width: 100%;">
             @foreach (var item in Model.deceasedList)
             {
-            <tbody>
-                <tr><td style="width:40%;">Name of Deceased : @item.DeceasedName</td><td style="width:30%;">Age : @item.Age</td><td style="width:30%;">Gender : @item.Gender</td></tr>
-                <tr><td style="width:40%;">IC No / Passport No : @item.NoIC</td><td style="width:30%;">Nationality : @item.Nationality</td><td style="width:30%;">Race : @item.Race</td></tr>
-                <tr><td style="width:40%;">BID / DIC / Hospitalised </td><td style="width:30%;">Hospital Reg. No : @item.NoOfHospitalRegister</td><td style="width:30%;">Ward : @item.WadUnit</td></tr>
-                <tr><td style="width:100%;" colspan="3">Date / Time of Admission to Hospital : @item.DateOfRegistration</td></tr>
-                <tr><td style="width:100%;" colspan="3">Date / Time Arrived at forensic Unit : @item.DateOfReceived</td></tr>
-                <tr><td style="width:100%;" colspan="3">Date / Time of Post Mortem : @ViewData["dateBs"]</td></tr>
-                <tr><td style="width:100%;" colspan="3">Autopsy Performed By : @ViewData["medicalassistantBS"]</td></tr>
-            </tbody>
+                <tbody>
+                    <tr><td style="width:40%;"><b>Name of Deceased :</b> @item.DeceasedName</td><td style="width:30%;"><b>Age : @item.Age</b></td><td style="width:30%;"><b>Gender :</b> @item.Gender</td></tr>
+                    <tr><td style="width:40%;"><b>IC No / Passport No :</b> @item.NoIC</td><td style="width:30%;"><b>Nationality : @item.Nationality</b></td><td style="width:30%;"><b>Race :</b> @item.Race</td></tr>
+                    <tr><td style="width:40%;"><b class="col-md-6">BID / DIC / Hospitalised</b><div class="col-md-6"><input class="form-control" /></div> </td><td style="width:30%;"><b>Hospital Reg. No : @item.NoOfHospitalRegister</b></td><td style="width:30%;"><b>Ward :</b> @item.WadUnit</td></tr>
+                    <tr><td style="width:100%;" colspan="3"><b>Date / Time of Admission to Hospital :</b> @item.DateOfRegistration</td></tr>
+                    <tr><td style="width:100%;" colspan="3"><b>Date / Time Arrived at forensic Unit :</b> @item.DateOfReceived</td></tr>
+                    @if (@ViewData["dateBs"] == null || @ViewData["dateBs"] == "")
+                    {
+                        <tr><td style="width:100%;" colspan="3"><b class="col-md-5" style="padding-left: 0px;">Date / Time of Post Mortem :</b> <div class="col-md-7"><input class="form-control datetimepicker" /></div></td></tr>
+                    }
+                    else
+                    {
+                        <tr><td style="width:100%;" colspan="3"><b>Date / Time of Post Mortem :</b> @ViewData["dateBs"]</td></tr>
+                    }
+                    @if (@ViewData["medicalassistantBS"] == null || @ViewData["medicalassistantBS"] == "")
+                    {
+                        <tr><td style="width:100%;" colspan="3"><b class="col-md-5" style="padding-left: 0px;">Autopsy Performed By :</b> <div class="col-md-7"><input class="form-control" /></div></td></tr>
+                    }
+                    else
+                    {
+                        <tr><td style="width:100%;" colspan="3"><b>Autopsy Performed By :</b> @ViewData["medicalassistantBS"]</td></tr>
+                    }
+                </tbody>
             }
         </table>
         <table style="width: 100%;">
             <tbody>
-                <tr><td style="width:20%;" class="align_center" rowspan="9">Assisted By</td><td style="width:30%;" rowspan="3">Assitant Medical Officer (PPP) </td><td style="width:40%;">1.</td></tr>
-                <tr><td style="width:40%;">2.</td></tr>
-                <tr><td style="width:40%;">3.</td></tr>
-                <tr><td style="width:20%;" rowspan="3">Pembantu Perawatan Kesihatan </td><td style="width:40%;">1.</td></tr>
-                <tr><td style="width:40%;">2.</td></tr>
-                <tr><td style="width:40%;">3.</td></tr>
-                <tr><td style="width:20%;" rowspan="3">Other officer (Mo / Ho) </td><td style="width:40%;">1.</td></tr>
-                <tr><td style="width:40%;">2.</td></tr>
-                <tr><td style="width:40%;">3.</td></tr>
+                <tr><td style="width:20%;" class="align_center" rowspan="9">Assisted By</td><td style="width:30%;" rowspan="3">Assitant Medical Officer (PPP) </td><td style="width:40%;"><label class="control-label col-md-1">1.</label><div class="col-md-10"><input class="form-control" /></div></td></tr>
+                <tr><td style="width:40%;"><label class="control-label col-md-1">2.</label><div class="col-md-10"><input class="form-control" /></div></td></tr>
+                <tr><td style="width:40%;"><label class="control-label col-md-1">3.</label><div class="col-md-10"><input class="form-control" /></div></td></tr>
+                <tr><td style="width:20%;" rowspan="3">Pembantu Perawatan Kesihatan </td><td style="width:40%;"><label class="control-label col-md-1">1.</label><div class="col-md-10"><input class="form-control" /></div></td></tr>
+                <tr><td style="width:40%;"><label class="control-label col-md-1">2.</label><div class="col-md-10"><input class="form-control" /></div></td></tr>
+                <tr><td style="width:40%;"><label class="control-label col-md-1">3.</label><div class="col-md-10"><input class="form-control" /></div></td></tr>
+                <tr><td style="width:20%;" rowspan="3">Other officer (Mo / Ho) </td><td style="width:40%;"><label class="control-label col-md-1">1.</label><div class="col-md-10"><input class="form-control" /></div></td></tr>
+                <tr><td style="width:40%;"><label class="control-label col-md-1">2.</label><div class="col-md-10"><input class="form-control" /></div></td></tr>
+                <tr><td style="width:40%;"><label class="control-label col-md-1">3.</label><div class="col-md-10"><input class="form-control" /></div></td></tr>
             </tbody>
         </table>
         <br />
-        <b>Body Identified By :</b>
-        <div class="tableNoneBorder">
-            <table style="width: 100%;">
-                @foreach (var item3 in Model.butiranwariList)
-                {
-                    <tbody>
-                        <tr><td colspan="2"><b>1 Name of Next of Kin : @item3.WarisName</b></td></tr>
-                        <tr><td>MyKad / Passport No : @item3.WarisNoIC</td><td>Relationship : @item3.Perhubungan</td></tr>
-                        <tr><td colspan="2">Address : @item3.Alamat</td></tr>
-                        <tr><td>Tel. No : @item3.PhoneNo</td><td><p>___________</p><small>(Signature / Thumb print)</small></td></tr>
-                    </tbody>
-                    <tbody>
-                        <tr><td colspan="2"><b>2 Name of Police Officer : _____________________________________________</b></td></tr>
-                        <tr><td colspan="2">Rank :</td></tr>
-                        <tr><td>No : </td><td><p>___________</p><small>(Signature)</small></td></tr>
-                    </tbody>
-                    <tbody>
-                        <tr><td colspan="2"><b> Photographer : </b></td></tr>
-                        <tr><td colspan="2">Name :</td></tr>
-                        <tr><td colspan="2">Rank / No : </td></tr>
-                    </tbody>
-                }
-            </table>
+        <div class="pagebreak">
+            <b>Body Identified By :</b>
+            <div class="tableNoneBorder">
+                <table style="width: 100%;">
+                    @foreach (var item3 in Model.butiranwariList)
+                    {
+                        <tbody>
+                            <tr><td colspan="2"><b>1 Name of Next of Kin : @item3.WarisName</b></td></tr>
+                            <tr><td>MyKad / Passport No : @item3.WarisNoIC</td><td>Relationship : @item3.Perhubungan</td></tr>
+                            <tr><td colspan="2">Address : @item3.Alamat</td></tr>
+                            <tr><td>Tel. No : @item3.PhoneNo</td><td><p>___________</p><small>(Signature / Thumb print)</small></td></tr>
+                        </tbody>
+                        <tbody>
+                            <tr><td colspan="2"><b style="padding-left:0px;" class="col-md-4">2 Name of Police Officer : </b><div class="col-md-8"><input class="form-control" /></div></td></tr>
+                            <tr><td colspan="2"><label style="font-weight:normal;" class="col-md-4">Rank :</label><div class="col-md-8"><input class="form-control" /></div></td></tr>
+                            <tr><td colspan="2"><label style="font-weight:normal;" class="col-md-4">No :</label><div class="col-md-8"><input class="form-control" /></div></td></tr>
+                            <tr><td colspan="2"><label style="font-weight:normal;" class="col-md-4">Signature :</label><div class="col-md-8"><textarea class="form-control"></textarea></div></td></tr>
+                        </tbody>
+                        <tbody>
+                            <tr><td colspan="2"><b> Photographer : </b></td></tr>
+                            <tr><td colspan="2"><label style="font-weight:normal;" class="col-md-4">Name :</label><div class="col-md-8"><input class="form-control" /></div></td></tr>
+                            <tr><td colspan="2"><label style="font-weight:normal;" class="col-md-4">Rank / No :</label><div class="col-md-8"><input class="form-control" /></div></td></tr>
+                        </tbody>
+                    }
+                </table>
+            </div>
         </div>
         <br />
         <h4>CLOTHING:</h4>
         <table style="width: 100%;"><tbody><tr><td style="height: 300px;"></td></tr></tbody></table>
         <br />
-        <h4><b><u>EXTERNAL EXAMINATION</u></b></h4>
-        <div class="row">
-            <div class="col-md-6">
-                <label class="control-label col-md-6">General Features</label>
+        <div class="">
+            <h4><b><u>EXTERNAL EXAMINATION</u></b></h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="control-label col-md-6">General Features</label>
+                </div>
+                <div class="col-md-6">
+                    <table style="width:100%;">
+                        <tbody>
+                            <tr>
+                                <td><label style="font-weight:normal; padding-left:0px;" class="col-md-6">Height :</label><div class="col-md-6"><input style="padding-left: 1px; padding-right: 1px;" class="form-control" /></div></td>
+                                <td><label style="font-weight:normal; padding-left:0px;" class="col-md-6">Weight :</label><div class="col-md-6"><input style="padding-left: 1px; padding-right: 1px;" class="form-control" /></div></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <div class="col-md-6">
-                <table style="width:100%;">
-                    <tbody>
-                        <tr><td>Height : </td><td>Weight : </td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-                <p>Post Mortem Changes : Rigor Mortis</p>
-            </div>
-            <div class="col-md-6">
-                <p>Hypotasis : </p>
+            <div class="row">
+                <div class="col-md-6">
+                    <p>Post Mortem Changes : Rigor Mortis</p>
+                </div>
+                <div class="col-md-6">
+                    <label style="font-weight:normal;" class="col-md-4">Hypotasis :</label><div class="col-md-8"><input class="form-control"/></div>
+                </div>
             </div>
         </div>
 
@@ -132,89 +197,116 @@ KUCHING, SARAWAK</pre>
         <h4>Mark of Injuries:</h4>
         <table style="width: 100%;"><tbody><tr><td style="height: 300px;"></td></tr></tbody></table>
         <br />
-        <h4><b><u>INTERNAL EXAMINATION</u></b></h4>
-        <table style="width:100%;">
-            <thead><tr><th colspan="2">Head & Neck</th><th colspan="2">WEIGHT OF ORGAN</th></tr></thead>
-            <tbody>
-                @{
-                    int countHN = ViewBag.headNeck.Length;
-                    int countWOO = ViewBag.weightOfOrgan.Length;
-                    int countST = ViewBag.specimensTaken.Length;
-                    int rowspanST = countST + 1;
-                    int countArray = 0;
+        <div class="" id="internalExDiv">
+            <h4><b><u>INTERNAL EXAMINATION</u></b></h4>
+            <table style="width:100%;">
+                <thead><tr><th colspan="2">Head & Neck</th><th colspan="2">WEIGHT OF ORGAN</th></tr></thead>
+                <tbody>
+                    @{
+                        int countHN = ViewBag.headNeck.Length;
+                        int countWOO = ViewBag.weightOfOrgan.Length;
+                        int countST = ViewBag.specimensTaken.Length;
+                        int rowspanST = countST + 1;
+                        int countArray = 0;
 
-                    if (@countHN >= @countWOO)
-                    {
-                        countArray = @countHN;
+                        if (@countHN >= @countWOO)
+                        {
+                            countArray = @countHN;
+                        }
+                        else
+                        {
+                            countArray = @countWOO;
+                        }
                     }
-                    else
+                    @for (int i = 0; i < countArray; i++)
                     {
-                        countArray = @countWOO;
+                        <tr>
+                            <td width="25%">@ViewBag.headNeck[i]</td>
+                            <td><input class="form-control" /></td>
+                            <td width="25%">@ViewBag.weightOfOrgan[i]</td>
+                            <td><input class="form-control" /></td>
+                        </tr>
                     }
-                }
-                @for (int i = 0; i < countArray; i++)
-                {
-                    <tr>
-                        <td width="25%">@ViewBag.headNeck[i]</td>
-                        <td></td>
-                        <td width="25%">@ViewBag.weightOfOrgan[i]</td>
-                        <td></td>
-                    </tr>
-                }
-                <tr><th colspan="4">Chest</th></tr>
-                @foreach (var itemChest in ViewBag.chest)
-                {
-                    <tr>
-                        <td width="25%">@itemChest</td>
-                        <td colspan="3"></td>
-                    </tr>
-                }
-                <tr><th colspan="4">Abdomen</th></tr>
-                @foreach (var itemAbdomen in ViewBag.abdomen)
-                {
-                    <tr>
-                        <td width="25%">@itemAbdomen</td>
-                        <td colspan="3"></td>
-                    </tr>
-                }
-                <tr><td width="25%" rowspan="@rowspanST">Specimens Taken</td></tr>
-                @foreach (var itemST in ViewBag.specimensTaken)
-                {
-                    <tr>
-                        <td width="25%">@itemST</td>
-                        <td colspan="2"></td>
-                    </tr>
-                }
+                    <tr><th colspan="4">Chest</th></tr>
+                    @foreach (var itemChest in ViewBag.chest)
+                    {
+                        <tr>
+                            <td width="25%">@itemChest</td>
+                            <td colspan="3"><input class="form-control" /></td>
+                        </tr>
+                    }
+                    <tr><th colspan="4">Abdomen</th></tr>
+                    @foreach (var itemAbdomen in ViewBag.abdomen)
+                    {
+                        <tr>
+                            <td width="25%">@itemAbdomen</td>
+                            <td colspan="3"><input class="form-control" /></td>
+                        </tr>
+                    }
+                    <tr><td width="25%" rowspan="@rowspanST">Specimens Taken</td></tr>
+                    @foreach (var itemST in ViewBag.specimensTaken)
+                    {
+                        <tr>
+                            <td width="25%">@itemST</td>
+                            <td colspan="2"><input class="form-control" /></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <br />
+        <h4><b>CAUSE OF DEATH</b></h4>
+        <table class="tableNoneBorder" width="100%">
+            <tbody>
+                <tr>
+                    <td>
+                        <p>That the immediate case of death was ________________</p><p>due to (or in consequence of) ________________</p><p>due to (or in consequence of) _________________</p>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <label class="control-label">Place: </label> 
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Date: </label> 
+                        </div>
+                        <div class="form-group">
+                            <label style="padding-left: 0px;" class="control-label col-md-2">Signature: </label> <div class="col-md-10">
+                                <textarea class="form-control"></textarea>
+                            </div>
+                        </div><br>
+                        <div class="form-group">
+                            <label class="control-label">Name: </label> 
+                        </div>
+                    </td>
+                </tr>
             </tbody>
         </table>
-        <br />
-        <div class="row">
-            <div class="col-md-4">
-                <h4><b>CAUSE OF DEATH</b></h4>
-            </div>
-            <div class="col-md-8">
-                <p>That the immediate case of death was ......................................... </p><p>due to (or in consequence of) .........................................</p><p>due to (or in consequence of) .........................................</p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-md-2">Place</label> <div class="col-md-10">
-                <p> : ............................................................</p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-md-2">Date</label> <div class="col-md-10">
-                <p>  : ............................................................</p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-md-2">Signature</label> <div class="col-md-10">
-                <p> : ............................................................</p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label col-md-2">Name</label> <div class="col-md-10">
-                <p>  : ............................................................</p>
-            </div>
-        </div>
+        
+    </div>
+    <div class="container pagebreak" style="width:100%;margin-top:2%;">
+        <pre style="text-align:center;">UNIT FORENSIK
+HOSPITAL UMUM SARAWAK
+KUCHING, SARAWAK.</pre>
+        <label class="control-label col-md-3">NO. AUTOPSI: </label><div class="col-md-9"><input class="form-control" /></div>
+        <label class="control-label col-md-3">TARIKH: </label><div class="col-md-9"><input class="form-control" /></div>
+        <img src="~/Images/autopsy1.png" style="width:100%" />
+    </div>
+
+    <div class="container pagebreak" style="width:100%;margin-top:2%;">
+        <pre style="text-align:center;">UNIT FORENSIK
+HOSPITAL UMUM SARAWAK
+KUCHING, SARAWAK.</pre>
+        <label class="control-label col-md-3">NO. AUTOPSI: </label><div class="col-md-9"><input class="form-control" /></div>
+        <label class="control-label col-md-3">TARIKH: </label><div class="col-md-9"><input class="form-control" /></div>
+        <img src="~/Images/autopsy2.png" style="width:100%" />
     </div>
 </div>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="@Url.Content("~/Scripts/jquery.datetimepicker.full.min.js")"></script>
+<script>
+    $('.datetimepicker').datetimepicker({
+        format: 'm/d/Y H:i:s'
+    });
+    $('input[type="checkbox"]').attr("disabled", true);
+    $('input[type="radio"]').attr("disabled", true);
+</script>

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MoIS.Models;
+using MoIS.Helper;
 
 namespace MoIS.Controllers
 {
@@ -21,7 +22,7 @@ namespace MoIS.Controllers
         {
             using (DBModels dBModel = new DBModels())
             {
-                var maDetails = dBModel.medicalassistants.Where(x => x.Username == maModel.Username && x.Password == maModel.Password).FirstOrDefault();
+                var maDetails = dBModel.medicalassistants.Where(x => x.Username == maModel.Username).FirstOrDefault();
                 if (maDetails == null)
                 {
                     maModel.LoginErrorMessage = "Wrong username or password.";
@@ -29,7 +30,14 @@ namespace MoIS.Controllers
                 }
                 else
                 {
+                    string password = maModel.Password;
+                    string hashedPassword = maDetails.Password;
 
+                    if(Helper.Hashing.ValidatePassword(password, hashedPassword) != true)
+                    {
+                        maModel.LoginErrorMessage = "Wrong username or password.";
+                        return View("Index", maModel);
+                    }
                     //  var first = dBModel.medicalassistants.Where(s => s.MaID == maDetails.MaID).First();
                     //  first.LastLogin = @DateTime.Now;
                     // dBModel.SaveChanges();
@@ -37,11 +45,15 @@ namespace MoIS.Controllers
                     Session["maID"] = maDetails.MaID;
                     Session["username"] = maDetails.Username;
                     Session["role"] = maDetails.Role;
+                    
                     if(maDetails.Role == "MO")
                     {
-                        return RedirectToAction("Index", "MedicalAssistant");
-                    } else
+                        Session["role2"] = "MO";
+                        return RedirectToAction("Statistics", "MedicalAssistant");
+                    }
+                    else
                     {
+                        Session["role2"] = null;
                         return RedirectToAction("Index", "Home");
                     }
                 }

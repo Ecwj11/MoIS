@@ -9,58 +9,63 @@
 <h2>Butrian Pengurus Mayat</h2>
 
 
-@using (Html.BeginForm("BPM", "Home", FormMethod.Post))
+@using (Html.BeginForm("BPMPost", "Home", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
     <h4>Butrian Pengurus Mayat</h4>
+    <div class="form-group">
+        <label style="text-align:left; font-size:20px;" class="control-label col-md-2">Edit Data?</label>
+        <input style="text-align:left;" class="form-control" type="checkbox" id="editData" name="editData" />
+    </div>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.Syarikat_Individu, htmlAttributes: new { @class = "control-label col-md-4" })
-        <div class="col-md-8">
-            @Html.EditorFor(model => model.Syarikat_Individu, new { htmlAttributes = new { @class = "form-control", required = "required" } })
-            @Html.ValidationMessageFor(model => model.Syarikat_Individu, "", new { @class = "text-danger" })
+    <fieldset @ViewData["fieldsetDisabled"]>
+        <input type="hidden" value="@ViewData["eId"]" name="eId" />
+        <div class="form-group">
+            @Html.LabelFor(model => model.Syarikat_Individu, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.Syarikat_Individu, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                @Html.ValidationMessageFor(model => model.Syarikat_Individu, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Pemandu, htmlAttributes: new { @class = "control-label col-md-4" })
-        <div class="col-md-8">
-            @Html.EditorFor(model => model.Pemandu, new { htmlAttributes = new { @class = "form-control", required = "required" } })
-            @Html.ValidationMessageFor(model => model.Pemandu, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Pemandu, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.Pemandu, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                @Html.ValidationMessageFor(model => model.Pemandu, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.PhoneNO, htmlAttributes: new { @class = "control-label col-md-4" })
-        <div class="col-md-8">
-            @Html.EditorFor(model => model.PhoneNO, new { htmlAttributes = new { @class = "form-control", required = "required" } })
-            @Html.ValidationMessageFor(model => model.PhoneNO, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.PhoneNO, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.PhoneNO, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                @Html.ValidationMessageFor(model => model.PhoneNO, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.NoIC, htmlAttributes: new { @class = "control-label col-md-4" })
-        <div class="col-md-8">
-            @Html.EditorFor(model => model.NoIC, new { htmlAttributes = new { @class = "form-control", required = "required" } })
-            @Html.ValidationMessageFor(model => model.NoIC, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.NoIC, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.NoIC, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                @Html.ValidationMessageFor(model => model.NoIC, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.DateTime, htmlAttributes: new { @class = "control-label col-md-4" })
-        <div class="col-md-8">
-            @Html.EditorFor(model => model.DateTime, new { htmlAttributes = new { @class = "form-control datetimepicker", required = "required" } })
-            @Html.ValidationMessageFor(model => model.DateTime, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.DateTime, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.DateTime, new { htmlAttributes = new { @class = "form-control datetimepicker", required = "required" } })
+                @Html.ValidationMessageFor(model => model.DateTime, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-
+    </fieldset>
     <div class="form-group">
         <div class="col-md-offset-4 col-md-8">
-            <input type="submit" value="Save" class="btn btn-success" />
+            <input type="submit" id="btnSubmit" value="Save" class="btn btn-success" @ViewData["fieldsetDisabled"] />
             @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-default" })
         </div>
     </div>
@@ -72,6 +77,17 @@
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 <script src="@Url.Content("~/Scripts/jquery.datetimepicker.full.min.js")"></script>
 <script>
+    $('#editData').click(function () {
+        var isChecked = $('#editData:checked').length > 0;
+
+        if (isChecked === true) {
+            $('fieldset').removeAttr("disabled");
+            $('#btnSubmit').removeAttr("disabled");
+        } else {
+            $('fieldset').attr("disabled", true);
+            $('#btnSubmit').attr("disabled", true);
+        }
+    });
     $('.datetimepicker').datetimepicker({
         showSecond: true,
         format: 'm/d/Y H:i:s'

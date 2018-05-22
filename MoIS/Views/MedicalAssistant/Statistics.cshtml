@@ -1,0 +1,701 @@
+﻿@{
+    Layout = null;
+}
+@model MoIS.Models.StatisticsViewModel
+
+@{
+    if (Session["maID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+
+    }
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Morris Charts CSS -->
+    <link href="../vendors/bower_components/morris.js/morris.css" rel="stylesheet" type="text/css" />
+
+    <!-- Data table CSS -->
+    <link href="../vendors/bower_components/datatables/media/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="../vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.css" rel="stylesheet" type="text/css">
+
+    <!-- Custom CSS -->
+    <link href="../dist/css/style.css" rel="stylesheet" type="text/css">
+    <link href="@Url.Content("~/Content/jquery.datatables.css")" rel="stylesheet" type="text/css" />
+
+    <style>
+        .navbar.navbar-inverse {
+            background-color: #222;
+        }
+
+        .page-wrapper {
+            margin-left: auto !important;
+        }
+
+        footer {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 100px;
+            width: 100%;
+            overflow: hidden;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @*Html.ActionLink("MoIS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
+                <p class="navbar-brand">MoIS</p>
+                @if (Session["maID"] != null)
+                {
+                    if (Session["role2"] != null)
+                    {
+                        @Html.ActionLink("Home", "Index", "MedicalAssistant", new { area = "" }, new { @class = "navbar-brand" })
+                        @Html.ActionLink("Deceased Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                    }
+
+                    @Html.ActionLink("Password Management", "ChangePassword", "MedicalAssistant", new { area = "" }, new { @class = "navbar-brand" })
+
+                }
+            </div>
+            <div class="navbar-header pull-right">
+                @if (Session["maID"] != null)
+                {
+                    <a href="#" class="navbar-brand">Welcome, @Session["username"]</a>
+                    <a href="@Url.Action("LogOut","Login")" class="navbar-brand"><i class="fas fa-sign-out-alt"></i>Logout</a>
+                }
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav"></ul>
+            </div>
+        </div>
+    </div>
+    <!-- Preloader -->
+    <div class="preloader-it">
+        <div class="la-anim-1"></div>
+    </div>
+    <!-- /Preloader -->
+    <div class="wrapper theme-1-active pimary-color-red">
+
+        <!-- Main Content -->
+        <div class="page-wrapper">
+            <div class="container-fluid pt-25">
+                @if (Session["success"] != null)
+                {
+                    <div class="alert alert-success">@Session["success"]</div>
+                    Session["success"] = null;
+                }
+                @if (Session["error"] != null)
+                {
+                    <div class="alert alert-danger">@Session["error"]</div>
+                    Session["error"] = null;
+                }
+                @if (Session["warning"] != null)
+                {
+                    <div class="alert alert-warning">@Session["warning"]</div>
+                    Session["warning"] = null;
+                }
+                <!-- Row -->
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                        <div class="panel panel-default card-view pa-0">
+                            <div class="panel-wrapper collapse in">
+                                <div class="panel-body pa-0">
+                                    <div class="sm-data-box bg-red">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
+                                                    <span class="txt-light block counter"><span class="counter-anim">@Model.deceasedTotal</span></span>
+                                                    <span class="weight-500 uppercase-font txt-light block font-13">deceased</span>
+                                                </div>
+                                                <div class="col-xs-6 text-center  pl-0 pr-0 data-wrap-right">
+                                                    <i class="zmdi zmdi-male-female txt-light data-right-rep-icon"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                        <div class="panel panel-default card-view pa-0">
+                            <div class="panel-wrapper collapse in">
+                                <div class="panel-body pa-0">
+                                    <div class="sm-data-box bg-yellow">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
+                                                    <span class="txt-light block counter"><span class="counter-anim">46.41</span>@Model.bbsCount</span>
+                                                    <span class="weight-500 uppercase-font txt-light block">bedah siasat</span>
+                                                </div>
+                                                <div class="col-xs-6 text-center  pl-0 pr-0 data-wrap-right">
+                                                    <i class="zmdi zmdi-redo txt-light data-right-rep-icon"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                        <div class="panel panel-default card-view pa-0">
+                            <div class="panel-wrapper collapse in">
+                                <div class="panel-body pa-0">
+                                    <div class="sm-data-box bg-green">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
+                                                    <span class="txt-light block counter"><span class="counter-anim">@Model.policeCount</span></span>
+                                                    <span class="weight-500 uppercase-font txt-light block">normal case</span>
+                                                </div>
+                                                <div class="col-xs-6 text-center  pl-0 pr-0 data-wrap-right">
+                                                    <i class="zmdi zmdi-file txt-light data-right-rep-icon"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+                        <div class="panel panel-default card-view pa-0">
+                            <div class="panel-wrapper collapse in">
+                                <div class="panel-body pa-0">
+                                    <div class="sm-data-box bg-blue">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-xs-6 text-center pl-0 pr-0 data-wrap-left">
+                                                    <span class="txt-light block counter"><span class="counter-anim">@Model.normalCount</span>%</span>
+                                                    <span class="weight-500 uppercase-font txt-light block">police case</span>
+                                                </div>
+                                                <div class="col-xs-6 text-center  pl-0 pr-0 pt-25  data-wrap-right">
+                                                    <div id="sparkline_4" style="width: 100px; overflow: hidden; margin: 0px auto;"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Row -->
+                <!-- Row -->
+                <div class="row">
+                    <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+                        <div class="panel panel-default card-view">
+                            <div class="panel-heading">
+                                <div class="pull-left">
+                                    <h6 class="panel-title txt-dark">user statistics</h6>
+                                </div>
+                                <div class="pull-right">
+                                    <span class="no-margin-switcher">
+                                        <input type="checkbox" id="morris_switch" class="js-switch" data-color="#ff2a00" data-secondary-color="#2879ff" data-size="small" />
+                                    </span>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="panel-wrapper collapse in">
+                                <div class="panel-body">
+                                    <div id="morris_extra_line_chart" class="morris-chart" style="height:293px;"></div>
+                                    <ul class="flex-stat mt-40">
+                                        <li>
+                                            <span class="block">Weekly Deaceased</span>
+                                            <span class="block txt-dark weight-500 font-18"><span class="counter-anim">@Model.weeklyDeceased</span></span>
+                                        </li>
+                                        <li>
+                                            <span class="block">Monthly Deaceased</span>
+                                            <span class="block txt-dark weight-500 font-18"><span class="counter-anim">@Model.monthlyDeceased</span></span>
+                                        </li>
+                                        <li>
+                                            <span class="block">Trend</span>
+                                            <span class="block">
+                                                <i class="zmdi zmdi-trending-up txt-success font-24"></i>
+                                            </span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                        <div class="panel panel-default card-view panel-refresh">
+                            <div class="refresh-container">
+                                <div class="la-anim-1"></div>
+                            </div>
+                            <div class="panel-heading">
+                                <div class="pull-left">
+                                    <h6 class="panel-title txt-dark">Visit by Traffic Types</h6>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="#" class="pull-left inline-block refresh mr-15">
+                                        <i class="zmdi zmdi-replay"></i>
+                                    </a>
+                                    <div class="pull-left inline-block dropdown">
+                                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false" role="button"><i class="zmdi zmdi-more-vert"></i></a>
+                                        <ul class="dropdown-menu bullet dropdown-menu-right" role="menu">
+                                            <li role="presentation"><a href="javascript:void(0)" role="menuitem"><i class="icon wb-reply" aria-hidden="true"></i>Devices</a></li>
+                                            <li role="presentation"><a href="javascript:void(0)" role="menuitem"><i class="icon wb-share" aria-hidden="true"></i>General</a></li>
+                                            <li role="presentation"><a href="javascript:void(0)" role="menuitem"><i class="icon wb-trash" aria-hidden="true"></i>Referral</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="panel-wrapper collapse in">
+                                <div class="panel-body">
+                                    <div>
+                                        <canvas id="chart_6" height="255"></canvas>
+                                    </div>
+                                    <hr class="light-grey-hr row mt-10 mb-15" />
+                                    <div class="label-chatrs">
+                                        <div class="">
+                                            <span class="clabels clabels-lg inline-block bg-blue mr-10 pull-left"></span>
+                                            <span class="clabels-text font-12 inline-block txt-dark capitalize-font pull-left"><span class="block font-15 weight-500 mb-5">@string.Format("{0:N2}", @Model.malePercent)% Male</span><span class="block txt-grey">356 visits</span></span>
+                                            <div id="sparkline_1" class="pull-right" style="width: 100px; overflow: hidden; margin: 0px auto;"></div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                    <hr class="light-grey-hr row mt-10 mb-15" />
+                                    <div class="label-chatrs">
+                                        <div class="">
+                                            <span class="clabels clabels-lg inline-block bg-green mr-10 pull-left"></span>
+                                            <span class="clabels-text font-12 inline-block txt-dark capitalize-font pull-left"><span class="block font-15 weight-500 mb-5">@string.Format("{0:N2}", @Model.femalePercent)% Female</span><span class="block txt-grey">36 visits</span></span>
+                                            <div id="sparkline_2" class="pull-right" style="width: 100px; overflow: hidden; margin: 0px auto;"></div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Row -->
+                <!-- Row -->
+                <div class="row">
+                    <div class="col-lg-12 col-md-7 col-sm-12 col-xs-12">
+                        <div class="panel panel-default card-view panel-refresh">
+                            <div class="refresh-container">
+                                <div class="la-anim-1"></div>
+                            </div>
+                            <div class="panel-heading">
+                                <div class="pull-left">
+                                    <h6 class="panel-title txt-dark">Staff List @Html.ActionLink("Create New Staff", "Create", "MedicalAssitant", new { @class = "btn btn-primary" })</h6>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="#" class="pull-left inline-block refresh mr-15">
+                                        <i class="zmdi zmdi-replay"></i>
+                                    </a>
+                                    <a href="#" class="pull-left inline-block full-screen mr-15">
+                                        <i class="zmdi zmdi-fullscreen"></i>
+                                    </a>
+                                    <div class="pull-left inline-block dropdown">
+                                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false" role="button"><i class="zmdi zmdi-more-vert"></i></a>
+                                        <ul class="dropdown-menu bullet dropdown-menu-right" role="menu">
+                                            <li role="presentation"><a href="javascript:void(0)" role="menuitem"><i class="icon wb-reply" aria-hidden="true"></i>Edit</a></li>
+                                            <li role="presentation"><a href="javascript:void(0)" role="menuitem"><i class="icon wb-share" aria-hidden="true"></i>Delete</a></li>
+                                            <li role="presentation"><a href="javascript:void(0)" role="menuitem"><i class="icon wb-trash" aria-hidden="true"></i>New</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="panel-wrapper collapse in">
+                                <div class="panel-body row pa-0">
+                                    <div class="table-wrap">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Name</th>
+                                                        <th>username</th>
+                                                        <th>IC No</th>
+                                                        <th>Role</th>
+                                                        <th>Reset Password</th>
+                                                        <th>User Status</th>
+                                                        <th></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in Model.medicalassistantList)
+                                                    {
+                                                        <tr>
+                                                            <td>@item.MaID</td>
+                                                            <td>@item.MaName</td>
+                                                            <td>@item.Username</td>
+                                                            <td>@item.MaIcNo</td>
+                                                            <td>@item.Role</td>
+                                                            <td>
+                                                                @Html.ActionLink("Reset Password", "ResetPassword", "MedicalAssistant", new { eId = @ViewData["ID" + item.MaID] }, htmlAttributes: new { @class = "btn btn-danger", onClick = "javascript:return confirm_submit_reset();" })
+                                                            </td>
+                                                            @if (@item.Status == 1)
+                                                            {
+                                                                <td>
+                                                                    @Html.ActionLink("Active", "ChangeStatus", "MedicalAssistant", new { eId = @ViewData["ID" + item.MaID] }, htmlAttributes: new { @class = "btn btn-success", onClick = "javascript:return confirm_change();" })
+                                                                </td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td>
+                                                                    @Html.ActionLink("Inactive", "ChangeStatus", "MedicalAssistant", new { eId = @ViewData["ID" + item.MaID] }, htmlAttributes: new { @class = "btn btn-danger", onClick = "javascript:return confirm_change();" })
+                                                                </td>
+                                                            }
+
+                                                            <td>
+                                                                <a href='@ViewData["EditLink"]?eId=@ViewData["ID" + item.MaID]'>Edit</a> |
+                                                                <a href='@ViewData["DetailLink"]?eId=@ViewData["ID" + item.MaID]'>Details</a>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="col-lg-4 col-md-5 col-sm-12 col-xs-12">
+                            <div class="panel panel-default card-view panel-refresh">
+                                <div class="refresh-container">
+                                    <div class="la-anim-1"></div>
+                                </div>
+                                <div class="panel-heading">
+                                    <div class="pull-left">
+                                        <h6 class="panel-title txt-dark">Advertising & Promotions</h6>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="#" class="pull-left inline-block refresh mr-15">
+                                            <i class="zmdi zmdi-replay"></i>
+                                        </a>
+                                        <div class="pull-left inline-block dropdown">
+                                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false" role="button"><i class="zmdi zmdi-more-vert"></i></a>
+                                            <ul class="dropdown-menu bullet dropdown-menu-right" role="menu">
+                                                <li role="presentation"><a href="javascript:void(0)" role="menuitem"><i class="icon wb-reply" aria-hidden="true"></i>option 1</a></li>
+                                                <li role="presentation"><a href="javascript:void(0)" role="menuitem"><i class="icon wb-share" aria-hidden="true"></i>option 2</a></li>
+                                                <li role="presentation"><a href="javascript:void(0)" role="menuitem"><i class="icon wb-trash" aria-hidden="true"></i>option 3</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="panel-wrapper collapse in">
+                                    <div class="panel-body">
+                                        <div>
+                                            <canvas id="chart_2" height="253"></canvas>
+                                        </div>
+                                        <div class="label-chatrs mt-30">
+                                            <div class="inline-block mr-15">
+                                                <span class="clabels inline-block bg-yellow mr-5"></span>
+                                                <span class="clabels-text font-12 inline-block txt-dark capitalize-font">Active</span>
+                                            </div>
+                                            <div class="inline-block mr-15">
+                                                <span class="clabels inline-block bg-red mr-5"></span>
+                                                <span class="clabels-text font-12 inline-block txt-dark capitalize-font">Closed</span>
+                                            </div>
+                                            <div class="inline-block">
+                                                <span class="clabels inline-block bg-green mr-5"></span>
+                                                <span class="clabels-text font-12 inline-block txt-dark capitalize-font">Hold</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+                </div>
+                <!-- Row -->
+            </div>
+        </div>
+        <!-- /Main Content -->
+    </div>
+
+    <!-- jQuery -->
+    <script src="../vendors/bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Data table JavaScript -->
+    <script src="../vendors/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+
+    <!-- Slimscroll JavaScript -->
+    <script src="../dist/js/jquery.slimscroll.js"></script>
+
+    <!-- simpleWeather JavaScript -->
+    <script src="../vendors/bower_components/moment/min/moment.min.js"></script>
+    <script src="../vendors/bower_components/simpleWeather/jquery.simpleWeather.min.js"></script>
+    <script src="../dist/js/simpleweather-data.js"></script>
+
+    <!-- Progressbar Animation JavaScript -->
+    <script src="../vendors/bower_components/waypoints/lib/jquery.waypoints.min.js"></script>
+    <script src="../vendors/bower_components/jquery.counterup/jquery.counterup.min.js"></script>
+
+    <!-- Fancy Dropdown JS -->
+    <script src="../dist/js/dropdown-bootstrap-extended.js"></script>
+
+    <!-- Sparkline JavaScript -->
+    <script src="../vendors/jquery.sparkline/dist/jquery.sparkline.min.js"></script>
+
+    <!-- Owl JavaScript -->
+    <script src="../vendors/bower_components/owl.carousel/dist/owl.carousel.min.js"></script>
+
+    <!-- ChartJS JavaScript -->
+    <script src="../vendors/chart.js/Chart.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="../vendors/bower_components/raphael/raphael.min.js"></script>
+    <script src="../vendors/bower_components/morris.js/morris.min.js"></script>
+    <script src="../vendors/bower_components/jquery-toast-plugin/dist/jquery.toast.min.js"></script>
+
+    <!-- Switchery JavaScript -->
+    <script src="../vendors/bower_components/switchery/dist/switchery.min.js"></script>
+
+    <!-- Init JavaScript -->
+    <script src="../dist/js/init.js?v=1.03"></script>
+    <script src="../dist/js/dashboard-data.js?v=1.05"></script>
+    <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script>
+        function confirm_submit_reset() {
+            var confrm;
+            confrm = window.confirm("Confirm reset?");
+
+            return confrm;
+        }
+        function confirm_change() {
+            var confrm;
+            confrm = window.confirm("Confirm change user status?");
+
+            return confrm;
+        }
+        if ($('#chart_6').length > 0) {
+            var ctx6 = document.getElementById("chart_6").getContext("2d");
+            var data6 = {
+                labels: [
+                    "Male",
+                    "Female",
+                ],
+                datasets: [
+                    {
+                        data: [@Model.maleTotal, @Model.femaleTotal],
+                        backgroundColor: [
+                            "#2879ff",
+                            "#01c853",
+                        ],
+                        hoverBackgroundColor: [
+                            "#2879ff",
+                            "#01c853",
+                        ]
+                    }]
+            };
+
+            var pieChart = new Chart(ctx6, {
+                type: 'pie',
+                data: data6,
+                options: {
+                    animation: {
+                        duration: 3000
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(33,33,33,1)',
+                        cornerRadius: 0,
+                        footerFontFamily: "'Roboto'"
+                    },
+                    elements: {
+                        arc: {
+                            borderWidth: 0
+                        }
+                    }
+                }
+            });
+        }
+        if ($('#morris_extra_line_chart').length > 0) {
+            var data = [{
+                period: 'Sun',
+                male: @Model.maleSun,
+                female: @Model.femaleSun,
+            }, {
+                period: 'Mon',
+                male: @Model.maleMon,
+                female: @Model.femaleMon,
+            }, {
+                period: 'Tue',
+                male: @Model.maleTues,
+                female: @Model.femaleTues,
+            }, {
+                period: 'Wed',
+                male: @Model.maleWed,
+                female: @Model.femaleWed,
+            }, {
+                period: 'Thu',
+                male: @Model.maleThurs,
+                female: @Model.femaleThurs,
+            }, {
+                period: 'Fri',
+                male: @Model.maleFri,
+                female: @Model.femaleFri,
+            },
+            {
+                period: 'Sat',
+                male: @Model.maleSat,
+                female: @Model.femaleSat,
+                }];
+            var dataNew = [{
+                period: 'Jan',
+                male: @Model.maleJan,
+                female: @Model.femaleJan,
+            },
+            {
+                period: 'Feb',
+                male: @Model.maleFeb,
+                female: @Model.femaleFeb,
+            },
+            {
+                period: 'March',
+                male: @Model.maleMar,
+                female: @Model.femaleMar,
+            },
+            {
+                period: 'April',
+                male: @Model.maleApr,
+                female: @Model.femaleApr,
+            },
+            {
+                period: 'May',
+                male: @Model.maleMay,
+                female: @Model.femaleMay,
+            },
+            {
+                period: 'June',
+                male: @Model.maleJun,
+                female: @Model.femaleJun,
+            },
+            {
+                period: 'July',
+                male: @Model.maleJul,
+                female: @Model.femaleJul,
+            },
+            {
+                period: 'Aug',
+                male: @Model.maleAug,
+                female: @Model.femaleAug,
+            },
+            {
+                period: 'Sep',
+                male: @Model.maleSep,
+                female: @Model.femaleSep,
+            },
+            {
+                period: 'Oct',
+                male: @Model.maleOct,
+                female: @Model.femaleOct,
+            },
+            {
+                period: 'Nov',
+                male: @Model.maleNov,
+                female: @Model.femaleNov,
+            },
+            {
+                period: 'Dec',
+                male: @Model.maleDec,
+                female: @Model.femaleDec,
+            }
+            ];
+            var lineChart = Morris.Line({
+                element: 'morris_extra_line_chart',
+                data: data,
+                xkey: 'period',
+                ykeys: ['male', 'female'],
+                labels: ['Male', 'Female'],
+                pointSize: 2,
+                fillOpacity: 0,
+                lineWidth: 2,
+                pointStrokeColors: ['#fec107', '#e91e63'],
+                behaveLikeLine: true,
+                gridLineColor: '#878787',
+                hideHover: 'auto',
+                lineColors: ['#fec107', '#e91e63'],
+                resize: true,
+                redraw: true,
+                gridTextColor: '#878787',
+                gridTextFamily: "Roboto",
+                parseTime: false
+            });
+
+        /* Switchery Init*/
+        var elems = Array.prototype.slice.call(document.querySelectorAll('.js-switch'));
+        $('#morris_switch').each(function () {
+            new Switchery($(this)[0], $(this).data());
+        });
+        var swichMorris = function () {
+            if ($("#morris_switch").is(":checked")) {
+                lineChart.setData(data);
+                lineChart.redraw();
+            } else {
+                lineChart.setData(dataNew);
+                lineChart.redraw();
+            }
+        }
+        swichMorris();
+        $(document).on('change', '#morris_switch', function () {
+            swichMorris();
+        });
+        }
+
+        /*****Load function start*****/
+        $(window).load(function () {
+            window.setTimeout(function () {
+                $.toast({
+                    heading: 'Hello @Session["username"]',
+                    text: 'Welcome to MoIS.',
+                    position: 'top-right',
+                    loaderBg: '#fec107',
+                    icon: 'success',
+                    hideAfter: 3500,
+                    stack: 6
+                });
+            }, 3000);
+        });
+/*****Load function* end*****/
+    </script>
+    <script>
+        $('.table').dataTable({
+            stateSave: true
+        });
+    </script>
+</body>
+</html>
+@*<footer>
+        <hr />
+        <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+    </footer>*@

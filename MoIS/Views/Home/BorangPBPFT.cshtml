@@ -1,8 +1,7 @@
 ﻿@model MoIS.Models.DetailsViewModel
 
 @{
-
-    if (Session["maID"] == null)
+    if (Session["maID"] == null && @ViewData["print"] != "print")
     {
         Response.Redirect("~/Login/Index");
     }
@@ -16,27 +15,69 @@
         padding-left: 10px;
     }
 
-    .tableNoneBorder table tbody tr td {
-        border: none !important;
+    .container input {
+        display: none;
+    }
+
+        .container input[type=checkbox] {
+            display: inline;
+        }
+
+        .container input[type=radio] {
+            display: inline;
+        }
+
+    .container select {
+        display: none;
     }
 </style>
+@if (@ViewData["print"] == "print")
+{
+    <style>
+        /*.form-control {
+            border: none !important;
+            box-shadow: inset 0 0px 0px rgba(0,0,0,0.075) !important;
+        }*/
+
+        .navbar-fixed-top {
+            display: none;
+        }
+
+        .container {
+            margin-top: 0px;
+        }
+    </style>
+}
+else
+{
+    <style>
+        .container {
+            margin-top: 0px;
+            width: 60%;
+        }
+    </style>
+}
 <h2 class="align_center">BORANG PERMOHONAN BAGI PEMERIKSAAN FORENSIK/TOKSIKOLOGI</h2>
 <div>
     <hr />
-    <div class="container" style="width:60%;margin-top:2%">
-        <p>
-            @Html.ActionLink("Convert View To PDF", "PrintViewToPdf/" + @ViewData["deceasedId"] + "/BorangPBPFT", "", htmlAttributes: new { @class = "btn btn-primary" })
-            @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-default" })
-            @*Html.ActionLink("Convert View To PDF", "PrintViewToPdf", new { id = @ViewData["deceasedId"] })*@
-        </p>
+    <div class="container" style="width:100%;margin-top:2%">
+        @if (@ViewData["print"] != "print")
+        {
+            <p>
+                @Html.ActionLink("Convert View To PDF", "PrintViewToPdf", "Home", new { eId = @ViewData["deceasedId"], page = "BorangPBPFT" }, htmlAttributes: new { @class = "btn btn-primary" })
+                @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-default" })
+                @*Html.ActionLink("Convert View To PDF", "PrintViewToPdf", new { id = @ViewData["deceasedId"] })*@
+            </p>
+
+        }
         <div class="row">
             <div class="col-md-8">
-                <h5>Borang ini perlulah dilengkapkan dengan jelas oleh Pegawai Perubatan dan disertakan bersama spesimen kepada: </h5>
-                <h5>JABATAN KIMIA MALAYSIA</h5>
-                <h5>*PETALING JAYA (03-79853000)/P.PINANG (04-2108021)/IPOH (05-5466001)/MELAKA (06-2331688)/JOHOR BAHRU (07-2226366/ 07-2226569)/K. TERENGGANU (09-6203077)/KUANTAN (09-5662400)/BINTULU (086-334211)/KUCHING (082-313011)/KOTA KINABALU (088-259090)/......</h5>
+                <pre style="word-break: break-word;">Borang ini perlulah dilengkapkan dengan jelas oleh Pegawai Perubatan dan disertakan bersama spesimen kepada:
+JABATAN KIMIA MALAYSIA
+*PETALING JAYA (03-79853000)/P.PINANG (04-2108021)/IPOH (05-5466001)/MELAKA (06-2331688)/JOHOR BAHRU (07-2226366/ 07-2226569)/K. TERENGGANU (09-6203077)/KUANTAN (09-5662400)/BINTULU (086-334211)/KUCHING (082-313011)/KOTA KINABALU (088-259090)/...... </pre>
             </div>
             <div class="col-md-4">
-                <table width="60%"><tr><td height="150px" style="vertical-align: text-top;">Cop Melerai/Seal Keselamatan</td></tr></table>
+                <table width="80%"><tr><td height="150px" style="vertical-align: text-top;">Cop Melerai/Seal Keselamatan</td></tr></table>
             </div>
         </div>
         <h5><b>Bahagian 1:</b></h5>
@@ -45,7 +86,7 @@
                 <tr>
                     <td width="25%" style="border:none">a) Buritan Kes</td>
                     <td width="20%" style="border:none">Hidup <input type="checkbox" name="hidup" /></td>
-                    <td width="20%" style="border:none">Mati <input type="checkbox" name="mati" /></td>
+                    <td width="20%" style="border:none">Mati <input type="checkbox" name="mati" checked /></td>
                     <td width="35%" style="border:none">Tandakan (@ViewData["tick"]) yang berkenaan</td>
                 </tr>
             </tbody>
@@ -57,9 +98,71 @@
             {
                 <tbody>
                     <tr><td colspan="2" style="border:none"><p><i>Nama (HURUFBESAR):</i> @item.DeceasedName.ToUpper()</p><p>No.Kad Pengenalan/ Passport/ Surat Beranak: @item.NoIC</p></td></tr>
-                    <tr><td width="50%"><p>No. Pendaftaran Hospital: @item.NoOfHospitalRegister</p><p>No. Autopsi/Klinikal: </p><p>Pekerjaan: </p></td><td width="50%"><p>Jantina: @item.Gender</p><p>Umur: </p><p>Warganegara: @item.Nationality</p></td></tr>
+                    <tr>
+                        <td width="50%">
+                            <p>No. Pendaftaran Hospital: @item.NoOfHospitalRegister</p>
+                            <div class="row">
+                                <p class="col-md-4">No. Autopsi/Klinikal:</p>
+                                <div class="col-md-6">
+                                    <input value="" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <p class="col-md-4">Pekerjaan:</p>
+                                <div class="col-md-6">
+                                    <input value="" class="form-control" />
+                                </div>
+                            </div>
+                        </td>
+                        <td width="50%">
+                            <p>Jantina: @item.Gender</p><p>Umur: </p>
+                            @if (@item.Nationality != "Malaysian")
+                            {
+                                <div class="row">
+                                    <p class="col-md-4">Warganegara:</p>
+                                    <div class="col-md-6">
+                                        <small>No, (nyatakan)</small> <input value="" class="form-control" />
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <p>Warganegara: @item.Nationality</p>
+                            }
+                        </td>
+                    </tr>
                     <tr><td colspan="2"><p>Tarikah dan masa kemasukan: @String.Format("{0:H:mm:ss}", @item.DateOfRegistration) pada: @String.Format("{0:yyyy-MM-dd}", @item.DateOfRegistration) </p><p>Tarikah dan masa kematian: @String.Format("{0:H:mm:ss}", @item.DateOfDeath) pada: @String.Format("{0:yyyy-MM-dd}", @item.DateOfDeath) </p></td></tr>
-                    <tr><td width="50%" style="border-right:none;">Balai Polis:</td><td width="50%" style="border-left:none;">No. Repot Polis: @ViewData["noLaporanPolis"]</td></tr>
+                    <tr>
+                        <td width="50%" style="border-right:none;">
+                            <div class="row">
+                                <label class="col-md-4">Balai Polis:</label>
+                                <div class="col-md-6">
+                                    <input value="" class="form-control" />
+                                </div>
+                            </div>
+                        </td>
+                        <td width="50%" style="border-left:none;">
+                            @if (@ViewData["noLaporanPolis"] == "" || @ViewData["noLaporanPolis"] == null)
+                            {
+                                <div class="row">
+                                    <label class="col-md-4">No.Repot Polis:</label>
+                                    <div class="col-md-6">
+                                        <input value="" class="form-control" />
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="row">
+                                    <label class="col-md-4">No.Repot Polis:</label>
+                                    <div class="col-md-6">
+                                        <input value="@ViewData["noLaporanPolis"]" class="form-control" />
+                                    </div>
+                                </div>
+                            }
+
+                        </td>
+                    </tr>
                 </tbody>
             }
         </table>
@@ -67,56 +170,94 @@
         <table width="100%" style="border:none">
             <tbody>
                 <tr>
-                    <td width="80%" style="border:none">b) Keadaan Kes</td>
-                    <td width="20%" style="border:none">* Makan racun atau ubat/ jatuh dari bangunan/ kemalangan jalanraya/ gantung diri/ mati mengejut/ mati lemas/ jasad reput</td>
+                    <td width="50%" style="border:none">b) Keadaan Kes * </td>
+                    <td width="50%" style="border:none">
+                        <input type="checkbox" name="hidup" /> Makan racun atau ubat<br />
+                        <input type="checkbox" name="hidup" />jatuh dari bangunan<br />
+                        <input type="checkbox" name="hidup" /> Makan racun atau ubat <br />
+                        <input type="checkbox" name="hidup" />kemalangan jalanraya <br />
+                        <input type="checkbox" name="hidup" /> gantung diri <br />
+                        <input type="checkbox" name="hidup" /> mati mengejut <br />
+                        <input type="checkbox" name="hidup" />mati lemas <br />
+                        <input type="checkbox" name="hidup" />jasad reput
+                    </td>
                 </tr>
                 <tr>
-                    <td width="80%" style="border:none">Lain-lain:</td>
-                    <td width="20%" style="border:none">_____________________________________________________</td>
+                    <td width="50%" style="border:none">Lain-lain:</td>
+                    <td width="50%" style="border:none"><textarea></textarea></td>
                 </tr>
                 <tr>
-                    <td width="80%" style="border:none">c) Bawah pengawasan pegawai perubatan:</td>
-                    <td width="20%" style="border:none">* Ya/Tidak</td>
+                    <td width="50%" style="border:none">c) Bawah pengawasan pegawai perubatan:</td>
+                    <td width="50%" style="border:none">
+                        * Ya <input type="checkbox" name="hidup" />
+                        Tidak <input type="checkbox" name="hidup" />
+                    </td>
                 </tr>
                 <tr>
-                    <td width="80%" style="border:none">d) Pemindahan darah dijalankan semasa pengawasan/sebelum kematian:</td>
-                    <td width="20%" style="border:none">* Ya/Tidak/Tidak diketahui</td>
+                    <td width="50%" style="border:none">d) Pemindahan darah dijalankan semasa pengawasan/sebelum kematian:</td>
+                    <td width="50%" style="border:none">
+                        * Ya <input type="checkbox" name="hidup" />
+                        Tidak <input type="checkbox" name="hidup" />
+                        Tidak diketahui<input type="checkbox" name="hidup" />
+                    </td>
                 </tr>
                 <tr>
-                    <td width="80%" style="border:none"><b>Nota: </b></td>
-                    <td width="20%" style="border:none">Analisi toksikologi tidak akan memberi apa-apa makna sekiranya spesimen darah diambil selepas proses pemindahan darah.</td>
+                    <td width="50%" style="border:none"><b>Nota: </b></td>
+                    <td width="50%" style="border:none">Analisi toksikologi tidak akan memberi apa-apa makna sekiranya spesimen darah diambil selepas proses pemindahan darah.</td>
                 </tr>
             </tbody>
         </table>
         <br />
-        <h5><b>Bahagian 2:</b></h5>
-        <p>a) Butiran Spesimen</p>
-        <table width="100%">
-            <thead><tr><th>Spesimen</th><th>Tandaan</th><th>Masa dan Tarikh diambil</th><th>Analisis diperlukan</th></tr></thead>
-            <tbody>
-                @{
-                    int count = 10;
-                    int rowspan = count + 1;
-                }
-                <tr>
-                    <td height="40px"></td>
-                    <td></td>
-                    <td></td>
-                    <td rowspan="@rowspan">
-                        @for (int j = 0; j < 9; j++)
-                        {
-                            <div class="form-group">
-                                <input style="text-align:left;" type="checkbox" class="form-control" />
-                            </div>
-                        }
-                    </td>
-                </tr>
-                @for (int i = 0; i < count; i++)
-                {
-                    <tr><td height="40px"> </td><td></td><td></td></tr>
-                }
-            </tbody>
-        </table>
+        <div class="pagebreak">
+            <h5><b>Bahagian 2:</b></h5>
+            <p>a) Butiran Spesimen</p>
+            <table width="100%">
+                <thead><tr><th>Spesimen</th><th>Tandaan</th><th>Masa dan Tarikh diambil</th><th>Analisis diperlukan</th></tr></thead>
+                <tbody>
+                    @{
+                        int count = 10;
+                        int rowspan = count + 1;
+                    }
+                    <tr>
+                        <td height="40px">
+                            <select form-control">
+                                <option value=""></option>
+                                @foreach (var spesimen in ViewBag.Spesimen)
+                                {
+                                    <option>@spesimen</option>
+                                }
+                            </select>
+                        </td>
+                        <td><input class="form-control" /></td>
+                        <td><input class="form-control" /></td>
+                        <td rowspan="@rowspan">
+                            @for (int j = 0; j < 9; j++)
+                            {
+                                <div class="form-group">
+                                    <input style="text-align:left;" type="checkbox" class="form-control" />
+                                </div>
+                            }
+                        </td>
+                    </tr>
+                    @for (int i = 0; i < count; i++)
+                    {
+                        <tr>
+                            <td height="40px">
+                                <select form-control">
+                                    <option value=""></option>
+                                    @foreach (var spesimen in ViewBag.Spesimen)
+                                    {
+                                        <option>@spesimen</option>
+                                    }
+                                </select>
+                            </td>
+                            <td><input class="form-control" /></td>
+                            <td><input class="form-control" /></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
         <br />
         <table width="100%" style="border:none">
             <tbody>
@@ -152,7 +293,7 @@
                             <input style="text-align:left;" type="checkbox" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <p>___________________</p>
+                            <textarea class="form-control"></textarea>
                         </div>
                     </td>
                     <td width="15%" style="border:none">
@@ -163,7 +304,7 @@
                             <input style="text-align:left;" type="checkbox" class="form-control" />
                         </div>
                         <div class="form-group">
-                            <p>___________________</p>
+                            <textarea class="form-control"></textarea>
                         </div>
                     </td>
                 </tr>
@@ -171,18 +312,24 @@
         </table>
         <table width="100%" style="border:none;">
             <tbody>
-                <tr><td width="50%" style="border:none;">b) Simptom</td><td width="70%" style="border:none;">_____________________________________________</td></tr>
-                <tr><td width="50%" style="border:none;">c) Hal-hal berkaitan (yang defikirkan perlu dinyatakan seperti jenis racun disyaki)</td><td width="70%" style="border:none;">_____________________________________________</td></tr>
+                <tr><td width="50%" style="border:none;">b) Simptom</td><td width="70%" style="border:none;">_________________________________________________</td></tr>
+                <tr><td width="50%" style="border:none;">c) Hal-hal berkaitan (yang difikirkan perlu dinyatakan seperti jenis racun disyaki)</td><td width="70%" style="border:none;">_________________________________________________</td></tr>
             </tbody>
         </table>
         <table width="100%" style="border:none;">
             <tbody>
-                <tr><td width="70%" style="border:none;">Tandatangan</td><td width="200%" style="border:none;">_____________________________________________</td><td style="10%; border:none;">Tarikh: ______________________</td></tr>
-                <tr><td width="70%" style="border:none;">Nama Pegawai Perubatan: </td><td colspan="2" width="70%" style="border:none;">_____________________________________________</td></tr>
-                <tr><td width="70%" style="border:none;">Jawatan: </td><td colspan="2" width="70%" style="border:none;">_____________________________________________</td></tr>
-                <tr><td width="70%" style="border:none;">Hospital: </td><td colspan="2" width="70%" style="border:none;">_____________________________________________</td></tr>
-                <tr><td width="70%" style="border:none;">Telefon: </td><td colspan="2" width="70%" style="border:none;">_____________________________________________</td></tr>
+                <tr><td width="70%" style="border:none;">Tandatangan</td><td width="200%" style="border:none;" colspan="2"><textarea class="form-control"></textarea></td></tr>
+                <tr><td width="70%" style="border:none;">Tarikh: </td><td colspan="2" width="70%" style="border:none;">@DateTime.Now.ToString("yyyy-mm-dd H:mm:ss")</td></tr>
+                <tr><td width="70%" style="border:none;">Nama Pegawai Perubatan: </td><td colspan="2" width="70%" style="border:none;">_________________________________________________</td></tr>
+                <tr><td width="70%" style="border:none;">Jawatan: </td><td colspan="2" width="70%" style="border:none;">_________________________________________________</td></tr>
+                <tr><td width="70%" style="border:none;">Hospital: </td><td colspan="2" width="70%" style="border:none;">_________________________________________________</td></tr>
+                <tr><td width="70%" style="border:none;">Telefon: </td><td colspan="2" width="70%" style="border:none;">_________________________________________________</td></tr>
             </tbody>
         </table>
     </div>
 </div>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    $('input[type="checkbox"]').attr("disabled", true);
+    $('input[type="radio"]').attr("disabled", true);
+</script>

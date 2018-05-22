@@ -1,34 +1,74 @@
 ﻿@model MoIS.Models.DetailsViewModel
-
+<link href="@Url.Content("~/Content/jquery.datetimepicker.css")" rel="stylesheet" type="text/css" />
 @{
 
-    if (Session["maID"] == null)
+    if (Session["maID"] == null && @ViewData["print"] != "print")
     {
         Response.Redirect("~/Login/Index");
     }
+}
+@if (@ViewData["print"] == "print")
+{
+    <style>
+        .navbar-fixed-top {
+            display: none;
+        }
+
+        .container {
+            margin-top: 0px;
+        }
+        .container input[type=radio] {
+            height: 25px;
+        }
+    </style>
 }
 <style>
     table td {
         padding-left: 10px;
     }
+    .container input {
+        display: none;
+    }
+
+        .container input[type=checkbox] {
+            display: inline;
+        }
+
+        .container input[type=radio] {
+            display: inline;
+        }
+    .container select {
+        display: none;
+    }
 </style>
+
 <h2 class="align_center">BORANG PENGENDALIAN SPESIMEN MEDIKO-LEGAL</h2>
 
 <div>
     <hr />
     <div class="container" style="width:60%;margin-top:2%">
-        <p>
-            @Html.ActionLink("Convert View To PDF", "PrintViewToPdf/" + @ViewData["deceasedId"] + "/BorangPSML", "", htmlAttributes: new { @class = "btn btn-primary" })
-            @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-default" })
-        </p>
+        @if (@ViewData["print"] != "print")
+        {
+            <p>
+                @Html.ActionLink("Convert View To PDF", "PrintViewToPdf", "Home", new { eId = @ViewData["deceasedId"], page = "BorangPSML" }, htmlAttributes: new { @class = "btn btn-primary" })
+                @Html.ActionLink("Back to List", "Index", "", new { @class = "btn btn-default" })
+            </p>
+        }
         @foreach (var item in Model.deceasedList)
         {
             foreach (var item2 in Model.butiranbedahsiasatList)
-            { 
+            {
                 <table width="100%">
                     <tbody>
-                        <tr><td width="50%">NO. DAFTAR KLINIK FORENSIK</td><td width="50%"></td></tr>
-                        <tr><td width="50%">NO. REPORT POLIS</td><td width="50%">@item2.NoLaporanPolis</td></tr>
+                        <tr><td width="50%">NO. DAFTAR KLINIK FORENSIK</td><td width="50%"><input class="form-control" /></td></tr>
+                        @if (@item2.NoLaporanPolis == null || @item2.NoLaporanPolis == "")
+                        {
+                            <tr><td width="50%">NO. REPORT POLIS</td><td width="50%"><input class="form-control" /></td></tr>
+                        }
+                        else
+                        {
+                            <tr><td width="50%">NO. REPORT POLIS</td><td width="50%">@item2.NoLaporanPolis</td></tr>
+                        }
                         <tr><td width="50%">NAMA</td><td width="50%">@item.DeceasedName</td></tr>
                         <tr><td width="50%">NO. KAD PENGENALAN</td><td width="50%">@item.NoIC</td></tr>
                     </tbody>
@@ -50,7 +90,19 @@
                     <tbody>
                         @for (var i = 1; i < 9; i++)
                         {
-                            <tr><td style="width:20%;" class="align_center">@i</td><td width="60%"></td><td width="20%"></td></tr>
+                            <tr>
+                                <td style="width:20%;" class="align_center">@i</td>
+                                <td width="60%">
+                                    <select class="form-control">
+                                        <option></option>
+                                        @foreach (var spesimen in ViewBag.Spesimen)
+                                        {
+                                            <option>@spesimen</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td width="20%"><input class="form-control" type="checkbox" /></td>
+                            </tr>
                         }
                     </tbody>
                 </table>
@@ -61,7 +113,19 @@
                     <tbody>
                         @for (var i = 8; i < 15; i++)
                         {
-                            <tr><td style="width:20%;" class="align_center">@i</td><td width="60%"></td><td width="20%"></td></tr>
+                            <tr>
+                                <td style="width:20%;" class="align_center">@i</td>
+                                <td width="60%">
+                                    <select class="form-control">
+                                        <option></option>
+                                        @foreach (var spesimen in ViewBag.Spesimen)
+                                        {
+                                            <option>@spesimen</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td width="20%"><input class="form-control" type="checkbox" /></td>
+                            </tr>
                         }
                     </tbody>
                 </table>
@@ -76,7 +140,7 @@
                 <tr><td width="20%" class="align_center">3</td><td width="60%">Spesimen dimenteral oleh</td><td width="20%"></td></tr>
             </tbody>
         </table>
-        <div class="row">
+        <div class="row pagebreak">
             <div class="col-md-7">
                 <h5>Pegawai Penyiast PDRM Yang menerima Spesimen</h5>
                 <br />
@@ -101,8 +165,8 @@
             </div>
             <div class="col-md-5">
                 <h5>Pegawai Yang Menyerah Spesimen</h5>
-                <p class="align_center" ">_____________________</p>
-                <p style="font-size:85%; class=" align_center"">(Tandatangan)</p>
+                <p class="align_center">_____________________</p>
+                <p style="font-size:85%;" class="align_center">(Tandatangan)</p>
                 <label class="control-label col-md-5">Nama</label>
                 <div class="col-md-7">
                     <p>:____________________</p>
@@ -119,4 +183,12 @@
         </div>
     </div>
 </div>
-
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="@Url.Content("~/Scripts/jquery.datetimepicker.full.min.js")"></script>
+<script>
+    $('.datetimepicker').datetimepicker({
+        format: 'm/d/Y H:i:s'
+    });
+    $('input[type="checkbox"]').attr("disabled", true);
+    $('input[type="radio"]').attr("disabled", true);
+</script>

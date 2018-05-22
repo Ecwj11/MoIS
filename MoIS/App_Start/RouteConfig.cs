@@ -20,6 +20,12 @@ namespace MoIS
             );
 
             routes.MapRoute(
+                name: "Encrypt",
+                url: "{controller}/{action}/{eId}",
+                defaults: new { controller = "Login", action = "Index", id = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
                 name: "Pdf",
                 url: "{controller}/{action}/{id}/{page}",
                 defaults: new { controller = "Home", action = "PrintViewToPdf", id = UrlParameter.Optional, page = "" }

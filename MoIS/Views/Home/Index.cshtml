@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<MoIS.Models.deceased>
+@using MoIS.Helper
+@using MoIS.CONSTANT
 <link href="@Url.Content("~/Content/jquery.datatables.css")" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 
@@ -16,19 +18,13 @@
     <div class="page-header">
         <h1>Dashboard</h1>
         <div>Today is : @DateTime.Now.DayOfWeek</div>
-        <div class="pull-left">
-            <h2> Hello, @Session["username"]</h2>
-        </div>
-        <div class="pull-right">
-            <h3 class="text-right"> <a href="@Url.Action("LogOut","Login")"><i class="fas fa-sign-out-alt"></i>Logout</a></h3>
-        </div>
         <div class="clearfix"></div>
     </div>
 
 
 </div>
 <div class="form-group">
-    @Html.ActionLink("Create", "Create", "Home", new { @class = "btn btn-primary" })
+    @Html.ActionLink("Create Deceased", "Create", "Home", new { @class = "btn btn-primary" })
 </div>
 <div class="container" style="width:100%;margin-top:2%">
 
@@ -58,47 +54,65 @@
                     </th>
                     <th>Action</th>
                     <th>Report</th>
+                    <th>Deceased Status</th>
+                    <th>QR Code</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
-                    <tr>
-                        <td>
-                            @Html.ActionLink(item.DeceasedName, "McdPmcDetails", new { id = item.DeceasedID })
-                        </td>
-                        <td>
-                            @item.NoIC
-                        </td>
+                <tr>
+                    <td>
+                        @Html.ActionLink(item.DeceasedName, "McdPmcDetails", new { eId = @ViewData["ID" + item.DeceasedID] })
+                    </td>
+                    <td>
+                        @item.NoIC
+                    </td>
 
-                        @if (item.TypeOfCase == 0)
-                        {
-                            <td>
-                                Police Case
-                            </td>
-                        }
-                        else
-                        {
-                            <td>
-                                Normal Case
-                            </td>
-                        }
+                    @if (item.TypeOfCase == 0)
+                    {
                         <td>
-                            @item.DateOfRegistration
+                            Police Case
                         </td>
+                    }
+                    else
+                    {
                         <td>
-                            @Html.ActionLink("NextProcess", "NextProcess", new { id = item.DeceasedID }) |
-                            @Html.ActionLink("Butiran Pengurus Mayat", "BPM", new { id = item.DeceasedID }) |
-                            @Html.ActionLink("Butiran Bedah Siasat", "BBS", new { id = item.DeceasedID }) |
-                            @Html.ActionLink("Edit", "Edit", new { id = item.DeceasedID })
+                            Normal Case
                         </td>
+                    }
+                    <td>
+                        @item.DateOfRegistration
+                    </td>
+                    <td>
+                        @Html.ActionLink("Release Body Process", "NextProcess", new { eId = @ViewData["ID" + item.DeceasedID] }) |
+                        @Html.ActionLink("Butiran Pengurus Mayat", "BPM", new { eId = @ViewData["ID" + item.DeceasedID] }) |
+                        @Html.ActionLink("Butiran Bedah Siasat", "BBS", new { eId = @ViewData["ID" + item.DeceasedID] }) |
+                        @Html.ActionLink("Edit", "Edit", new { eId = @ViewData["ID" + item.DeceasedID] })
+                    </td>
+                    <td>
+                        @Html.ActionLink("BringToDeathReport", "BringToDeathReport", new { eId = @ViewData["ID" + item.DeceasedID] }) |
+                        @Html.ActionLink("BorangPSML", "BorangPSML", new { eId = @ViewData["ID" + item.DeceasedID] }) |
+                        @Html.ActionLink("AutopsyProtocol", "AutopsyProtocol", new { eId = @ViewData["ID" + item.DeceasedID] }) |
+                        @Html.ActionLink("BorangPBPFT", "BorangPBPFT", new { eId = @ViewData["ID" + item.DeceasedID] })
+                    </td>
+                    @if (item.Status == 1)
+                    {
                         <td>
-                            @Html.ActionLink("BringToDeathReport", "BringToDeathReport", new { id = item.DeceasedID }) |
-                            @Html.ActionLink("BorangPSML", "BorangPSML", new { id = item.DeceasedID }) |
-                            @Html.ActionLink("AutopsyProtocol", "AutopsyProtocol", new { id = item.DeceasedID }) |
-                            @Html.ActionLink("BorangPBPFT", "BorangPBPFT", new { id = item.DeceasedID })
+                            @Html.ActionLink("Active", "ChangeStatus", "Home", new { eId = @ViewData["ID" + item.DeceasedID] }, htmlAttributes: new { @class = "btn btn-success", onClick = "javascript:return confirm_change();" })
                         </td>
-                    </tr>
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.ActionLink("Inactive", "ChangeStatus", "Home", new { eId = @ViewData["ID" + item.DeceasedID] }, htmlAttributes: new { @class = "btn btn-danger", onClick = "javascript:return confirm_change();" })
+                        </td>
+                    }
+                    <td>
+                        <a href="@ViewData["DomainUrl"]/Qr/QrDetails?eId=@ViewData["ID" + item.DeceasedID]" style="color:#000000;font-size: 25px;" target="_blank"><i class="fas fa-qrcode"></i></a>
+                        @*<a href="@ViewData["QRLink"]?eId=@ViewData["ID" + item.DeceasedID]" style="color:#000000;font-size: 25px;" target="_blank"><i class="fas fa-qrcode"></i></a>*@
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
@@ -117,4 +131,10 @@
     $('.table').dataTable({
         stateSave: true
     });
+    function confirm_change() {
+        var confrm;
+        confrm = window.confirm("Confirm change user status?");
+
+        return confrm;
+    }
 </script>
